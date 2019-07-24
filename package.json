@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "create-react-class": "^15.6.3",
     "react-scripts": "3.0.1"
   },
   "repository": {
@@ -19,7 +20,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start-server": "nodemon ./server/server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,9 +39,19 @@
     ]
   },
   "devDependencies": {
+    "moment": "^2.24.0",
+    "body-parser": "^1.19.0",
     "bootstrap": "^4.3.1",
+    "docxtemplater": "^3.14.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "jszip": "^2.4.0",
     "lodash": "^4.17.15",
+    "morgan": "^1.9.1",
+    "nconf": "^0.10.0",
     "node-sass": "^4.12.0",
+    "nodemon": "^1.19.1",
+    "path": "^0.12.7",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "reactstrap": "^8.0.1"
