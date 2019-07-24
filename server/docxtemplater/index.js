@@ -5,14 +5,16 @@ const path = require('path')
 
 const generateFile = (data) => {
   const content = fs.readFileSync(
-    path.resolve(__dirname, './tag-example.docx'), 'binary'
+    path.resolve(__dirname, './tamplate.docx'), 'binary'
   )
   const zip = new JSZip(content)
   const doc = new Docxtemplater()
 
   doc.loadZip(zip)
 
-  doc.setData(data)
+  doc.setData({
+    ...data
+  })
 
   try {
     doc.render()
@@ -31,8 +33,10 @@ const generateFile = (data) => {
   const buf = doc.getZip().generate({
     type: 'nodebuffer'
   })
+  
+  const nameFile = `report_${ Date.now() }.docx`
 
-  fs.writeFileSync(path.resolve(__dirname, 'output.docx'), buf)
+  fs.writeFileSync(path.resolve(__dirname, nameFile), buf)
 }
 
 module.exports = generateFile

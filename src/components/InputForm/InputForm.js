@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { 
-  Button, 
-  Form, 
-  FormGroup, 
-  Label, 
-  Input, 
-  Col, 
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Col,
   Row
 } from 'reactstrap'
+import { generateFileFromApi } from '../../api/index'
+import moment from 'moment'
 import './InputForm.scss'
 
 class InputForm extends Component {
@@ -53,7 +55,10 @@ class InputForm extends Component {
   }
 
   onAccidentDateChange(event) {
-    this.setState({ accidentDate: event.target.value })
+    this.setState({
+      accidentDate: moment(event.target.value).format('MM/DD/YYYY')
+    })
+    console.log(moment(event.target.value).format('MM/DD/YYYY'))
   }
 
   onSameHolderChange() {
@@ -70,6 +75,7 @@ class InputForm extends Component {
 
   onSubmitForm(event) {
     event.preventDefault()
+    generateFileFromApi(this.state)
   }
 
   render() {
