@@ -21,7 +21,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start-server": "nodemon ./server/server.js"
+    "start-server": "nodemon ./server/server.js",
+    "postinstall": "npm i --save-dev --ignore-scripts pizzip"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,19 +40,18 @@
     ]
   },
   "devDependencies": {
-    "moment": "^2.24.0",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.3.1",
-    "docxtemplater": "^3.14.0",
-    "express": "^4.17.1",
-    "fs": "0.0.1-security",
-    "jszip": "^2.4.0",
+    "docxtemplater": "^3.1.4",
+    "file-saver": "^2.0.2",
+    "jszip": "^2.6.1",
+    "jszip-utils": "^0.1.0",
     "lodash": "^4.17.15",
-    "morgan": "^1.9.1",
-    "nconf": "^0.10.0",
+    "moment": "^2.24.0",
     "node-sass": "^4.12.0",
     "nodemon": "^1.19.1",
     "path": "^0.12.7",
+    "pizzip": "^3.0.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "reactstrap": "^8.0.1"
