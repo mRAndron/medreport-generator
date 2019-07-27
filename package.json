@@ -21,7 +21,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start-server": "nodemon ./server/server.js"
+    "start-server": "nodemon ./server/server.js",
+    "postinstall": "npm i --save-dev --ignore-scripts pizzip"
   },
   "eslintConfig": {
     "extends": "react-app"
