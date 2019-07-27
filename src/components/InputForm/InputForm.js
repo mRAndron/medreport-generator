@@ -8,7 +8,7 @@ import {
   Col,
   Row
 } from 'reactstrap'
-import { generateFileFromApi } from '../../api/index'
+import { generateFile } from '../../api/index'
 import moment from 'moment'
 import './InputForm.scss'
 
@@ -31,7 +31,7 @@ class InputForm extends Component {
     this.onPolicyNumberChange = this.onPolicyNumberChange.bind(this)
     this.onAccidentDateChange = this.onAccidentDateChange.bind(this)
     this.onSameHolderChange = this.onSameHolderChange.bind(this)
-    this.onSubmitForm = this.onSubmitForm.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
   
   onInsuranceNameChange(event) {
@@ -58,31 +58,30 @@ class InputForm extends Component {
     this.setState({
       accidentDate: moment(event.target.value).format('MM/DD/YYYY')
     })
-    console.log(moment(event.target.value).format('MM/DD/YYYY'))
   }
 
   onSameHolderChange() {
     const { isSameHolder } = this.state
     !(isSameHolder) ? this.setState({
-        insuranceHolder: this.state.patientName,
+      insuranceHolder: this.state.patientName,
     }) : this.setState({
-        insuranceHolder: ''
+      insuranceHolder: ''
     })
     this.setState({
       isSameHolder: !isSameHolder
     })
   }
 
-  onSubmitForm(event) {
+  onSubmit(event) {
     event.preventDefault()
-    generateFileFromApi(this.state)
+    generateFile(this.state)
   }
 
   render() {
     return (
       <div>
         <h2>Medrepot-generator</h2>
-        <Form className='form' onSubmit={ this.onSubmitForm }>
+        <Form className='form' onSubmit={ this.onSubmit }>
           <Row form>
             <Col md={6}>
               <FormGroup>
@@ -90,6 +89,7 @@ class InputForm extends Component {
                 <Input
                   placeholder='insurance name...'
                   onChange={ this.onInsuranceNameChange }
+                  required
                 />
               </FormGroup>
             </Col>
@@ -99,6 +99,7 @@ class InputForm extends Component {
                 <Input
                   placeholder='insurance number...'
                   onChange={ this.onInsuranceNumberChange }
+                  required
                 />
               </FormGroup>
             </Col>
@@ -109,6 +110,7 @@ class InputForm extends Component {
                 <Label>Full name patient:</Label>
                 <Input placeholder='full name patient...'
                   onChange={ this.onPatientNameChange }
+                  required
                 />
               </FormGroup>
             </Col>
@@ -122,6 +124,7 @@ class InputForm extends Component {
                   value={ this.state.insuranceHolder }
                   disabled={this.state.isSameHolder}
                   onChange={ this.onInsuranceHolderChange }
+                  required
                 />
                 <Label check className='form-item'>
                   <Input
@@ -140,6 +143,7 @@ class InputForm extends Component {
                 <Input
                   placeholder='policy number...'
                   onChange={ this.onPolicyNumberChange }
+                  required
                 />
               </FormGroup>
             </Col>
@@ -152,13 +156,12 @@ class InputForm extends Component {
                   id='exampleDate'
                   placeholder='accident date...'
                   onChange={ this.onAccidentDateChange }
+                  required
                 />
               </FormGroup>
             </Col>
           </Row>
-          <Button
-            className='form-item'
-            onClick={this.onClick}>
+          <Button className='form-item'>
             Submit
           </Button>
         </Form>
@@ -166,5 +169,5 @@ class InputForm extends Component {
     )
   }
 }
-  
+
 export default InputForm
