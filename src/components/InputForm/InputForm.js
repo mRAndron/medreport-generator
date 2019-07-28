@@ -1,14 +1,7 @@
 import React, { Component } from 'react'
 import { 
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Col,
-  Row,
-  Breadcrumb,
-  BreadcrumbItem
+  Button, Form, FormGroup, Label, Input,
+  Col, Row, Breadcrumb, BreadcrumbItem
 } from 'reactstrap'
 import { generateFile } from '../../api/index'
 import moment from 'moment'
@@ -19,12 +12,10 @@ import {
   NotificationContainer,
   NotificationManager
 } from 'react-notifications'
-
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-]
+import { 
+  DATE_FORMAT, ERROR_LABEL, 
+  ERROR_MESSAGE, TIMEOUT_MESSAGE
+} from '../../constants/InputForm'
 
 class InputForm extends Component {
   constructor(props) {
@@ -92,7 +83,7 @@ class InputForm extends Component {
 
   onDobChange(event) {
     this.setState({
-      dob: moment(event.target.value).format('MMDDYYYY')
+      dob: moment(event.target.value).format(DATE_FORMAT)
     })
   }
 
@@ -164,15 +155,17 @@ class InputForm extends Component {
       generateFile(this.state)
     else 
     NotificationManager.error(
-      'Error message',
-      'Please, fill in all fields!',
-      3000
+      ERROR_LABEL,
+      ERROR_MESSAGE,
+      TIMEOUT_MESSAGE
     )
-    console.log(this.state)
   }
 
   render() {
-    console.log(window.insuranceList)
+    const insuranceList = window.insuranceList
+    const doctorList = window.doctorList
+    const servicesList = window.servicesList
+    const officeAddressList = window.officeAddressList
     return (
       <div>
         <h2>Medrepot-generator</h2>
@@ -185,7 +178,7 @@ class InputForm extends Component {
               <FormGroup>
                 <Label>Doctor:</Label>
                 <Select 
-                  options={options}
+                  options={ doctorList }
                   onChange={ this.onDoctorChange }
                 />
               </FormGroup>
@@ -194,7 +187,7 @@ class InputForm extends Component {
               <FormGroup>
               <Label>Insurance name:</Label>
               <Select
-                options={options} 
+                options={ insuranceList }
                 onChange={ this.onInsuranceNameChange }
               />
               </FormGroup>
@@ -205,7 +198,7 @@ class InputForm extends Component {
               <FormGroup>
                 <Label>Office address:</Label>
                 <Select
-                  options={options}
+                  options={ officeAddressList }
                   onChange={ this.onOfficeAddressChange }
                 />
               </FormGroup>
@@ -214,9 +207,7 @@ class InputForm extends Component {
               <FormGroup>
               <Label>Selection of services rendered:</Label>
               <Select
-                isMulti
-                name='colors'
-                options={ options }
+                isMulti name='colors' options={ servicesList }
                 className='basic-multi-select'
                 classNamePrefix='select'
                 onChange={ this.onServicesChange }
@@ -329,7 +320,7 @@ class InputForm extends Component {
                 <Input
                   placeholder='full name insurance holder...'
                   value={ this.state.insuranceHolder }
-                  disabled={this.state.isSameHolder}
+                  disabled={ this.state.isSameHolder }
                   onChange={ this.onInsuranceHolderChange }
                   required
                 />
