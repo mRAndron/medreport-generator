@@ -8,7 +8,7 @@ import {
   MINE_TYPE,
   TYPE_OUTPUT,
   DATE_FORMAT
-} from './constants'
+} from '../constants/Api'
 
 const loadFile = (url,callback) => {
   JSZipUtils.getBinaryContent(url,callback)
