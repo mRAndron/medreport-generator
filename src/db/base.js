@@ -2,8 +2,10 @@ import Rebase from 're-base'
 import firebase from 'firebase'
 
 /*
-  CONFIG
+CONFIG
+
 */
+
 
 const app = firebase.initializeApp(config)
 const base = Rebase.createClass(app.database())

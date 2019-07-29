@@ -30,7 +30,6 @@ class App extends Component {
   }
 
   render() {
-    //console.log(this.state)
     return (
       <Container className='app'>
         <MainForm addPatien={ this.addPatient } patients={ this.state.patients } />

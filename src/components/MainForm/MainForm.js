@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Form, TabContent, TabPane, Row, Col, Button } from 'reactstrap'
+import { Form, TabContent, TabPane, Row, Col } from 'reactstrap'
 import PatientDetails from '../PatientDetails/PatientDetails'
+import DoctorsAppointment from '../DoctorsAppointment/DoctorsAppointment'
 import { FIRST_NAV_TAB  } from '../../constants/mainForm'
 import NavBar from '../NavBar/NavBar'
 import PropTypes from 'prop-types'
@@ -9,7 +10,7 @@ import './MainForm.scss'
 class MainForm extends Component {
   static propTypes = {
     addPatien: PropTypes.func.isRequired,
-    patients: PropTypes.array.isRequired
+    //patients: PropTypes.object.isRequired
   }
 
   constructor(props) {
@@ -30,6 +31,7 @@ class MainForm extends Component {
 
   render() {
     const { activeTab } = this.state
+    const { patients } = this.props
     return (
       <Form>
         <h2>Medrepot-generator</h2>
@@ -38,14 +40,7 @@ class MainForm extends Component {
           <TabPane tabId='1'>
             <Row>
               <Col sm='12'>
-                {
-                  Object.entries(this.props.patients).map(([key, val]) => {
-                    return (
-                      <p key={key}>{ val.patientName }</p>
-                    )
-                  })
-                }
-                <Button onClick={ this.props.addPatien }>Add</Button>
+                <DoctorsAppointment patientsList={ patients } />
               </Col>
             </Row>
           </TabPane>

@@ -258,8 +258,8 @@ class PatientDetails extends Component {
             </FormGroup>
           </Col>
           </Row>
-        <Button color='secondary' size='lg'>Submit</Button>
-        <NotificationContainer/>
+        <Button color='secondary' size='lg'>Add</Button>
+        <NotificationContainer />
       </Form>
     )
   }

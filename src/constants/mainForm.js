@@ -6,6 +6,17 @@ export const TIMEOUT_MESSAGE = 3000
 export const FIRST_NAV_TAB = '1'
 export const SECOND_NAV_TAB = '2'
 
+//DoctorsAppointment
+
+export const INITIAL_STATE_DOCTORS_APPOINTMENT = {
+  patientName: '',
+  services: [],
+  officeAddress: '',
+  diagnoses: [],
+  doctor: '',
+  dateReceipt: null
+}
+
 // PATIENT DETAILS
 export const INITIAL_STATE_PATIENT = {
   patientName: '',
