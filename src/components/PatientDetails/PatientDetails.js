@@ -9,9 +9,14 @@ import {
 import moment from 'moment'
 import Select from 'react-select'
 import './PatientDetails.scss'
+import PropTypes from 'prop-types'
 import 'react-notifications/lib/notifications.css'
 
 class PatientDetails extends Component {
+  static propTypes = {
+    addPatien: PropTypes.func.isRequired
+  }
+
   constructor(props) {
     super(props)
     this.state = INITIAL_STATE_PATIENT
@@ -101,19 +106,27 @@ class PatientDetails extends Component {
   }
 
   checkValidForm() {
-    console.log(this.state.gender, this.state.state)
-    return this.state.gernder && this.state.state
+    return this.state.gender && this.state.state
   }
 
   onSubmit(event) {
     event.preventDefault()
-    this.checkValidForm() ?
-      console.log(this.state) :
-    NotificationManager.error(
-      ERROR_LABEL,
-      ERROR_MESSAGE,
-      TIMEOUT_MESSAGE
-    )
+    if (this.checkValidForm()) {
+      const patient = this.state
+      delete patient.isSameHolder
+      this.props.addPatien(patient)
+      NotificationManager.success(
+        'You add new patient',
+        'Success',
+        TIMEOUT_MESSAGE
+      )
+    } else {
+      NotificationManager.error(
+        ERROR_LABEL,
+        ERROR_MESSAGE,
+        TIMEOUT_MESSAGE
+      )
+    }
   }
 
 

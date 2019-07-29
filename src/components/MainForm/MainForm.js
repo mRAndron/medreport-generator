@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
-import { Form, TabContent, TabPane, Row, Col } from 'reactstrap'
+import { Form, TabContent, TabPane, Row, Col, Button } from 'reactstrap'
 import PatientDetails from '../PatientDetails/PatientDetails'
 import { FIRST_NAV_TAB  } from '../../constants/mainForm'
 import NavBar from '../NavBar/NavBar'
+import PropTypes from 'prop-types'
 import './MainForm.scss'
 
 class MainForm extends Component {
+  static propTypes = {
+    addPatien: PropTypes.func.isRequired,
+    patients: PropTypes.array.isRequired
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -32,14 +38,21 @@ class MainForm extends Component {
           <TabPane tabId='1'>
             <Row>
               <Col sm='12'>
-                <h4>Tab 1 Contents</h4>
+                {
+                  Object.entries(this.props.patients).map(([key, val]) => {
+                    return (
+                      <p key={key}>{ val.patientName }</p>
+                    )
+                  })
+                }
+                <Button onClick={ this.props.addPatien }>Add</Button>
               </Col>
             </Row>
           </TabPane>
           <TabPane tabId='2'>
             <Row>
               <Col sm='12'>
-                <PatientDetails />
+                <PatientDetails addPatien={ this.props.addPatien } />
               </Col>
             </Row>
           </TabPane>
