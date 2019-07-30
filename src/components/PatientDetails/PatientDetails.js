@@ -4,7 +4,8 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import {
   INITIAL_STATE_PATIENT, GENDER_LIST, 
   USA_STATES, DATE_FORMAT, ERROR_LABEL, 
-  ERROR_MESSAGE, TIMEOUT_MESSAGE
+  ERROR_MESSAGE, TIMEOUT_MESSAGE,
+  SUCCES_MESSAGE, SUCCES_LABEL
 } from '../../constants/mainForm'
 import moment from 'moment'
 import Select from 'react-select'
@@ -116,8 +117,8 @@ class PatientDetails extends Component {
       delete patient.isSameHolder
       this.props.addPatien(patient)
       NotificationManager.success(
-        'You add new patient',
-        'Success',
+        SUCCES_MESSAGE,
+        SUCCES_LABEL,
         TIMEOUT_MESSAGE
       )
     } else {

@@ -30,9 +30,13 @@ class App extends Component {
   }
 
   render() {
+    const { patients } = this.state
     return (
       <Container className='app'>
-        <MainForm addPatien={ this.addPatient } patients={ this.state.patients } />
+        <MainForm
+          addPatien={ this.addPatient }
+          patients={ patients }
+        />
       </Container>
     )
   }

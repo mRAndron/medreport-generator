@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, TabContent, TabPane, Row, Col } from 'reactstrap'
+import { TabContent, TabPane, Row, Col } from 'reactstrap'
 import PatientDetails from '../PatientDetails/PatientDetails'
 import DoctorsAppointment from '../DoctorsAppointment/DoctorsAppointment'
 import { FIRST_NAV_TAB  } from '../../constants/mainForm'
@@ -9,8 +9,7 @@ import './MainForm.scss'
 
 class MainForm extends Component {
   static propTypes = {
-    addPatien: PropTypes.func.isRequired,
-    //patients: PropTypes.object.isRequired
+    addPatien: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -33,7 +32,7 @@ class MainForm extends Component {
     const { activeTab } = this.state
     const { patients } = this.props
     return (
-      <Form>
+      <div className='main-form'>
         <h2>Medrepot-generator</h2>
         <NavBar toggle={ this.toggle } tabPosition={ activeTab } />
         <TabContent activeTab={ activeTab }>
@@ -52,7 +51,7 @@ class MainForm extends Component {
             </Row>
           </TabPane>
         </TabContent>
-      </Form>
+      </div>
     )
   }
 }
