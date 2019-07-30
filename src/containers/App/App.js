@@ -1,14 +1,41 @@
-import React from 'react'
+import React, { Component } from 'react'
 import './App.scss'
 import { Container } from 'reactstrap'
-import InputForm from '../../components/InputForm/InputForm'
+import { base } from '../../db/base'
+import MainForm from '../../components/MainForm/MainForm'
 
-function App() {
-  return (
-    <Container className="App">
-      <InputForm />
-    </Container>
-  )
+class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      patients: []
+    }
+    this.addPatient = this.addPatient.bind(this)
+  }
+
+  addPatient(data) {
+    const patients = { ...this.state.patients }
+    const id = Date.now()
+    patients[id] = {
+      ...data
+    }
+    this.setState({ patients })
+  }
+
+  componentWillMount() {
+    this.patientsRef = base.syncState('patients', {
+      context: this,
+      state: 'patients'
+    })
+  }
+
+  render() {
+    return (
+      <Container className='app'>
+        <MainForm addPatien={ this.addPatient } patients={ this.state.patients } />
+      </Container>
+    )
+  }
 }
 
 export default App
