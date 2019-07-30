@@ -44,6 +44,32 @@ window.officeAddressList = [
   }
 ]
 
+window.diagnosesList = [
+  { 
+    value: 'M54.2',
+    label: 'M54.2'
+  },
+  {
+    value: 'M54.6',
+    label: 'M54.6'
+  },
+  {
+    value: 'M99.01',
+    label: 'M99.01'
+  },
+  {
+    value: 'M99.04',
+    label: 'M99.04'
+  },
+  {
+    value: 'M99.02',
+    label: 'M99.02'
+  },
+  {
+    value: 'M99.03',
+    label: 'M99.03'
+  }
+]
 
 window.servicesList = [
   { 
