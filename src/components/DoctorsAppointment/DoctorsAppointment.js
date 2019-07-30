@@ -3,20 +3,15 @@ import { Button, Form, FormGroup, Label, Input, Col, Row } from 'reactstrap'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import {
   INITIAL_STATE_DOCTORS_APPOINTMENT,
-  DATE_FORMAT, ERROR_LABEL, 
-  ERROR_MESSAGE, TIMEOUT_MESSAGE
+  DATE_FORMAT, ERROR_LABEL, SUCCES_LABEL,
+  ERROR_MESSAGE, TIMEOUT_MESSAGE, SUCCES_GENERATION
 } from '../../constants/mainForm'
 import { generateFile } from '../../api/index'
 import moment from 'moment'
 import Select from 'react-select'
-//import PropTypes from 'prop-types'
 import 'react-notifications/lib/notifications.css'
 
 class DoctorsAppointment extends Component {
-  static propTypes = {
-    //patientsList: PropTypes.object.isRequired
-  }
-
   constructor(props) {
     super(props)
     this.state = INITIAL_STATE_DOCTORS_APPOINTMENT
@@ -100,8 +95,8 @@ class DoctorsAppointment extends Component {
     if (this.checkValid()) {
       generateFile(this.state)
       NotificationManager.success(
-        'Generation',
-        'Success',
+        SUCCES_GENERATION,
+        SUCCES_LABEL,
         TIMEOUT_MESSAGE
       )
     } else {
