@@ -51,7 +51,11 @@ class DoctorsAppointment extends Component {
   }
 
   onDoctorChange(event) {
-    this.setState({ doctor: event.label })
+    console.log(event)
+    this.setState({ 
+      doctorName: event.label,
+      doctorValue: event.value
+    })
   }
 
   onDiagnosesChange(event) {
@@ -59,11 +63,11 @@ class DoctorsAppointment extends Component {
   }
 
   checkValid() {
-    const { doctor, patientName, officeAddress } = this.state
+    const { doctorName, patientName, officeAddress } = this.state
     const { patientsList, selectedPatientId } = this.props
     const servicesList = patientsList[selectedPatientId].services
     const diagnosesList = patientsList[selectedPatientId].diagnoses
-    return officeAddress && doctor && patientName && 
+    return officeAddress && doctorName && patientName && 
            Array.isArray(servicesList) && servicesList.length && 
            Array.isArray(diagnosesList) && diagnosesList.length
   }
@@ -71,7 +75,8 @@ class DoctorsAppointment extends Component {
   onSubmit(event) {
     event.preventDefault()
     if (this.checkValid()) {
-      generateFile(this.state)
+      const { patientsList, selectedPatientId } = this.props
+      generateFile(this.state, patientsList[selectedPatientId])
       NotificationManager.success(
         SUCCES_GENERATION,
         SUCCES_LABEL,
