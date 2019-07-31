@@ -39,7 +39,14 @@ class MainForm extends Component {
           <TabPane tabId='1'>
             <Row>
               <Col sm='12'>
-                <DoctorsAppointment patientsList={ patients } />
+                <DoctorsAppointment
+                  patientsList={ patients }
+                  getPatientByName={ this.props.getPatientByName }
+                  setSelectedPatientId={ this.props.setSelectedPatientId }
+                  getPatientIdByValue={ this.props.getPatientIdByValue }
+                  setPatientInfo={ this.props.setPatientInfo }
+                  selectedPatientId={ this.props.selectedPatientId }
+                />
               </Col>
             </Row>
           </TabPane>

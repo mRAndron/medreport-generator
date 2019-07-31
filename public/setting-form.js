@@ -72,92 +72,24 @@ window.diagnosesList = [
 ]
 
 window.servicesList = [
-  { 
-    value: { code: '97014', pay: '50' },
-    label: '97014'
-  }, 
-  { 
-    value: { code: '97010', pay: '50' },
-    label: '97010'
-  },
-  { 
-    value: { code: '97039', pay: '60' },
-    label: '97039'
-  },
-  {
-    value: { code: '97012', pay: '75' },
-    label: '97012'
-  },
-  {
-    value: { code: '97035', pay: '35' },
-    label: '97035'
-  },
-  { 
-    value: { code: '97110', pay: '70' },
-    label: '97110'
-  },
-  {
-    value: { code: '97140', pay: '60' },
-    label: '97140'
-  },
-  {
-    value: { code: '97530', pay: '70' },
-    label: '97530'
-  },
-  {
-    value: { code: '97112', pay: '' },
-    label: '97112'
-  },
-  {
-    value: { code: '97535', pay: '' },
-    label: '97535'
-  },
-  {
-    value: { code: '76140', pay: '85' },
-    label: '76140'
-  },
-  {
-    value: { code: '98940', pay: '80' },
-    label: '98940'
-  },
-  {
-    value: { code: '98941', pay: '100' },
-    label:'98941'
-  },
-  {
-    value: { code: '98942', pay: '120' },
-    label: '98942'
-  },
-  {
-    value: { code: '98943', pay: '80' },
-    label: '98943'
-  },
-  { 
-    value: { code: '99202', pay: '250' },
-    label: '99202'
-  },
-  {
-    value: { code: '99203', pay: '350' },
-    label: '99203'
-  },
-  {
-    value: { code: '99212', pay: '150' },
-    label: '99212'
-  },
-  {
-    value: { code: '99213', pay: '200' },
-    label: '99213'
-  },
-  {
-    value: { code: '99348', pay: '350' },
-    label: '99348'
-  },
-  {
-    value: { code: '99343', pay: '450' },
-    label: '99343'
-  }, 
-  {
-    value: { code: '99082', pay: '20' },
-    label: '99082'
-  }
+  { label:  '97014', value: '50' },
+  { label:  '97010', value: '50' },
+  { label:  '97039', value: '60' },
+  { label:  '97012', value: '75' },
+  { label:  '97035', value: '35' },
+  { label:  '97110', value: '70' },
+  { label:  '97140', value: '60' },
+  { label:  '97530', value: '70' },
+  { label:  '76140', value: '85' },
+  { label:  '98940', value: '80' },
+  { label:  '98941', value: '100' },
+  { label:  '98942', value: '120' },
+  { label:  '98943', value: '80' },
+  { label:  '99202', value: '250' },
+  { label:  '99203', value: '350' },
+  { label:  '99212', value: '150' },
+  { label:  '99213', value: '200' },
+  { label:  '99348', value: '350' },
+  { label:  '99343', value: '450' },
+  { label:  '99082', value: '20' }
 ]

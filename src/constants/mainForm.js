@@ -8,15 +8,17 @@ export const SUCCES_GENERATION = 'Generation'
 export const TIMEOUT_MESSAGE = 3000
 export const FIRST_NAV_TAB = '1'
 export const SECOND_NAV_TAB = '2'
+export const SERVICES_FIELD = 'services'
+export const DIAGNOSES_FIELD = 'diagnoses'
+export const TABLE_NAME = 'patients'
 
 //DoctorsAppointment
 
 export const INITIAL_STATE_DOCTORS_APPOINTMENT = {
   patientName: '',
-  services: [],
   officeAddress: '',
-  diagnoses: [],
   doctor: '',
+  isPatientSelected: true,
   dateReceipt: null
 }
 
@@ -33,7 +35,9 @@ export const INITIAL_STATE_PATIENT = {
   gender: '',
   insuranceHolder: '',
   isSameHolder: false,
-  policyNumber: ''
+  policyNumber: '',
+  diagnoses: [],
+  services: []
 }
 
 export const GENDER_LIST = [
