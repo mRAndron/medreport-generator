@@ -51,7 +51,6 @@ class DoctorsAppointment extends Component {
   }
 
   onDoctorChange(event) {
-    console.log(event)
     this.setState({ 
       doctorName: event.label,
       doctorValue: event.value
