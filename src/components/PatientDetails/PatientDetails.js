@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { Button, Form, FormGroup, Label, Input, Col, Row } from 'reactstrap'
+import { Button, Form, FormGroup, Label, Input, Col, Row, CustomInput  } from 'reactstrap'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import {
   INITIAL_STATE_PATIENT, GENDER_LIST, 
   USA_STATES, DATE_FORMAT, ERROR_LABEL, 
   ERROR_MESSAGE, TIMEOUT_MESSAGE,
-  SUCCES_MESSAGE, SUCCES_LABEL
+  SUCCES_MESSAGE, SUCCES_LABEL,
+  RELATIONSHIP_LIST
 } from '../../constants/mainForm'
 import moment from 'moment'
 import Select from 'react-select'
@@ -34,11 +35,39 @@ class PatientDetails extends Component {
     this.onCityChange = this.onCityChange.bind(this)
     this.onPhoneNumberChange = this.onPhoneNumberChange.bind(this)
     this.checkValidForm = this.checkValidForm.bind(this)
+    this.onEmploymentChange = this.onEmploymentChange.bind(this)
+    this.onAutoAccidentChange = this.onAutoAccidentChange.bind(this)
+    this.onOtherAccidentChange = this.onOtherAccidentChange.bind(this)
+    this.onStateAccidentChange = this.onStateAccidentChange.bind(this)
+    this.onRelastionshipChange = this.onRelastionshipChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
   }
 
   onSSNChange(event) {
     this.setState({ ssn: event.target.value })
+  }
+
+  onRelastionshipChange(event) {
+    this.setState({ relastionship: event.value })
+  }
+
+  onEmploymentChange(event) {
+    const { isEmployment } = this.state
+    this.setState({ isEmployment: !isEmployment })
+  }
+
+  onAutoAccidentChange(event) {
+    const { isAutoAccident } = this.state
+    this.setState({ isAutoAccident: !isAutoAccident })
+  }
+
+  onOtherAccidentChange(event) {
+    const { isOtherAccident } = this.state
+    this.setState({ isOtherAccident: !isOtherAccident })
+  }
+
+  onStateAccidentChange(event) {
+    this.setState({ stateAccident: event.target.value })
   }
 
   onPatientNameChange(event) {
@@ -107,7 +136,8 @@ class PatientDetails extends Component {
   }
 
   checkValidForm() {
-    return this.state.gender && this.state.state
+    return this.state.gender && this.state.state && 
+           this.state.relastionship
   }
 
   onSubmit(event) {
@@ -132,6 +162,7 @@ class PatientDetails extends Component {
 
 
   render() {
+    const { isEmployment, isAutoAccident, isOtherAccident, stateAccident } = this.state
     return (
       <Form onSubmit={ this.onSubmit }>
         <Row form>
@@ -258,6 +289,60 @@ class PatientDetails extends Component {
               />
             </FormGroup>
           </Col>
+          </Row>
+          <Row className='line'>
+            <Col md={6}>
+              <FormGroup>
+                <Label>Patient to relationship to insured:</Label>
+                  <Select
+                    placeholder='...'
+                    options={ RELATIONSHIP_LIST }
+                    onChange={ this.onRelastionshipChange }
+                  />
+              </FormGroup>
+            </Col>
+            <Col md={6}>
+              <FormGroup>
+                <Label for='exampleCheckbox'>Is patients condition related to:</Label>
+                <div>
+                  <CustomInput
+                    type='switch'
+                    id='exampleCustomSwitch'
+                    name='customSwitch'
+                    label='EMPLOYMENT? (Courrent or Previous)'
+                    onChange={ this.onEmploymentChange }
+                    checked={ isEmployment }
+                  />
+                  <Row>
+                    <Col md={3}>
+                      <CustomInput
+                        type='switch'
+                        id='exampleCustomSwitch2'
+                        name='customSwitch'
+                        label='AUTO ACCIDENT?'
+                        onChange={ this.onAutoAccidentChange }
+                        checked={ isAutoAccident }
+                      />
+                    </Col>
+                    <Col className='inputState' md={2}>
+                      State:
+                      <Input
+                        bsSize='sm'
+                        value={ stateAccident }
+                        onChange={ this.onStateAccidentChange }
+                      />
+                    </Col>
+                  </Row>
+                  <CustomInput
+                    type='switch'
+                    id='exampleCustomSwitch3'
+                    label='OTHER ACCIDENT?'
+                    onChange={ this.onOtherAccidentChange }
+                    checked={ isOtherAccident }
+                  />
+                </div>
+              </FormGroup>
+            </Col>
           </Row>
         <Button color='secondary' size='lg'>Add</Button>
         <NotificationContainer />

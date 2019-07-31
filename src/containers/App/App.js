@@ -58,12 +58,11 @@ class App extends Component {
 
   getPatientIdByValue(value) {
     const { patients } = this.state
-    return Object.entries(patients).map(([key, val]) => {
-      if (val === value) {
+    for (let [key, val] of Object.entries(patients)) {
+      if (JSON.stringify(val) === JSON.stringify(value)) {
         return key
       }
-      return null
-    })
+    }
   }
 
   componentWillMount() {

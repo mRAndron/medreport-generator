@@ -41,13 +41,11 @@ class DoctorsAppointment extends Component {
   }
 
   onPatientChange(event) {
-    this.setState({ patientName: event.value })
     const patient = this.props.getPatientByName(event.value)
-    const patientId = this.props.getPatientIdByValue(patient).pop()
+    const patientId = this.props.getPatientIdByValue(patient)
     this.props.setSelectedPatientId(patientId)
     this.setState({
-      services: patient.services,
-      diagnoses: patient.diagnoses,
+      patientName: event.value,
       isPatientSelected: false
     })
   }
@@ -61,13 +59,13 @@ class DoctorsAppointment extends Component {
   }
 
   checkValid() {
-    const { 
-      doctor, patientName, diagnoses,
-      officeAddress, services
-    } = this.state
+    const { doctor, patientName, officeAddress } = this.state
+    const { patientsList, selectedPatientId } = this.props
+    const servicesList = patientsList[selectedPatientId].services
+    const diagnosesList = patientsList[selectedPatientId].diagnoses
     return officeAddress && doctor && patientName && 
-           Array.isArray(services) && services.length && 
-           Array.isArray(diagnoses) && diagnoses.length
+           Array.isArray(servicesList) && servicesList.length && 
+           Array.isArray(diagnosesList) && diagnosesList.length
   }
 
   onSubmit(event) {

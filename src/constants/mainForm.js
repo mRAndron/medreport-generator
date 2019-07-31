@@ -37,12 +37,24 @@ export const INITIAL_STATE_PATIENT = {
   isSameHolder: false,
   policyNumber: '',
   diagnoses: [],
-  services: []
+  services: [],
+  relastionship: '',
+  isEmployment: false,
+  isAutoAccident: true,
+  isOtherAccident: false,
+  stateAccident: 'FL'
 }
 
 export const GENDER_LIST = [
   { value: 'Male', label: 'Male' },
   { value: 'Female', label: 'Female' }
+]
+
+export const RELATIONSHIP_LIST = [
+  { value: 'Selа', label: 'Selа' },
+  { value: 'Spouse', label: 'Spouse' },
+  { value: 'Child', label: 'Child' },
+  { value: 'Other', label: 'Other' }
 ]
 
 export const USA_STATES = [
