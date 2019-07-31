@@ -138,10 +138,9 @@ class DoctorsAppointment extends Component {
             </Col>
             <Col md={6}>
               <FormGroup>
-                <Label for='exampleState'>Date of Receipt:</Label>
+                <Label>Date of Receipt:</Label>
                 <Input
                   type='date'
-                  id='exampleDate'
                   placeholder='date of receipt...'
                   onChange={ this.onDataReceiptbChange }
                   required
@@ -177,6 +176,7 @@ class DoctorsAppointment extends Component {
                 isMulti name='colors' options={ diagnosesList }
                 className='basic-multi-select'
                 classNamePrefix='select'
+                closeMenuOnSelect={ false }
                 onChange={ this.onDiagnosesChange }
               />
               </FormGroup>
@@ -188,6 +188,7 @@ class DoctorsAppointment extends Component {
                 isMulti name='colors' options={ servicesList }
                 className='basic-multi-select'
                 classNamePrefix='select'
+                closeMenuOnSelect={ false }
                 onChange={ this.onServicesChange }
               />
               </FormGroup>
