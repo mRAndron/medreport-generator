@@ -4,7 +4,8 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import {
   INITIAL_STATE_DOCTORS_APPOINTMENT,
   DATE_FORMAT, ERROR_LABEL, SUCCES_LABEL,
-  ERROR_MESSAGE, TIMEOUT_MESSAGE, SUCCES_GENERATION
+  ERROR_MESSAGE, TIMEOUT_MESSAGE, SUCCES_GENERATION,
+  SERVICES_FIELD, DIAGNOSES_FIELD
 } from '../../constants/mainForm'
 import { generateFile } from '../../api/index'
 import moment from 'moment'
@@ -22,7 +23,6 @@ class DoctorsAppointment extends Component {
     this.onServicesChange = this.onServicesChange.bind(this)
     this.onDiagnosesChange = this.onDiagnosesChange.bind(this)
     this.checkValid = this.checkValid.bind(this)
-    this.addMulti = this.addMulti.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
   }
 
@@ -33,15 +33,7 @@ class DoctorsAppointment extends Component {
   }
 
   onServicesChange(event) {
-    let servicesArray = []
-    if (event !== null){
-      event.forEach((element) => {
-        servicesArray.push(element.value)
-      })
-      this.setState({ services: servicesArray })
-    } else {
-      this.setState({ services: [] })
-    }
+    this.props.setPatientInfo(event, SERVICES_FIELD )
   }
   
   onOfficeAddress(event) {
@@ -49,51 +41,41 @@ class DoctorsAppointment extends Component {
   }
 
   onPatientChange(event) {
-    this.setState({ patientName: event.value })
+    const patient = this.props.getPatientByName(event.value)
+    const patientId = this.props.getPatientIdByValue(patient)
+    this.props.setSelectedPatientId(patientId)
+    this.setState({
+      patientName: event.value,
+      isPatientSelected: false
+    })
   }
 
   onDoctorChange(event) {
-    this.setState({ doctor: event.label })
+    this.setState({ 
+      doctorName: event.label,
+      doctorValue: event.value
+    })
   }
 
   onDiagnosesChange(event) {
-    let diagnosesArray = []
-    if (event !== null){
-      event.forEach((element) => {
-        diagnosesArray.push(element.value)
-      })
-      this.setState({ diagnoses: diagnosesArray })
-    } else {
-      this.setState({ diagnoses: [] })
-    }
-  }
-
-  addMulti(prop, value) {
-    let tempArray = []
-    if (value !== null) {
-      value.forEach((element) => {
-        tempArray.push(element.value)
-      })
-      this.setState({ prop: tempArray })
-    } else {
-      this.setState({ prop: [] })
-    }
+    this.props.setPatientInfo(event, DIAGNOSES_FIELD )
   }
 
   checkValid() {
-    const { 
-      doctor, patientName, diagnoses,
-      officeAddress, services
-    } = this.state
-    return officeAddress && doctor && patientName && 
-           Array.isArray(services) && services.length && 
-           Array.isArray(diagnoses) && diagnoses.length
+    const { doctorName, patientName, officeAddress } = this.state
+    const { patientsList, selectedPatientId } = this.props
+    const servicesList = patientsList[selectedPatientId].services
+    const diagnosesList = patientsList[selectedPatientId].diagnoses
+    return officeAddress && doctorName && patientName && 
+           Array.isArray(servicesList) && servicesList.length && 
+           Array.isArray(diagnosesList) && diagnosesList.length
   }
 
   onSubmit(event) {
     event.preventDefault()
     if (this.checkValid()) {
-      generateFile(this.state)
+      const { patientsList, selectedPatientId } = this.props
+      generateFile(this.state, patientsList[selectedPatientId])
       NotificationManager.success(
         SUCCES_GENERATION,
         SUCCES_LABEL,
@@ -113,7 +95,8 @@ class DoctorsAppointment extends Component {
     const servicesList = window.servicesList
     const officeAddressList = window.officeAddressList
     const diagnosesList = window.diagnosesList
-    const { patientsList } = this.props
+    const { patientsList, selectedPatientId } = this.props
+    const { isPatientSelected } = this.state
     const selectPatientList = []
     Object.entries(patientsList).map(([key, val]) => {
       return (
@@ -138,10 +121,9 @@ class DoctorsAppointment extends Component {
             </Col>
             <Col md={6}>
               <FormGroup>
-                <Label for='exampleState'>Date of Receipt:</Label>
+                <Label>Date of Receipt:</Label>
                 <Input
                   type='date'
-                  id='exampleDate'
                   placeholder='date of receipt...'
                   onChange={ this.onDataReceiptbChange }
                   required
@@ -177,7 +159,11 @@ class DoctorsAppointment extends Component {
                 isMulti name='colors' options={ diagnosesList }
                 className='basic-multi-select'
                 classNamePrefix='select'
+                closeMenuOnSelect={ false }
+                hideSelectedOptions={ true }
                 onChange={ this.onDiagnosesChange }
+                isDisabled={ isPatientSelected }
+                value={ selectedPatientId && patientsList[selectedPatientId].diagnoses }
               />
               </FormGroup>
             </Col>
@@ -188,7 +174,11 @@ class DoctorsAppointment extends Component {
                 isMulti name='colors' options={ servicesList }
                 className='basic-multi-select'
                 classNamePrefix='select'
+                closeMenuOnSelect={ false }
+                hideSelectedOptions={ true }
                 onChange={ this.onServicesChange }
+                isDisabled={ isPatientSelected }
+                value={ selectedPatientId && patientsList[selectedPatientId].services }
               />
               </FormGroup>
             </Col>

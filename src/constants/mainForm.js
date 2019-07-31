@@ -8,15 +8,18 @@ export const SUCCES_GENERATION = 'Generation'
 export const TIMEOUT_MESSAGE = 3000
 export const FIRST_NAV_TAB = '1'
 export const SECOND_NAV_TAB = '2'
+export const SERVICES_FIELD = 'services'
+export const DIAGNOSES_FIELD = 'diagnoses'
+export const TABLE_NAME = 'patients'
 
 //DoctorsAppointment
 
 export const INITIAL_STATE_DOCTORS_APPOINTMENT = {
   patientName: '',
-  services: [],
   officeAddress: '',
-  diagnoses: [],
-  doctor: '',
+  doctorName: '',
+  doctorValue: {},
+  isPatientSelected: true,
   dateReceipt: null
 }
 
@@ -33,7 +36,14 @@ export const INITIAL_STATE_PATIENT = {
   gender: '',
   insuranceHolder: '',
   isSameHolder: false,
-  policyNumber: ''
+  policyNumber: '',
+  diagnoses: [],
+  services: [],
+  relastionship: '',
+  isEmployment: false,
+  isAutoAccident: true,
+  isOtherAccident: false,
+  stateAccident: 'FL'
 }
 
 export const GENDER_LIST = [
@@ -41,64 +51,248 @@ export const GENDER_LIST = [
   { value: 'Female', label: 'Female' }
 ]
 
+export const RELATIONSHIP_LIST = [
+  { value: 'Selа', label: 'Selа' },
+  { value: 'Spouse', label: 'Spouse' },
+  { value: 'Child', label: 'Child' },
+  { value: 'Other', label: 'Other' }
+]
+
 export const USA_STATES = [
-  { value: 'ALABAMA', label: 'ALABAMA'},
-  { value: 'ALASKA', label: 'ALASKA'},
-  { value: 'AMERICAN SAMOA', label: 'AMERICAN SAMOA'},
-  { value: 'ARIZONA', label: 'ARIZONA'},
-  { value: 'ARKANSAS', label: 'ARKANSAS'},
-  { value: 'CALIFORNIA', label: 'CALIFORNIA'},
-  { value: 'COLORADO', label: 'COLORADO'},
-  { value: 'CONNECTICUT', label: 'CONNECTICUT'},
-  { value: 'DELAWARE', label: 'DELAWARE'},
-  { value: 'DISTRICT OF COLUMBIA', label: 'DISTRICT OF COLUMBIA'},
-  { value: 'FEDERATED STATES OF MICRONESIA', label: 'FEDERATED STATES OF MICRONESIA'},
-  { value: 'FLORIDA', label: 'FLORIDA'},
-  { value: 'GEORGIA', label: 'GEORGIA'},
-  { value: 'GUAM', label: 'GUAM'},
-  { value: 'HAWAII', label: 'HAWAII'},
-  { value: 'IDAHO', label: 'IDAHO'},
-  { value: 'ILLINOIS', label: 'ILLINOIS'},
-  { value: 'INDIANA', label: 'INDIANA'},
-  { value: 'IOWA', label: 'IOWA'},
-  { value: 'KANSAS', label: 'KANSAS'},
-  { value: 'KENTUCKY', label: 'KENTUCKY'},
-  { value: 'LOUISIANA', label: 'LOUISIANA'},
-  { value: 'MAINE', label: 'MAINE'},
-  { value: 'MARSHALL ISLANDS', label: 'MARSHALL ISLANDS'},
-  { value: 'MARYLAND', label: 'MARYLAND'},
-  { value: 'MASSACHUSETTS', label: 'MASSACHUSETTS'},
-  { value: 'MICHIGAN', label: 'MICHIGAN'},
-  { value: 'MINNESOTA', label: 'MINNESOTA'},
-  { value: 'MISSISSIPPI', label: 'MISSISSIPPI'},
-  { value: 'MISSOURI', label: 'MISSOURI'},
-  { value: 'MONTANA', label: 'MONTANA'},
-  { value: 'NEBRASKA', label: 'NEBRASKA'},
-  { value: 'NEVADA', label: 'NEVADA'},
-  { value: 'NEW HAMPSHIRE', label: 'NEW HAMPSHIRE'},
-  { value: 'NEW JERSEY', label: 'NEW JERSEY'},
-  { value: 'NEW MEXICO', label: 'NEW MEXICO'},
-  { value: 'NEW YORK', label: 'NEW YORK'},
-  { value: 'NORTH CAROLINA', label: 'NORTH CAROLINA'},
-  { value: 'NORTH DAKOTA', label: 'NORTH DAKOTA'},
-  { value: 'NORTHERN MARIANA ISLANDS', label: 'NORTHERN MARIANA ISLANDS'},
-  { value: 'OHIO', label: 'OHIO'},
-  { value: 'OKLAHOMA', label: 'OKLAHOMA'},
-  { value: 'OREGON', label: 'OREGON'},
-  { value: 'PALAU', label: 'PALAU'},
-  { value: 'PENNSYLVANIA', label: 'PENNSYLVANIA'},
-  { value: 'PUERTO RICO', label: 'PUERTO RICO'},
-  { value: 'RHODE ISLAND', label: 'RHODE ISLAND'},
-  { value: 'SOUTH CAROLINA', label: 'SOUTH CAROLINA'},
-  { value: 'SOUTH DAKOTA', label: 'SOUTH DAKOTA'},
-  { value: 'TENNESSEE', label: 'TENNESSEE'},
-  { value: 'TEXAS', label: 'TEXAS'},
-  { value: 'UTAH', label: 'UTAH'},
-  { value: 'VERMONT', label: 'VERMONT'},
-  { value: 'VIRGIN ISLANDS', label: 'VI'},
-  { value: 'VIRGINIA', label: 'VIRGINIA'},
-  { value: 'WASHINGTON', label: 'WASHINGTON'},
-  { value: 'WEST VIRGINIA', label: 'WEST VIRGINIA'},
-  { value: 'WISCONSIN', label: 'WISCONSIN'},
-  { value: 'WYOMING', label: 'WYOMING' }
+  {
+      value: "Alabama",
+      label: "AL"
+  },
+  {
+      value: "Alaska",
+      label: "AK"
+  },
+  {
+      value: "American Samoa",
+      label: "AS"
+  },
+  {
+      value: "Arizona",
+      label: "AZ"
+  },
+  {
+      value: "Arkansas",
+      label: "AR"
+  },
+  {
+      value: "California",
+      label: "CA"
+  },
+  {
+      value: "Colorado",
+      label: "CO"
+  },
+  {
+      value: "Connecticut",
+      label: "CT"
+  },
+  {
+      value: "Delaware",
+      label: "DE"
+  },
+  {
+      value: "District Of Columbia",
+      label: "DC"
+  },
+  {
+      value: "Federated States Of Micronesia",
+      label: "FM"
+  },
+  {
+      value: "Florida",
+      label: "FL"
+  },
+  {
+      value: "Georgia",
+      label: "GA"
+  },
+  {
+      value: "Guam",
+      label: "GU"
+  },
+  {
+      value: "Hawaii",
+      label: "HI"
+  },
+  {
+      value: "Idaho",
+      label: "ID"
+  },
+  {
+      value: "Illinois",
+      label: "IL"
+  },
+  {
+      value: "Indiana",
+      label: "IN"
+  },
+  {
+      value: "Iowa",
+      label: "IA"
+  },
+  {
+      value: "Kansas",
+      label: "KS"
+  },
+  {
+      value: "Kentucky",
+      label: "KY"
+  },
+  {
+      value: "Louisiana",
+      label: "LA"
+  },
+  {
+      value: "Maine",
+      label: "ME"
+  },
+  {
+      value: "Marshall Islands",
+      label: "MH"
+  },
+  {
+      value: "Maryland",
+      label: "MD"
+  },
+  {
+      value: "Massachusetts",
+      label: "MA"
+  },
+  {
+      value: "Michigan",
+      label: "MI"
+  },
+  {
+      value: "Minnesota",
+      label: "MN"
+  },
+  {
+      value: "Mississippi",
+      label: "MS"
+  },
+  {
+      value: "Missouri",
+      label: "MO"
+  },
+  {
+      value: "Montana",
+      label: "MT"
+  },
+  {
+      value: "Nebraska",
+      label: "NE"
+  },
+  {
+      value: "Nevada",
+      label: "NV"
+  },
+  {
+      value: "New Hampshire",
+      label: "NH"
+  },
+  {
+      value: "New Jersey",
+      label: "NJ"
+  },
+  {
+      value: "New Mexico",
+      label: "NM"
+  },
+  {
+      value: "New York",
+      label: "NY"
+  },
+  {
+      value: "North Carolina",
+      label: "NC"
+  },
+  {
+      value: "North Dakota",
+      label: "ND"
+  },
+  {
+      value: "Northern Mariana Islands",
+      label: "MP"
+  },
+  {
+      value: "Ohio",
+      label: "OH"
+  },
+  {
+      value: "Oklahoma",
+      label: "OK"
+  },
+  {
+      value: "Oregon",
+      label: "OR"
+  },
+  {
+      value: "Palau",
+      label: "PW"
+  },
+  {
+      value: "Pennsylvania",
+      label: "PA"
+  },
+  {
+      value: "Puerto Rico",
+      label: "PR"
+  },
+  {
+      value: "Rhode Island",
+      label: "RI"
+  },
+  {
+      value: "South Carolina",
+      label: "SC"
+  },
+  {
+      value: "South Dakota",
+      label: "SD"
+  },
+  {
+      value: "Tennessee",
+      label: "TN"
+  },
+  {
+      value: "Texas",
+      label: "TX"
+  },
+  {
+      value: "Utah",
+      label: "UT"
+  },
+  {
+      value: "Vermont",
+      label: "VT"
+  },
+  {
+      value: "Virgin Islands",
+      label: "VI"
+  },
+  {
+      value: "Virginia",
+      label: "VA"
+  },
+  {
+      value: "Washington",
+      label: "WA"
+  },
+  {
+      value: "West Virginia",
+      label: "WV"
+  },
+  {
+      value: "Wisconsin",
+      label: "WI"
+  },
+  {
+      value: "Wyoming",
+      label: "WY"
+  }
 ]

@@ -10,11 +10,11 @@ import {
   DATE_FORMAT
 } from '../constants/api'
 
-const loadFile = (url,callback) => {
-  JSZipUtils.getBinaryContent(url,callback)
+const loadFile = (url, callback) => {
+  JSZipUtils.getBinaryContent(url, callback)
 }
 
-export const generateFile = data => {
+export const generateFile = (doctorsAppointment, patient) => {
   loadFile(URL_TEMPLATE, (error, content) => {
     if (error) {
       throw error
@@ -24,7 +24,9 @@ export const generateFile = data => {
     const doc = new docxtemplater().loadZip(zip)
 
     doc.setData({
-      ...data
+      ...doctorsAppointment,
+      signature: doctorsAppointment.doctorValue.signature,
+      ...patient
     })
 
     try {
