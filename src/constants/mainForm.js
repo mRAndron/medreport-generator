@@ -35,6 +35,7 @@ export const INITIAL_STATE_PATIENT = {
   zip: '',
   phoneNumber: '',
   dob: null,
+  accidentDate: null,
   gender: '',
   insuranceHolder: '',
   isSameHolder: false,

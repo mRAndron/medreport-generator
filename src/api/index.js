@@ -26,6 +26,7 @@ export const generateFile = (data, patient) => {
     let doctorsList = []
     let paySum = []
     let temporarySum = 0
+    //const accidentDate = moment(patient.accidentDate).format('MM DD YYYY') // TODO: CHECK FORMAT
 
     data.allDiagnoses.forEach((list, indexList) => {
       temporaryDate = {}
