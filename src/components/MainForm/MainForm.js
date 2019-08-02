@@ -46,6 +46,13 @@ class MainForm extends Component {
                   getPatientIdByValue={ this.props.getPatientIdByValue }
                   setPatientInfo={ this.props.setPatientInfo }
                   selectedPatientId={ this.props.selectedPatientId }
+                  setAllData={ this.props.setAllData }
+                  day={ this.props.day }
+                  allServices={ this.props.allServices }
+                  allDiagnoses={ this.props.allDiagnoses }
+                  allDoctors={ this.props.allDoctors }
+                  allDates={ this.props.allDates }
+                  allOffices={ this.props.allOffices }
                 />
               </Col>
             </Row>
