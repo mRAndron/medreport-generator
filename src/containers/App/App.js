@@ -3,20 +3,27 @@ import './App.scss'
 import { Container } from 'reactstrap'
 import { base } from '../../db/base'
 import MainForm from '../../components/MainForm/MainForm'
-import { SERVICES_FIELD, TABLE_NAME } from '../../constants/mainForm'
+import { SERVICES_FIELD, TABLE_NAME, MAX_DAY, MIN_DAY } from '../../constants/mainForm'
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       patients: {},
-      selectedPatientId: ''
+      selectedPatientId: '',
+      allServices: [],
+      allDiagnoses: [],
+      allDoctors: [],
+      allDates: [],
+      allOffices: [],
+      day: 1
     }
     this.addPatient = this.addPatient.bind(this)
     this.setSelectedPatientId = this.setSelectedPatientId.bind(this)
     this.setPatientInfo = this.setPatientInfo.bind(this)
     this.getPatientByName = this.getPatientByName.bind(this)
     this.getPatientIdByValue = this.getPatientIdByValue.bind(this)
+    this.setAllData = this.setAllData.bind(this)
   }
 
   addPatient(data) {
@@ -46,6 +53,20 @@ class App extends Component {
   setSelectedPatientId(id) {
     this.setState({
       selectedPatientId: id
+    })
+  }
+
+  setAllData(data) {
+    const {
+      allServices, allDates, allDiagnoses, allDoctors, allOffices, day
+    } = this.state
+    this.setState({
+      allServices: (day !== MAX_DAY) ? [...allServices, data.services] : [],
+      allDates: (day !== MAX_DAY) ? [...allDates, data.date] : [],
+      allDiagnoses: (day !== MAX_DAY) ? [...allDiagnoses, data.diagnoses] : [],
+      allDoctors: (day !== MAX_DAY) ? [...allDoctors, data.doctor] : [],
+      allOffices: (day !== MAX_DAY) ? [...allOffices, data.office] : [],
+      day: (day !== MAX_DAY) ? (day + MIN_DAY) : MIN_DAY
     })
   }
 
@@ -79,7 +100,17 @@ class App extends Component {
   }
 
   render() {
-    const { patients } = this.state
+    const { 
+      patients,
+      day,
+      selectedPatientId,
+      allServices,
+      allDiagnoses,
+      allDoctors,
+      allDates,
+      allOffices,
+    } = this.state
+
     return (
       <Container className='app'>
         <MainForm
@@ -89,7 +120,14 @@ class App extends Component {
           getPatientIdByValue={ this.getPatientIdByValue }
           setPatientInfo={ this.setPatientInfo }
           patients={ patients }
-          selectedPatientId={ this.state.selectedPatientId }
+          selectedPatientId={ selectedPatientId }
+          setAllData={ this.setAllData }
+          day={ day }
+          allServices={ allServices }
+          allDiagnoses={ allDiagnoses }
+          allDoctors={ allDoctors }
+          allDates={ allDates }
+          allOffices={ allOffices }
         />
       </Container>
     )

@@ -11,6 +11,8 @@ export const SECOND_NAV_TAB = '2'
 export const SERVICES_FIELD = 'services'
 export const DIAGNOSES_FIELD = 'diagnoses'
 export const TABLE_NAME = 'patients'
+export const MAX_DAY = 7
+export const MIN_DAY = 1
 
 //DoctorsAppointment
 

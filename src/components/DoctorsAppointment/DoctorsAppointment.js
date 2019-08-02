@@ -5,7 +5,8 @@ import {
   INITIAL_STATE_DOCTORS_APPOINTMENT,
   DATE_FORMAT, ERROR_LABEL, SUCCES_LABEL,
   ERROR_MESSAGE, TIMEOUT_MESSAGE, SUCCES_GENERATION,
-  SERVICES_FIELD, DIAGNOSES_FIELD
+  SERVICES_FIELD, DIAGNOSES_FIELD,
+  MIN_DAY, MAX_DAY
 } from '../../constants/mainForm'
 import { generateFile } from '../../api/index'
 import moment from 'moment'
@@ -74,13 +75,48 @@ class DoctorsAppointment extends Component {
   onSubmit(event) {
     event.preventDefault()
     if (this.checkValid()) {
-      const { patientsList, selectedPatientId } = this.props
-      generateFile(this.state, patientsList[selectedPatientId])
-      NotificationManager.success(
-        SUCCES_GENERATION,
-        SUCCES_LABEL,
-        TIMEOUT_MESSAGE
-      )
+      const { 
+        patientsList,
+        selectedPatientId,
+        day,
+        allServices,
+        allDiagnoses,
+        allDoctors,
+        allDates,
+        allOffices,
+      } = this.props
+      const { doctorValue, officeAddress, dateReceipt } = this.state
+
+      this.props.setAllData({
+        services: patientsList[selectedPatientId].services,
+        date: dateReceipt,
+        diagnoses: patientsList[selectedPatientId].diagnoses,
+        doctor: doctorValue,
+        office: officeAddress
+      })
+      if (day === MAX_DAY) {
+        const genData = {
+          allServices: [...allServices, patientsList[selectedPatientId].services],
+          allDiagnoses: [...allDiagnoses, patientsList[selectedPatientId].diagnoses],
+          allDoctors: [...allDoctors, doctorValue],
+          allDates: [...allDates, dateReceipt],
+          allOffices: [...allOffices, officeAddress]
+        }
+        try {
+          generateFile(genData, patientsList[selectedPatientId])
+          NotificationManager.success(
+            SUCCES_GENERATION,
+            SUCCES_LABEL,
+            TIMEOUT_MESSAGE
+          )
+        } catch (e) {
+          NotificationManager.error(
+            ERROR_LABEL,
+            '',
+            TIMEOUT_MESSAGE
+          )
+        }
+      }
     } else {
       NotificationManager.error(
         ERROR_LABEL,
@@ -95,7 +131,7 @@ class DoctorsAppointment extends Component {
     const servicesList = window.servicesList
     const officeAddressList = window.officeAddressList
     const diagnosesList = window.diagnosesList
-    const { patientsList, selectedPatientId } = this.props
+    const { patientsList, selectedPatientId, day } = this.props
     const { isPatientSelected } = this.state
     const selectPatientList = []
     Object.entries(patientsList).map(([key, val]) => {
@@ -109,6 +145,7 @@ class DoctorsAppointment extends Component {
 
     return (
       <Form onSubmit={ this.onSubmit }>
+        Input info for { day } day:
         <Row form>
             <Col md={6}>
               <FormGroup>
@@ -116,6 +153,7 @@ class DoctorsAppointment extends Component {
                 <Select 
                   options={ selectPatientList }
                   onChange={ this.onPatientChange }
+                  isDisabled={ day !== MIN_DAY }
                 />
               </FormGroup>
             </Col>
