@@ -145,7 +145,7 @@ class DoctorsAppointment extends Component {
 
     return (
       <Form onSubmit={ this.onSubmit }>
-        Input info for { day } day:
+        <h4>Input info for { day } day:</h4>
         <Row form>
             <Col md={6}>
               <FormGroup>
