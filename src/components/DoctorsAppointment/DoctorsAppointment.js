@@ -12,6 +12,7 @@ import { generateFile } from '../../api/index'
 import moment from 'moment'
 import Select from 'react-select'
 import 'react-notifications/lib/notifications.css'
+import './DoctorsAppointment.scss'
 
 class DoctorsAppointment extends Component {
   constructor(props) {
@@ -34,7 +35,7 @@ class DoctorsAppointment extends Component {
   }
 
   onServicesChange(event) {
-    this.props.setPatientInfo(event, SERVICES_FIELD )
+    this.props.setPatientInfo(event, SERVICES_FIELD)
   }
   
   onOfficeAddress(event) {
@@ -145,7 +146,7 @@ class DoctorsAppointment extends Component {
 
     return (
       <Form onSubmit={ this.onSubmit }>
-        <h4>Input info for { day } day:</h4>
+        <h4 className='input-label'>Input info for { day } day:</h4>
         <Row form>
             <Col md={6}>
               <FormGroup>

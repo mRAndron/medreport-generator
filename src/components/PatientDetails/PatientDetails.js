@@ -111,7 +111,7 @@ class PatientDetails extends Component {
   }
 
   onStateChange(event) {
-    this.setState({ state: event.value })
+    this.setState({ state: event.label })
   }
 
   onPhoneNumberChange(event) {
