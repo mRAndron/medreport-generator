@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Button, Form, FormGroup, Label, Input, Col, Row, CustomInput  } from 'reactstrap'
+import { Button, Form, FormGroup, Label, Input, Col, Row, CustomInput } from 'reactstrap'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import {
-  INITIAL_STATE_PATIENT, GENDER_LIST, 
-  USA_STATES, DATE_FORMAT, ERROR_LABEL, 
+  INITIAL_STATE_PATIENT, GENDER_LIST,
+  USA_STATES, DATE_FORMAT, ERROR_LABEL,
   ERROR_MESSAGE, TIMEOUT_MESSAGE,
   SUCCES_MESSAGE, SUCCES_LABEL,
   RELATIONSHIP_LIST
@@ -143,8 +143,8 @@ class PatientDetails extends Component {
   }
 
   checkValidForm() {
-    return this.state.gender && this.state.state && 
-           this.state.relastionship
+    return this.state.gender && this.state.state &&
+      this.state.relastionship
   }
 
   onSubmit(event) {
@@ -171,26 +171,26 @@ class PatientDetails extends Component {
   render() {
     const { isEmployment, isAutoAccident, isOtherAccident, stateAccident } = this.state
     return (
-      <Form onSubmit={ this.onSubmit }>
+      <Form onSubmit={this.onSubmit}>
         <Row form>
           <Col md={7}>
-          <FormGroup>
-            <Label>Full name patient:</Label>
+            <FormGroup>
+              <Label>Full name patient:</Label>
               <Input
                 placeholder='full name patient...'
-                onChange={ this.onPatientNameChange }
+                onChange={this.onPatientNameChange}
                 required
               />
-              </FormGroup>
-            </Col>
-            <Col md={5}>
-              <FormGroup>
-                <Label>Social Security Number (SSN):</Label>
-                <Input
-                  placeholder='ssn...'
-                  onChange={ this.onSSNChange }
-                  required
-                />
+            </FormGroup>
+          </Col>
+          <Col md={5}>
+            <FormGroup>
+              <Label>Social Security Number (SSN):</Label>
+              <Input
+                placeholder='ssn...'
+                onChange={this.onSSNChange}
+                required
+              />
             </FormGroup>
           </Col>
         </Row>
@@ -198,7 +198,7 @@ class PatientDetails extends Component {
           <Label>Address patient:</Label>
           <Input
             placeholder='address patient...'
-            onChange={ this.onAddressPatientChange }
+            onChange={this.onAddressPatientChange}
             required
           />
         </FormGroup>
@@ -208,8 +208,9 @@ class PatientDetails extends Component {
               <Label>City:</Label>
               <Input
                 placeholder='city patient...'
-                onChange={ this.onCityChange }
+                onChange={this.onCityChange}
                 required
+                defaultValue="Jacksonville"
               />
             </FormGroup>
           </Col>
@@ -218,8 +219,12 @@ class PatientDetails extends Component {
               <Label>State:</Label>
               <Select
                 placeholder='state patient...'
-                options={ USA_STATES }
-                onChange={ this.onStateChange }
+                options={USA_STATES}
+                onChange={this.onStateChange}
+                defaultValue={{
+                  value: "Florida",
+                  label: "FL"
+                }}
               />
             </FormGroup>
           </Col>
@@ -228,7 +233,7 @@ class PatientDetails extends Component {
               <Label>Zip:</Label>
               <Input
                 placeholder='zip patient...'
-                onChange={ this.onZipChange }
+                onChange={this.onZipChange}
                 required
               />
             </FormGroup>
@@ -240,7 +245,7 @@ class PatientDetails extends Component {
               <Label>Phone number:</Label>
               <Input
                 placeholder='phone number...'
-                onChange={ this.onPhoneNumberChange }
+                onChange={this.onPhoneNumberChange}
                 required
               />
             </FormGroup>
@@ -251,7 +256,7 @@ class PatientDetails extends Component {
               <Input
                 type='date'
                 placeholder='date of birth...'
-                onChange={ this.onDobChange }
+                onChange={this.onDobChange}
                 required
               />
             </FormGroup>
@@ -259,107 +264,107 @@ class PatientDetails extends Component {
           <Col md={2}>
             <FormGroup>
               <Label>Gender:</Label>
-                <Select
-                  placeholder='gender...'
-                  options={ GENDER_LIST }
-                  onChange={ this.onGenderChange }
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-          <Row form>
-            <Col md={6}>
-              <FormGroup>
-                <Label>Full name insurance holder:</Label>
-                <Input
-                  placeholder='full name insurance holder...'
-                  value={ this.state.insuranceHolder }
-                  disabled={ this.state.isSameHolder }
-                  onChange={ this.onInsuranceHolderChange }
-                  required
-                />
-                <Label check className='check-box'>
-                  <Input
-                    type='checkbox'
-                    onChange={ this.onSameHolderChange }
-                  />{' '}
-                    the name of the insurer matches the name of the patient
-                </Label>
-              </FormGroup>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-              <Label>Palicy Number:</Label>
-              <Input
-                placeholder='palicy number...'
-                onChange={ this.onPolicyNumberChange }
+              <Select
+                placeholder='gender...'
+                options={GENDER_LIST}
+                onChange={this.onGenderChange}
               />
             </FormGroup>
           </Col>
-          </Row>
-          <Row className='line'>
-            <Col md={6}>
-              <FormGroup>
-                <Label>Patient to relationship to insured:</Label>
-                  <Select
-                    placeholder='...'
-                    options={ RELATIONSHIP_LIST }
-                    onChange={ this.onRelastionshipChange }
-                  />
-              </FormGroup>
-              <FormGroup>
-                <Label>Accident date:</Label>
+        </Row>
+        <Row form>
+          <Col md={6}>
+            <FormGroup>
+              <Label>Full name insurance holder:</Label>
+              <Input
+                placeholder='full name insurance holder...'
+                value={this.state.insuranceHolder}
+                disabled={this.state.isSameHolder}
+                onChange={this.onInsuranceHolderChange}
+                required
+              />
+              <Label check className='check-box'>
                 <Input
-                  type='date'
-                  placeholder='accident date...'
-                  onChange={ this.onAccidentDateChange }
-                  required
+                  type='checkbox'
+                  onChange={this.onSameHolderChange}
+                />{' '}
+                the name of the insurer matches the name of the patient
+                </Label>
+            </FormGroup>
+          </Col>
+          <Col md={6}>
+            <FormGroup>
+              <Label>Palicy Number:</Label>
+              <Input
+                placeholder='palicy number...'
+                onChange={this.onPolicyNumberChange}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+        <Row className='line'>
+          <Col md={6}>
+            <FormGroup>
+              <Label>Patient to relationship to insured:</Label>
+              <Select
+                placeholder='...'
+                options={RELATIONSHIP_LIST}
+                onChange={this.onRelastionshipChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>Accident date:</Label>
+              <Input
+                type='date'
+                placeholder='accident date...'
+                onChange={this.onAccidentDateChange}
+                required
+              />
+            </FormGroup>
+          </Col>
+          <Col md={6}>
+            <FormGroup>
+              <Label for='exampleCheckbox'>Is patients condition related to:</Label>
+              <div>
+                <CustomInput
+                  type='switch'
+                  id='exampleCustomSwitch'
+                  name='customSwitch'
+                  label='EMPLOYMENT? (Courrent or Previous)'
+                  onChange={this.onEmploymentChange}
+                  checked={isEmployment}
                 />
-              </FormGroup>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                <Label for='exampleCheckbox'>Is patients condition related to:</Label>
-                <div>
-                  <CustomInput
-                    type='switch'
-                    id='exampleCustomSwitch'
-                    name='customSwitch'
-                    label='EMPLOYMENT? (Courrent or Previous)'
-                    onChange={ this.onEmploymentChange }
-                    checked={ isEmployment }
-                  />
-                  <Row>
-                    <Col md={3}>
-                      <CustomInput
-                        type='switch'
-                        id='exampleCustomSwitch2'
-                        name='customSwitch'
-                        label='AUTO ACCIDENT?'
-                        onChange={ this.onAutoAccidentChange }
-                        checked={ isAutoAccident }
-                      />
-                    </Col>
-                    <Col className='inputState' md={2}>
-                      State:
+                <Row>
+                  <Col md={3}>
+                    <CustomInput
+                      type='switch'
+                      id='exampleCustomSwitch2'
+                      name='customSwitch'
+                      label='AUTO ACCIDENT?'
+                      onChange={this.onAutoAccidentChange}
+                      checked={isAutoAccident}
+                    />
+                  </Col>
+                  <Col className='inputState' md={2}>
+                    State:
                       <Input
-                        bsSize='sm'
-                        value={ stateAccident }
-                        onChange={ this.onStateAccidentChange }
-                      />
-                    </Col>
-                  </Row>
-                  <CustomInput
-                    type='switch'
-                    id='exampleCustomSwitch3'
-                    label='OTHER ACCIDENT?'
-                    onChange={ this.onOtherAccidentChange }
-                    checked={ isOtherAccident }
-                  />
-                </div>
-              </FormGroup>
-            </Col>
-          </Row>
+                      bsSize='sm'
+                      value={stateAccident}
+                      onChange={this.onStateAccidentChange}
+                    />
+                  </Col>
+                </Row>
+                <CustomInput
+                  type='switch'
+                  id='exampleCustomSwitch3'
+                  label='OTHER ACCIDENT?'
+                  onChange={this.onOtherAccidentChange}
+                  checked={isOtherAccident}
+                />
+              </div>
+            </FormGroup>
+          </Col>
+        </Row>
         <Button color='secondary' size='lg'>Add</Button>
         <NotificationContainer />
       </Form>
