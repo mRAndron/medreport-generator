@@ -40,6 +40,7 @@ class PatientDetails extends Component {
     this.onOtherAccidentChange = this.onOtherAccidentChange.bind(this)
     this.onStateAccidentChange = this.onStateAccidentChange.bind(this)
     this.onRelastionshipChange = this.onRelastionshipChange.bind(this)
+    this.onAccidentDateChange = this.onAccidentDateChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
   }
 
@@ -99,12 +100,18 @@ class PatientDetails extends Component {
     })
   }
 
+  onAccidentDateChange(event) {
+    this.setState({
+      accidentDate: moment(event.target.value).format(DATE_FORMAT)
+    })
+  }
+
   onCityChange(event) {
     this.setState({ city: event.target.value })
   }
 
   onStateChange(event) {
-    this.setState({ state: event.value })
+    this.setState({ state: event.label })
   }
 
   onPhoneNumberChange(event) {
@@ -299,6 +306,15 @@ class PatientDetails extends Component {
                     options={ RELATIONSHIP_LIST }
                     onChange={ this.onRelastionshipChange }
                   />
+              </FormGroup>
+              <FormGroup>
+                <Label>Accident date:</Label>
+                <Input
+                  type='date'
+                  placeholder='accident date...'
+                  onChange={ this.onAccidentDateChange }
+                  required
+                />
               </FormGroup>
             </Col>
             <Col md={6}>
