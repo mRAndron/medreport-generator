@@ -210,6 +210,7 @@ class PatientDetails extends Component {
                 placeholder='city patient...'
                 onChange={ this.onCityChange }
                 required
+                defaultValue="Jacksonville"
               />
             </FormGroup>
           </Col>
@@ -220,6 +221,10 @@ class PatientDetails extends Component {
                 placeholder='state patient...'
                 options={ USA_STATES }
                 onChange={ this.onStateChange }
+                defaultValue={{
+                  value: "Florida",
+                  label: "FL"
+                }}
               />
             </FormGroup>
           </Col>
