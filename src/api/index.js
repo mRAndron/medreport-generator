@@ -82,6 +82,14 @@ export const generateFile = (data, patient) => {
       })
     })
 
+    const offices = {}
+    let indexSub = null
+    data.allOffices.forEach((element, index) => {
+      indexSub = element.search(/JACKSONVILLE/i)
+      offices[`of_${index}_1`] = element.substr(0, indexSub)
+      offices[`of_${index}_2`] = element.substr(indexSub + 1)
+    })
+
     const zip = new PizZip(content)
     const doc = new docxtemplater().loadZip(zip)
     doc.setOptions({ nullGetter: () => {
@@ -90,6 +98,7 @@ export const generateFile = (data, patient) => {
     doc.setData({
       ...patient,
       ...propsData.allDates,
+      ...offices,
 
       firstServices: propsData.allServices[0],
       secondServices: propsData.allServices[1],

@@ -29,11 +29,16 @@ class PatientDetails extends Component {
     this.onDobChange = this.onDobChange.bind(this)
     this.onSameHolderChange = this.onSameHolderChange.bind(this)
     this.onAddressPatientChange = this.onAddressPatientChange.bind(this)
+    this.onAddressHolderChange = this.onAddressHolderChange.bind(this)
     this.onStateChange = this.onStateChange.bind(this)
+    this.onStateHolderChange = this.onStateHolderChange.bind(this)
     this.onGenderChange = this.onGenderChange.bind(this)
     this.onZipChange = this.onZipChange.bind(this)
+    this.onZipHolderChange = this.onZipHolderChange.bind(this)
     this.onCityChange = this.onCityChange.bind(this)
+    this.onCityHolderChange = this.onCityHolderChange.bind(this)
     this.onPhoneNumberChange = this.onPhoneNumberChange.bind(this)
+    this.onPhoneNumberHolderChange = this.onPhoneNumberHolderChange.bind(this)
     this.checkValidForm = this.checkValidForm.bind(this)
     this.onEmploymentChange = this.onEmploymentChange.bind(this)
     this.onAutoAccidentChange = this.onAutoAccidentChange.bind(this)
@@ -93,6 +98,15 @@ class PatientDetails extends Component {
 
   onAddressPatientChange(event) {
     this.setState({ addressPatient: event.target.value })
+    if (this.state.isSameHolder) {
+      this.setState({
+        addressHolder: event.target.value
+      })
+    }
+  }
+
+  onAddressHolderChange(event) {
+    this.setState({ addressHolder: event.target.value })
   }
 
   onDobChange(event) {
@@ -109,14 +123,41 @@ class PatientDetails extends Component {
 
   onCityChange(event) {
     this.setState({ city: event.target.value })
+    if (this.state.isSameHolder) {
+      this.setState({
+        cityHolder: event.target.value
+      })
+    }
+  }
+
+  onCityHolderChange(event) {
+    this.setState({ cityHolder: event.target.value })
   }
 
   onStateChange(event) {
     this.setState({ state: event.label })
+    if (this.state.isSameHolder) {
+      this.setState({
+        stateHolder: event.label
+      })
+    }
+  }
+
+  onStateHolderChange(event) {
+    this.setState({ stateHolder: event.label })
   }
 
   onPhoneNumberChange(event) {
     this.setState({ phoneNumber: event.target.value })
+    if (this.state.isSameHolder) {
+      this.setState({
+        phoneNumberHolder: event.target.value
+      })
+    }
+  }
+
+  onPhoneNumberHolderChange(event) {
+    this.setState({ phoneNumberHolder: event.target.value })
   }
 
   onGenderChange(event) {
@@ -133,14 +174,35 @@ class PatientDetails extends Component {
 
   onZipChange(event) {
     this.setState({ zip: event.target.value })
+    if (this.state.isSameHolder) {
+      this.setState({
+        zipHolder: event.target.value
+      })
+    }
+  }
+
+  onZipHolderChange(event) {
+    this.setState({ zipHolder: event.target.value })
   }
 
   onSameHolderChange() {
-    const { isSameHolder, patientName } = this.state
+    const { isSameHolder, patientName, phoneNumber, zip,
+      city, state, addressPatient
+    } = this.state
     !(isSameHolder) ? this.setState({
       insuranceHolder: patientName,
+      phoneNumberHolder: phoneNumber,
+      zipHolder: zip,
+      cityHolder: city,
+      stateHolder: state,
+      addressHolder: addressPatient,
     }) : this.setState({
-      insuranceHolder: ''
+      insuranceHolder: '',
+      phoneNumberHolder: '',
+      zipHolder: '',
+      cityHolder: '',
+      stateHolder: '',
+      addressHolder: '',
     })
     this.setState({
       isSameHolder: !isSameHolder
@@ -148,8 +210,9 @@ class PatientDetails extends Component {
   }
 
   checkValidForm() {
-    return this.state.gender && this.state.state &&
-      this.state.relastionship
+    return this.state.gender && this.state.state && 
+      this.state.insurance && this.state.relastionship && 
+      this.state.stateHolder
   }
 
   onSubmit(event) {
@@ -174,7 +237,10 @@ class PatientDetails extends Component {
 
 
   render() {
-    const { isEmployment, isAutoAccident, isOtherAccident, stateAccident } = this.state
+    const {
+      isEmployment, isAutoAccident, isSameHolder,
+      isOtherAccident, stateAccident
+    } = this.state
     return (
       <Form onSubmit={this.onSubmit}>
         <Row className='input-label' form>
@@ -205,7 +271,6 @@ class PatientDetails extends Component {
                 placeholder='...'
                 options={INSURANCE_LIST}
                 onChange={this.onInsuranceChange}
-                defaultValue={INSURANCE_LIST[0]}
               />
             </FormGroup>
           </Col>
@@ -226,7 +291,6 @@ class PatientDetails extends Component {
                 placeholder='city patient...'
                 onChange={this.onCityChange}
                 required
-                defaultValue="Jacksonville"
               />
             </FormGroup>
           </Col>
@@ -237,10 +301,6 @@ class PatientDetails extends Component {
                 placeholder='state patient...'
                 options={USA_STATES}
                 onChange={this.onStateChange}
-                defaultValue={{
-                  value: "Florida",
-                  label: "FL"
-                }}
               />
             </FormGroup>
           </Col>
@@ -288,20 +348,21 @@ class PatientDetails extends Component {
             </FormGroup>
           </Col>
         </Row>
-        <Row form>
+        <Row className='line' form>
           <Col md={6}>
             <FormGroup>
               <Label>Full name insurance holder:</Label>
               <Input
                 placeholder='full name insurance holder...'
                 value={this.state.insuranceHolder}
-                disabled={this.state.isSameHolder}
+                disabled={isSameHolder}
                 onChange={this.onInsuranceHolderChange}
                 required
               />
               <Label check className='check-box'>
                 <Input
                   type='checkbox'
+                  checked={isSameHolder}
                   onChange={this.onSameHolderChange}
                 />{' '}
                 the name of the insurer matches the name of the patient
@@ -318,7 +379,70 @@ class PatientDetails extends Component {
             </FormGroup>
           </Col>
         </Row>
-        <Row className='line'>
+        <Row>
+          <Col md={6}>
+            <FormGroup>
+              <Label>Address:</Label>
+              <Input
+                placeholder='address holder...'
+                onChange={this.onAddressHolderChange}
+                value={this.state.addressHolder}
+                disabled={isSameHolder}
+                required
+              />
+            </FormGroup>
+          </Col>
+          <Col md={6}>
+            <FormGroup>
+              <Label>Phone number:</Label>
+              <Input
+                placeholder='phone number...'
+                onChange={this.onPhoneNumberHolderChange}
+                value={this.state.phoneNumberHolder}
+                disabled={isSameHolder}
+                required
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+        <Row form>
+          <Col md={6}>
+            <FormGroup>
+              <Label>City:</Label>
+              <Input
+                placeholder='city holder...'
+                onChange={this.onCityHolderChange}
+                value={this.state.cityHolder}
+                disabled={isSameHolder}
+                required
+              />
+            </FormGroup>
+          </Col>
+          <Col md={4}>
+            <FormGroup>
+              <Label>State:</Label>
+              <Select
+                placeholder='state holder...'
+                options={USA_STATES}
+                onChange={this.onStateHolderChange}
+                isDisabled={isSameHolder}
+              />
+            </FormGroup>
+          </Col>
+          <Col md={2}>
+            <FormGroup>
+              <Label>Zip:</Label>
+              <Input
+                placeholder='zip holder...'
+                onChange={this.onZipHolderChange}
+                value={this.state.zipHolder}
+                disabled={isSameHolder}
+                required
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+        <Row className='line' form>
           <Col md={6}>
             <FormGroup>
               <Label>Patient to relationship to insured:</Label>
