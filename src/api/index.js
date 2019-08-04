@@ -3,8 +3,7 @@ import JSZipUtils from 'jszip-utils'
 import { saveAs } from 'file-saver'
 import PizZip from 'pizzip'
 import moment from 'moment'
-import { 
-  URL_TEMPLATE,
+import {
   MINE_TYPE,
   TYPE_OUTPUT,
   DATE_FORMAT,

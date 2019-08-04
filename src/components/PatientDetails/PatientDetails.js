@@ -6,7 +6,7 @@ import {
   USA_STATES, DATE_FORMAT, ERROR_LABEL,
   ERROR_MESSAGE, TIMEOUT_MESSAGE,
   SUCCES_MESSAGE, SUCCES_LABEL,
-  RELATIONSHIP_LIST
+  RELATIONSHIP_LIST, INSURANCE_LIST
 } from '../../constants/mainForm'
 import moment from 'moment'
 import Select from 'react-select'
@@ -41,6 +41,7 @@ class PatientDetails extends Component {
     this.onStateAccidentChange = this.onStateAccidentChange.bind(this)
     this.onRelastionshipChange = this.onRelastionshipChange.bind(this)
     this.onAccidentDateChange = this.onAccidentDateChange.bind(this)
+    this.onInsuranceChange = this.onInsuranceChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
   }
 
@@ -122,6 +123,10 @@ class PatientDetails extends Component {
     this.setState({ gender: event.value })
   }
 
+  onInsuranceChange(event) {
+    this.setState({ insurance: event.value })
+  }
+
   onOfficeAddressChange(event) {
     this.setState({ officeAddress: event.value })
   }
@@ -172,8 +177,8 @@ class PatientDetails extends Component {
     const { isEmployment, isAutoAccident, isOtherAccident, stateAccident } = this.state
     return (
       <Form onSubmit={this.onSubmit}>
-        <Row form>
-          <Col md={7}>
+        <Row className='input-label' form>
+          <Col md={6}>
             <FormGroup>
               <Label>Full name patient:</Label>
               <Input
@@ -183,13 +188,24 @@ class PatientDetails extends Component {
               />
             </FormGroup>
           </Col>
-          <Col md={5}>
+          <Col md={4}>
             <FormGroup>
               <Label>Social Security Number (SSN):</Label>
               <Input
                 placeholder='ssn...'
                 onChange={this.onSSNChange}
                 required
+              />
+            </FormGroup>
+          </Col>
+          <Col md={2}>
+            <FormGroup>
+              <Label>Insurance name:</Label>
+              <Select
+                placeholder='...'
+                options={INSURANCE_LIST}
+                onChange={this.onInsuranceChange}
+                defaultValue={INSURANCE_LIST[0]}
               />
             </FormGroup>
           </Col>

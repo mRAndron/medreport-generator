@@ -46,12 +46,18 @@ export const INITIAL_STATE_PATIENT = {
   isEmployment: false,
   isAutoAccident: true,
   isOtherAccident: false,
+  insurance: '',
   stateAccident: 'FL'
 }
 
 export const GENDER_LIST = [
   { value: 'Male', label: 'Male' },
   { value: 'Female', label: 'Female' }
+]
+
+export const INSURANCE_LIST = [
+    { value: 'STATEFARM', label: 'STATEFARM' },
+    { value: 'GEICO', label: 'GEICO' }
 ]
 
 export const RELATIONSHIP_LIST = [
