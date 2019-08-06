@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/medreport-generator/precache-manifest.e66ba2d4e6e138737437309c0a49a8d4.js"
+  "/medreport-generator/precache-manifest.d939d44ce6ea72b379b1bda058874ac2.js"
 );
 
 self.addEventListener('message', (event) => {
