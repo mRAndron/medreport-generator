@@ -419,6 +419,7 @@ class PatientDetails extends Component {
                 onChange={this.onCityHolderChange}
                 value={this.state.cityHolder}
                 disabled={isSameHolder}
+                defaultValue="Jacksonville"
                 required
               />
             </FormGroup>
