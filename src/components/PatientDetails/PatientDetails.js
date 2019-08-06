@@ -419,6 +419,7 @@ class PatientDetails extends Component {
                 onChange={this.onCityHolderChange}
                 value={this.state.cityHolder}
                 disabled={isSameHolder}
+                defaultValue="Jacksonville"
                 required
               />
             </FormGroup>
@@ -431,6 +432,10 @@ class PatientDetails extends Component {
                 options={USA_STATES}
                 onChange={this.onStateHolderChange}
                 isDisabled={isSameHolder}
+                defaultValue={{
+                  value: "Florida",
+                  label: "FL"
+                }}
               />
             </FormGroup>
           </Col>
