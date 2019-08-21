@@ -24,7 +24,9 @@
     "eject": "react-scripts eject",
     "postinstall": "npm i --save-dev --ignore-scripts pizzip",
     "predeploy": "env-cmd -f ./.env.production.local npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "precommit": "lint-staged",
+    "eslint": "node_modules/.bin/eslint src/"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -63,13 +65,15 @@
     "react-alert": "^5.5.0",
     "react-dom": "^16.8.6",
     "react-notifications": "^1.4.3",
-    "react-redux": "^7.1.0",
     "react-select": "^3.0.4",
-    "react-select-us-states": "^0.1.2",
     "reactstrap": "^8.0.1",
-    "redux": "^4.0.4",
-    "redux-devtools-extension": "^2.13.8",
-    "redux-thunk": "^2.3.0",
     "semantic-ui-react": "^0.87.3"
+  },
+  "lint-staged": {
+    "*.{js, jsx}": [
+      "node_modules/.bin/eslint --max-warnings=0",
+      "prettier --write",
+      "git add"
+    ]
   }
 }
