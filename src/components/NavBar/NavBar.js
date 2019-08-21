@@ -5,12 +5,12 @@ import classnames from 'classnames'
 export { FIRST_NAV_TAB, SECOND_NAV_TAB } from '../../constants/mainForm'
 
 const FIRST_NAV_TAB = '1' // DO EXPORT
-const SECOND_NAV_TAB = '2'  // DO EXPORT
+const SECOND_NAV_TAB = '2' // DO EXPORT
 
 class NavBar extends Component {
   static propTypes = {
     toggle: PropTypes.func.isRequired,
-    tabPosition: PropTypes.string.isRequired
+    tabPosition: PropTypes.string.isRequired,
   }
 
   render() {
@@ -19,24 +19,20 @@ class NavBar extends Component {
       <Nav tabs>
         <NavItem>
           <NavLink
-            className={
-              classnames({
-                active: tabPosition === FIRST_NAV_TAB
-              })
-            }
-            onClick={ () => toggle(FIRST_NAV_TAB) }
+            className={classnames({
+              active: tabPosition === FIRST_NAV_TAB,
+            })}
+            onClick={() => toggle(FIRST_NAV_TAB)}
           >
             Doctor's Appointment
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink
-            className={
-              classnames({
-                active: tabPosition === SECOND_NAV_TAB
-              })
-            }
-            onClick={ () => toggle(SECOND_NAV_TAB) }
+            className={classnames({
+              active: tabPosition === SECOND_NAV_TAB,
+            })}
+            onClick={() => toggle(SECOND_NAV_TAB)}
           >
             Patient Details
           </NavLink>

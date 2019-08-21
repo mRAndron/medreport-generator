@@ -1,4 +1,4 @@
-import docxtemplater  from 'docxtemplater'
+import docxtemplater from 'docxtemplater'
 import JSZipUtils from 'jszip-utils'
 import { saveAs } from 'file-saver'
 import PizZip from 'pizzip'
@@ -16,7 +16,7 @@ import {
   CODE_99202,
   CODE_99203,
   CODE_99212,
-  CODE_99213
+  CODE_99213,
 } from '../constants/api'
 
 const loadFile = (url, callback) => {
@@ -45,16 +45,14 @@ export const generateFile = (data, patient) => {
         temporaryDate[`dai_${indexList}_${indexElement}`] = element.value
       })
       diagnosesList.push(temporaryDate)
-      diagnosesRemainList.push(
-        list.slice(11, list.length - 1).join()
-      )
+      diagnosesRemainList.push(list.slice(11, list.length - 1).join())
     })
 
     propsData.allDoctors.forEach((element, index) => {
       doctorsList.push({
         [`dN_${index}`]: element.name,
         [`npi_${index}`]: element.npi,
-        [`sig_${index}`]: element.signature
+        [`sig_${index}`]: element.signature,
       })
     })
 
@@ -63,22 +61,33 @@ export const generateFile = (data, patient) => {
       list.forEach((element, number) => {
         element.value = element.value.replace(`${element.label}_`, '')
         temporarySum += parseInt(element.value)
-        if ((element.label === CODE_97110) && 
-            (list.find(elem => elem.label === CODE_97530) !== undefined)) {
+        if (
+          element.label === CODE_97110 &&
+          list.find(elem => elem.label === CODE_97530) !== undefined
+        ) {
           propsData.allServices[index][number].label = `${CODE_97110} 59`
-        } else if ((element.label === CODE_97140) && 
-                   (list.find(elem => ((elem.label === CODE_98940) || 
-                   (elem.label === CODE_98941) || 
-                   (elem.label === CODE_98942) )) !== undefined)) {
+        } else if (
+          element.label === CODE_97140 &&
+          list.find(
+            elem =>
+              elem.label === CODE_98940 ||
+              elem.label === CODE_98941 ||
+              elem.label === CODE_98942
+          ) !== undefined
+        ) {
           propsData.allServices[index][number].label = `${CODE_97140} 59`
-        } else if (((element.label === CODE_99202) || (element.label === CODE_99203) ||
-                   (element.label === CODE_99212) || (element.label === CODE_99213)) && 
-                   propsData.allServices[index].length > 1) {
+        } else if (
+          (element.label === CODE_99202 ||
+            element.label === CODE_99203 ||
+            element.label === CODE_99212 ||
+            element.label === CODE_99213) &&
+          propsData.allServices[index].length > 1
+        ) {
           propsData.allServices[index][number].label = `${element.label} 25`
         }
       })
       paySum.push({
-        [`sum_${index}`]: temporarySum
+        [`sum_${index}`]: temporarySum,
       })
     })
 
@@ -92,9 +101,11 @@ export const generateFile = (data, patient) => {
 
     const zip = new PizZip(content)
     const doc = new docxtemplater().loadZip(zip)
-    doc.setOptions({ nullGetter: () => {
-      return ''
-    }})
+    doc.setOptions({
+      nullGetter: () => {
+        return ''
+      },
+    })
     doc.setData({
       ...patient,
       ...propsData.allDates,
@@ -143,8 +154,7 @@ export const generateFile = (data, patient) => {
 
     try {
       doc.render()
-    }
-    catch (error) {
+    } catch (error) {
       const e = {
         message: error.message,
         name: error.name,
@@ -160,7 +170,7 @@ export const generateFile = (data, patient) => {
       mimeType: MINE_TYPE,
     })
     const dateTimeCreate = moment(Date.now()).format(DATE_FORMAT)
-    const outputName = `report_${ dateTimeCreate }.docx`
+    const outputName = `report_${dateTimeCreate}.docx`
     saveAs(output, outputName)
   })
 }

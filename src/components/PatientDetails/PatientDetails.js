@@ -1,12 +1,27 @@
 import React, { Component } from 'react'
-import { Button, Form, FormGroup, Label, Input, Col, Row, CustomInput } from 'reactstrap'
+import {
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Col,
+  Row,
+  CustomInput,
+} from 'reactstrap'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import {
-  INITIAL_STATE_PATIENT, GENDER_LIST,
-  USA_STATES, DATE_FORMAT, ERROR_LABEL,
-  ERROR_MESSAGE, TIMEOUT_MESSAGE,
-  SUCCES_MESSAGE, SUCCES_LABEL,
-  RELATIONSHIP_LIST, INSURANCE_LIST
+  INITIAL_STATE_PATIENT,
+  GENDER_LIST,
+  USA_STATES,
+  DATE_FORMAT,
+  ERROR_LABEL,
+  ERROR_MESSAGE,
+  TIMEOUT_MESSAGE,
+  SUCCES_MESSAGE,
+  SUCCES_LABEL,
+  RELATIONSHIP_LIST,
+  INSURANCE_LIST,
 } from '../../constants/mainForm'
 import moment from 'moment'
 import Select from 'react-select'
@@ -16,7 +31,7 @@ import 'react-notifications/lib/notifications.css'
 
 class PatientDetails extends Component {
   static propTypes = {
-    addPatien: PropTypes.func.isRequired
+    addPatien: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -79,11 +94,11 @@ class PatientDetails extends Component {
 
   onPatientNameChange(event) {
     this.setState({
-      patientName: event.target.value
+      patientName: event.target.value,
     })
     if (this.state.isSameHolder) {
       this.setState({
-        insuranceHolder: event.target.value
+        insuranceHolder: event.target.value,
       })
     }
   }
@@ -100,7 +115,7 @@ class PatientDetails extends Component {
     this.setState({ addressPatient: event.target.value })
     if (this.state.isSameHolder) {
       this.setState({
-        addressHolder: event.target.value
+        addressHolder: event.target.value,
       })
     }
   }
@@ -111,13 +126,13 @@ class PatientDetails extends Component {
 
   onDobChange(event) {
     this.setState({
-      dob: moment(event.target.value).format(DATE_FORMAT)
+      dob: moment(event.target.value).format(DATE_FORMAT),
     })
   }
 
   onAccidentDateChange(event) {
     this.setState({
-      accidentDate: moment(event.target.value).format(DATE_FORMAT)
+      accidentDate: moment(event.target.value).format(DATE_FORMAT),
     })
   }
 
@@ -125,7 +140,7 @@ class PatientDetails extends Component {
     this.setState({ city: event.target.value })
     if (this.state.isSameHolder) {
       this.setState({
-        cityHolder: event.target.value
+        cityHolder: event.target.value,
       })
     }
   }
@@ -138,7 +153,7 @@ class PatientDetails extends Component {
     this.setState({ state: event.label })
     if (this.state.isSameHolder) {
       this.setState({
-        stateHolder: event.label
+        stateHolder: event.label,
       })
     }
   }
@@ -151,7 +166,7 @@ class PatientDetails extends Component {
     this.setState({ phoneNumber: event.target.value })
     if (this.state.isSameHolder) {
       this.setState({
-        phoneNumberHolder: event.target.value
+        phoneNumberHolder: event.target.value,
       })
     }
   }
@@ -176,7 +191,7 @@ class PatientDetails extends Component {
     this.setState({ zip: event.target.value })
     if (this.state.isSameHolder) {
       this.setState({
-        zipHolder: event.target.value
+        zipHolder: event.target.value,
       })
     }
   }
@@ -186,33 +201,45 @@ class PatientDetails extends Component {
   }
 
   onSameHolderChange() {
-    const { isSameHolder, patientName, phoneNumber, zip,
-      city, state, addressPatient
+    const {
+      isSameHolder,
+      patientName,
+      phoneNumber,
+      zip,
+      city,
+      state,
+      addressPatient,
     } = this.state
-    !(isSameHolder) ? this.setState({
-      insuranceHolder: patientName,
-      phoneNumberHolder: phoneNumber,
-      zipHolder: zip,
-      cityHolder: city,
-      stateHolder: state,
-      addressHolder: addressPatient,
-    }) : this.setState({
-      insuranceHolder: '',
-      phoneNumberHolder: '',
-      zipHolder: '',
-      cityHolder: '',
-      stateHolder: '',
-      addressHolder: '',
-    })
+    !isSameHolder
+      ? this.setState({
+          insuranceHolder: patientName,
+          phoneNumberHolder: phoneNumber,
+          zipHolder: zip,
+          cityHolder: city,
+          stateHolder: state,
+          addressHolder: addressPatient,
+        })
+      : this.setState({
+          insuranceHolder: '',
+          phoneNumberHolder: '',
+          zipHolder: '',
+          cityHolder: '',
+          stateHolder: '',
+          addressHolder: '',
+        })
     this.setState({
-      isSameHolder: !isSameHolder
+      isSameHolder: !isSameHolder,
     })
   }
 
   checkValidForm() {
-    return this.state.gender && this.state.state && 
-      this.state.insurance && this.state.relastionship && 
+    return (
+      this.state.gender &&
+      this.state.state &&
+      this.state.insurance &&
+      this.state.relastionship &&
       this.state.stateHolder
+    )
   }
 
   onSubmit(event) {
@@ -221,34 +248,28 @@ class PatientDetails extends Component {
       const patient = this.state
       delete patient.isSameHolder
       this.props.addPatien(patient)
-      NotificationManager.success(
-        SUCCES_MESSAGE,
-        SUCCES_LABEL,
-        TIMEOUT_MESSAGE
-      )
+      NotificationManager.success(SUCCES_MESSAGE, SUCCES_LABEL, TIMEOUT_MESSAGE)
     } else {
-      NotificationManager.error(
-        ERROR_LABEL,
-        ERROR_MESSAGE,
-        TIMEOUT_MESSAGE
-      )
+      NotificationManager.error(ERROR_LABEL, ERROR_MESSAGE, TIMEOUT_MESSAGE)
     }
   }
 
-
   render() {
     const {
-      isEmployment, isAutoAccident, isSameHolder,
-      isOtherAccident, stateAccident
+      isEmployment,
+      isAutoAccident,
+      isSameHolder,
+      isOtherAccident,
+      stateAccident,
     } = this.state
     return (
       <Form onSubmit={this.onSubmit}>
-        <Row className='input-label' form>
+        <Row className="input-label" form>
           <Col md={6}>
             <FormGroup>
               <Label>Full name patient:</Label>
               <Input
-                placeholder='full name patient...'
+                placeholder="full name patient..."
                 onChange={this.onPatientNameChange}
                 required
               />
@@ -258,7 +279,7 @@ class PatientDetails extends Component {
             <FormGroup>
               <Label>Social Security Number (SSN):</Label>
               <Input
-                placeholder='ssn...'
+                placeholder="ssn..."
                 onChange={this.onSSNChange}
                 required
               />
@@ -268,7 +289,7 @@ class PatientDetails extends Component {
             <FormGroup>
               <Label>Insurance name:</Label>
               <Select
-                placeholder='...'
+                placeholder="..."
                 options={INSURANCE_LIST}
                 onChange={this.onInsuranceChange}
               />
@@ -278,7 +299,7 @@ class PatientDetails extends Component {
         <FormGroup>
           <Label>Address patient:</Label>
           <Input
-            placeholder='address patient...'
+            placeholder="address patient..."
             onChange={this.onAddressPatientChange}
             required
           />
@@ -288,7 +309,7 @@ class PatientDetails extends Component {
             <FormGroup>
               <Label>City:</Label>
               <Input
-                placeholder='city patient...'
+                placeholder="city patient..."
                 onChange={this.onCityChange}
                 required
                 defaultValue="Jacksonville"
@@ -299,12 +320,12 @@ class PatientDetails extends Component {
             <FormGroup>
               <Label>State:</Label>
               <Select
-                placeholder='state patient...'
+                placeholder="state patient..."
                 options={USA_STATES}
                 onChange={this.onStateChange}
                 defaultValue={{
-                  value: "Florida",
-                  label: "FL"
+                  value: 'Florida',
+                  label: 'FL',
                 }}
               />
             </FormGroup>
@@ -313,7 +334,7 @@ class PatientDetails extends Component {
             <FormGroup>
               <Label>Zip:</Label>
               <Input
-                placeholder='zip patient...'
+                placeholder="zip patient..."
                 onChange={this.onZipChange}
                 required
               />
@@ -325,7 +346,7 @@ class PatientDetails extends Component {
             <FormGroup>
               <Label>Phone number:</Label>
               <Input
-                placeholder='phone number...'
+                placeholder="phone number..."
                 onChange={this.onPhoneNumberChange}
                 required
               />
@@ -335,8 +356,8 @@ class PatientDetails extends Component {
             <FormGroup>
               <Label>Date of Birth:</Label>
               <Input
-                type='date'
-                placeholder='date of birth...'
+                type="date"
+                placeholder="date of birth..."
                 onChange={this.onDobChange}
                 required
               />
@@ -346,39 +367,39 @@ class PatientDetails extends Component {
             <FormGroup>
               <Label>Gender:</Label>
               <Select
-                placeholder='gender...'
+                placeholder="gender..."
                 options={GENDER_LIST}
                 onChange={this.onGenderChange}
               />
             </FormGroup>
           </Col>
         </Row>
-        <Row className='line' form>
+        <Row className="line" form>
           <Col md={6}>
             <FormGroup>
               <Label>Full name insurance holder:</Label>
               <Input
-                placeholder='full name insurance holder...'
+                placeholder="full name insurance holder..."
                 value={this.state.insuranceHolder}
                 disabled={isSameHolder}
                 onChange={this.onInsuranceHolderChange}
                 required
               />
-              <Label check className='check-box'>
+              <Label check className="check-box">
                 <Input
-                  type='checkbox'
+                  type="checkbox"
                   checked={isSameHolder}
                   onChange={this.onSameHolderChange}
                 />{' '}
                 the name of the insurer matches the name of the patient
-                </Label>
+              </Label>
             </FormGroup>
           </Col>
           <Col md={6}>
             <FormGroup>
               <Label>Palicy Number:</Label>
               <Input
-                placeholder='palicy number...'
+                placeholder="palicy number..."
                 onChange={this.onPolicyNumberChange}
               />
             </FormGroup>
@@ -389,7 +410,7 @@ class PatientDetails extends Component {
             <FormGroup>
               <Label>Address:</Label>
               <Input
-                placeholder='address holder...'
+                placeholder="address holder..."
                 onChange={this.onAddressHolderChange}
                 value={this.state.addressHolder}
                 disabled={isSameHolder}
@@ -401,7 +422,7 @@ class PatientDetails extends Component {
             <FormGroup>
               <Label>Phone number:</Label>
               <Input
-                placeholder='phone number...'
+                placeholder="phone number..."
                 onChange={this.onPhoneNumberHolderChange}
                 value={this.state.phoneNumberHolder}
                 disabled={isSameHolder}
@@ -415,7 +436,7 @@ class PatientDetails extends Component {
             <FormGroup>
               <Label>City:</Label>
               <Input
-                placeholder='city holder...'
+                placeholder="city holder..."
                 onChange={this.onCityHolderChange}
                 value={this.state.cityHolder}
                 disabled={isSameHolder}
@@ -428,13 +449,13 @@ class PatientDetails extends Component {
             <FormGroup>
               <Label>State:</Label>
               <Select
-                placeholder='state holder...'
+                placeholder="state holder..."
                 options={USA_STATES}
                 onChange={this.onStateHolderChange}
                 isDisabled={isSameHolder}
                 defaultValue={{
-                  value: "Florida",
-                  label: "FL"
+                  value: 'Florida',
+                  label: 'FL',
                 }}
               />
             </FormGroup>
@@ -443,7 +464,7 @@ class PatientDetails extends Component {
             <FormGroup>
               <Label>Zip:</Label>
               <Input
-                placeholder='zip holder...'
+                placeholder="zip holder..."
                 onChange={this.onZipHolderChange}
                 value={this.state.zipHolder}
                 disabled={isSameHolder}
@@ -452,12 +473,12 @@ class PatientDetails extends Component {
             </FormGroup>
           </Col>
         </Row>
-        <Row className='line' form>
+        <Row className="line" form>
           <Col md={6}>
             <FormGroup>
               <Label>Patient to relationship to insured:</Label>
               <Select
-                placeholder='...'
+                placeholder="..."
                 options={RELATIONSHIP_LIST}
                 onChange={this.onRelastionshipChange}
               />
@@ -465,8 +486,8 @@ class PatientDetails extends Component {
             <FormGroup>
               <Label>Accident date:</Label>
               <Input
-                type='date'
-                placeholder='accident date...'
+                type="date"
+                placeholder="accident date..."
                 onChange={this.onAccidentDateChange}
                 required
               />
@@ -474,40 +495,42 @@ class PatientDetails extends Component {
           </Col>
           <Col md={6}>
             <FormGroup>
-              <Label for='exampleCheckbox'>Is patients condition related to:</Label>
+              <Label for="exampleCheckbox">
+                Is patients condition related to:
+              </Label>
               <div>
                 <CustomInput
-                  type='switch'
-                  id='exampleCustomSwitch'
-                  name='customSwitch'
-                  label='EMPLOYMENT? (Courrent or Previous)'
+                  type="switch"
+                  id="exampleCustomSwitch"
+                  name="customSwitch"
+                  label="EMPLOYMENT? (Courrent or Previous)"
                   onChange={this.onEmploymentChange}
                   checked={isEmployment}
                 />
                 <Row>
                   <Col md={3}>
                     <CustomInput
-                      type='switch'
-                      id='exampleCustomSwitch2'
-                      name='customSwitch'
-                      label='AUTO ACCIDENT?'
+                      type="switch"
+                      id="exampleCustomSwitch2"
+                      name="customSwitch"
+                      label="AUTO ACCIDENT?"
                       onChange={this.onAutoAccidentChange}
                       checked={isAutoAccident}
                     />
                   </Col>
-                  <Col className='inputState' md={2}>
+                  <Col className="inputState" md={2}>
                     State:
-                      <Input
-                      bsSize='sm'
+                    <Input
+                      bsSize="sm"
                       value={stateAccident}
                       onChange={this.onStateAccidentChange}
                     />
                   </Col>
                 </Row>
                 <CustomInput
-                  type='switch'
-                  id='exampleCustomSwitch3'
-                  label='OTHER ACCIDENT?'
+                  type="switch"
+                  id="exampleCustomSwitch3"
+                  label="OTHER ACCIDENT?"
                   onChange={this.onOtherAccidentChange}
                   checked={isOtherAccident}
                 />
@@ -515,7 +538,9 @@ class PatientDetails extends Component {
             </FormGroup>
           </Col>
         </Row>
-        <Button color='secondary' size='lg'>Add</Button>
+        <Button color="secondary" size="lg">
+          Add
+        </Button>
         <NotificationContainer />
       </Form>
     )
