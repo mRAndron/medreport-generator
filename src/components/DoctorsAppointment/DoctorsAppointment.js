@@ -160,6 +160,7 @@ class DoctorsAppointment extends Component {
             <h4>Input info for {day} day:</h4>
           </Col>
           <Col>
+            <Label>Number of pages in report file:</Label>
             <Select
               options={COUT_DAYS}
               onChange={e => this.props.setCountDays(e.value)}
