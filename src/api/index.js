@@ -47,7 +47,6 @@ export const generateFile = (data, patient, countDays) => {
         4,
         4
       )}`
-      console.log(patient.accidentDate)
 
       propsData.allDiagnoses.forEach((list, indexList) => {
         temporaryDate = {}

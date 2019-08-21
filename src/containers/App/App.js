@@ -112,7 +112,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state)
     const {
       patients,
       currentDay,
