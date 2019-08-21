@@ -11,8 +11,8 @@ import {
   SUCCES_GENERATION,
   SERVICES_FIELD,
   DIAGNOSES_FIELD,
+  COUT_DAYS,
   MIN_DAY,
-  MAX_DAY,
 } from '../../constants/mainForm'
 import { generateFile } from '../../api/index'
 import moment from 'moment'
@@ -97,6 +97,7 @@ class DoctorsAppointment extends Component {
         allDoctors,
         allDates,
         allOffices,
+        countDays,
       } = this.props
       const { doctorValue, officeAddress, dateReceipt } = this.state
 
@@ -107,7 +108,7 @@ class DoctorsAppointment extends Component {
         doctor: doctorValue,
         office: officeAddress,
       })
-      if (day === MAX_DAY) {
+      if (day === countDays) {
         const genData = {
           allServices: [
             ...allServices,
@@ -122,7 +123,7 @@ class DoctorsAppointment extends Component {
           allOffices: [...allOffices, officeAddress],
         }
         try {
-          generateFile(genData, patientsList[selectedPatientId])
+          generateFile(genData, patientsList[selectedPatientId], countDays)
           NotificationManager.success(
             SUCCES_GENERATION,
             SUCCES_LABEL,
@@ -154,7 +155,23 @@ class DoctorsAppointment extends Component {
 
     return (
       <Form onSubmit={this.onSubmit}>
-        <h4 className="input-label">Input info for {day} day:</h4>
+        <Row form className="input-label">
+          <Col>
+            <h4>Input info for {day} day:</h4>
+          </Col>
+          <Col>
+            <Select
+              options={COUT_DAYS}
+              onChange={e => this.props.setCountDays(e.value)}
+              placeholder="choose count days..."
+              defaultValue={{
+                value: 1,
+                label: '1',
+              }}
+              isDisabled={day !== MIN_DAY}
+            />
+          </Col>
+        </Row>
         <Row form>
           <Col md={6}>
             <FormGroup>
