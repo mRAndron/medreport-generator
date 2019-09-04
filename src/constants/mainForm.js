@@ -25,6 +25,31 @@ export const INITIAL_STATE_DOCTORS_APPOINTMENT = {
   dateReceipt: null,
 }
 
+export const getPatientByName = (list, name) => {
+  return Object.values(list).find(patient => {
+    return patient.patientName === name
+  })
+}
+
+export const getPatientIdByValue = (list, value) => {
+  for (let [key, val] of Object.entries(list)) {
+    if (JSON.stringify(val) === JSON.stringify(value)) {
+      return key
+    }
+  }
+}
+
+export const getSelectedPatients = patientsList => {
+  const selectPatientList = []
+  Object.entries(patientsList).map(([key, val]) => {
+    return selectPatientList.push({
+      value: val.patientName,
+      label: val.patientName,
+    })
+  })
+  return selectPatientList
+}
+
 // PATIENT DETAILS
 export const INITIAL_STATE_PATIENT = {
   patientName: '',

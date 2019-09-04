@@ -13,7 +13,13 @@ import './MainForm.scss'
 const MainForm = props => {
   const [activeTab, handleToggle] = useState(FIRST_NAV_TAB)
 
-  const { addPatient, showMesseageSuccess, showMesseageFill } = props
+  const {
+    addPatient,
+    showMesseageSuccess,
+    showMesseageFill,
+    updatePatient,
+    patients,
+  } = props
 
   return (
     <div className="main-form">
@@ -23,7 +29,10 @@ const MainForm = props => {
         <TabPane tabId="1">
           <Row>
             <Col sm="12">
-              <DoctorsAppointment />
+              <DoctorsAppointment
+                patients={patients}
+                updatePatient={updatePatient}
+              />
             </Col>
           </Row>
         </TabPane>
@@ -47,6 +56,8 @@ T.PropTypes = {
   addPatient: T.func.isRequired,
   showMesseageSuccess: T.func.isRequired,
   showMesseageFill: T.func.isRequired,
+  updatePatient: T.func.isRequired,
+  patients: T.Object,
 }
 
 export { MainForm }

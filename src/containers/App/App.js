@@ -14,6 +14,7 @@ import {
   TIMEOUT_MESSAGE,
   SUCCES_MESSAGE,
 } from '@/constants/app'
+import { SERVICES_FIELD } from '../../constants/mainForm'
 
 import './App.scss'
 import 'react-notifications/lib/notifications.css'
@@ -38,6 +39,8 @@ class App extends Component {
       patients: {
         ...prevState.patients,
         [id]: patientData,
+        diagnoses: [],
+        services: [],
       },
     }))
   }
@@ -50,13 +53,29 @@ class App extends Component {
     NotificationManager.error(ERROR_LABEL, ERROR_MESSAGE, TIMEOUT_MESSAGE)
   }
 
+  updatePatient = (id, data, field) => {
+    const { patients } = this.state
+    const patientsList = { ...patients }
+    const selectedPatient = patientsList[id]
+    if (field === SERVICES_FIELD) {
+      selectedPatient.services = data
+    } else {
+      selectedPatient.diagnoses = data
+    }
+    patientsList[id] = selectedPatient
+    this.setState({ patients: patientsList })
+  }
+
   render() {
+    const { patients } = this.state
     return (
       <Container className="app">
         <MainForm
           addPatient={this.addPatient}
           showMesseageSuccess={this.showMesseageSuccess}
           showMesseageFill={this.showMesseageFill}
+          patients={patients}
+          updatePatient={this.updatePatient}
         />
         <NotificationContainer />
       </Container>

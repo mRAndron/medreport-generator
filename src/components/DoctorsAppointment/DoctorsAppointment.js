@@ -1,28 +1,87 @@
-import React /* useState */ from 'react'
+import React, { useState } from 'react'
 import { Button, Form, FormGroup, Label, Input, Col, Row } from 'reactstrap'
 
 //import moment from 'moment'
 import Select from 'react-select'
+
+import {
+  COUT_DAYS,
+  MIN_DAY,
+  getPatientByName,
+  getPatientIdByValue,
+  getSelectedPatients,
+  SERVICES_FIELD,
+  DIAGNOSES_FIELD,
+} from '@/constants/mainForm'
+
 import './DoctorsAppointment.scss'
 
 const DoctorsAppointment = props => {
+  const [idPatient, setIdPatient] = useState('')
+  const [maxDay, setMaxDay] = useState(MIN_DAY)
+  const [currentDay, setCurrentDay] = useState(MIN_DAY)
+  const [pages, setPages] = useState([])
+  const [doctor, setDoctor] = useState('')
+  const [officeAddress, setOfficeAddress] = useState('')
+  const [dateReceipt, setDateReceipt] = useState(null)
+
+  const doctorList = window.doctorList
+  const servicesList = window.servicesList
+  const officeAddressList = window.officeAddressList
+  const diagnosesList = window.diagnosesList
+  const { patients, updatePatient } = props
+
+  const selectPatientList = getSelectedPatients(patients)
+
+  const handleChangePatient = e => {
+    const patient = getPatientByName(patients, e.value)
+    const patientId = getPatientIdByValue(patients, patient)
+    setIdPatient(patientId)
+  }
+
+  const handleServicesChange = e => {
+    updatePatient(idPatient, e, SERVICES_FIELD)
+  }
+
+  const handleDiagnosesChange = e => {
+    updatePatient(idPatient, e, DIAGNOSES_FIELD)
+  }
+
+  const onSubmitForm = e => {
+    e.preventDefault()
+    const newPage = {
+      services: patients[idPatient].services,
+      diagnoses: patients[idPatient].diagnoses,
+      doctor: doctor,
+      officeAddress: officeAddress,
+      dateReceipt: dateReceipt,
+    }
+    setPages(pages.concat(newPage))
+
+    setCurrentDay(currentDay + 1)
+    if (currentDay === maxDay) {
+      setCurrentDay(MIN_DAY)
+      console.log(pages)
+    }
+  }
+
   return (
-    <Form>
+    <Form onSubmit={onSubmitForm}>
       <Row form className="input-label">
         <Col>
-          <h4>Input info for -- day:</h4>
+          <h4>Input info for {currentDay} day:</h4>
         </Col>
         <Col>
           <Label>Number of pages in report file:</Label>
           <Select
-          /*               options={COUT_DAYS}
-              onChange={e => this.props.setCountDays(e.value)}
-              placeholder="choose count days..."
-              defaultValue={{
-                value: 1,
-                label: '1',
-              }}
-              isDisabled={day !== MIN_DAY} */
+            options={COUT_DAYS}
+            onChange={e => setMaxDay(e.value)}
+            placeholder="choose count days..."
+            defaultValue={{
+              value: 1,
+              label: '1',
+            }}
+            isDisabled={currentDay !== MIN_DAY}
           />
         </Col>
       </Row>
@@ -31,9 +90,9 @@ const DoctorsAppointment = props => {
           <FormGroup>
             <Label>Patient:</Label>
             <Select
-            /*                 options={selectPatientList}
-                onChange={this.onPatientChange}
-                isDisabled={day !== MIN_DAY} */
+              options={selectPatientList}
+              onChange={handleChangePatient}
+              isDisabled={currentDay !== MIN_DAY}
             />
           </FormGroup>
         </Col>
@@ -43,7 +102,7 @@ const DoctorsAppointment = props => {
             <Input
               type="date"
               placeholder="date of receipt..."
-              //onChange={this.onDataReceiptbChange}
+              onChange={e => setDateReceipt(e.target.value)}
               required
             />
           </FormGroup>
@@ -54,15 +113,15 @@ const DoctorsAppointment = props => {
           <FormGroup>
             <Label>Office address:</Label>
             <Select
-            /* options={officeAddressList}
-                onChange={this.onOfficeAddress} */
+              options={officeAddressList}
+              onChange={e => setOfficeAddress(e.value)}
             />
           </FormGroup>
         </Col>
         <Col md={6}>
           <FormGroup>
             <Label>Doctor:</Label>
-            <Select /* options={doctorList} onChange={this.onDoctorChange} */ />
+            <Select options={doctorList} onChange={e => setDoctor(e.value)} />
           </FormGroup>
         </Col>
       </Row>
@@ -72,17 +131,14 @@ const DoctorsAppointment = props => {
             <Label>Diagnoses:</Label>
             <Select
               isMulti
-              /*                 name="colors"
-                options={diagnosesList}
-                className="basic-multi-select"
-                classNamePrefix="select"
-                closeMenuOnSelect={false}
-                hideSelectedOptions={true}
-                onChange={this.onDiagnosesChange}
-                isDisabled={isPatientSelected}
-                value={
-                  selectedPatientId && patientsList[selectedPatientId].diagnoses
-                } */
+              options={diagnosesList}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              closeMenuOnSelect={false}
+              hideSelectedOptions={true}
+              onChange={handleDiagnosesChange}
+              isDisabled={!idPatient}
+              value={idPatient && patients[idPatient].diagnoses}
             />
           </FormGroup>
         </Col>
@@ -91,17 +147,14 @@ const DoctorsAppointment = props => {
             <Label>Selection of services rendered:</Label>
             <Select
               isMulti
-              /*                 name="colors"
-                options={servicesList}
-                className="basic-multi-select"
-                classNamePrefix="select"
-                closeMenuOnSelect={false}
-                hideSelectedOptions={true}
-                onChange={this.onServicesChange}
-                isDisabled={isPatientSelected}
-                value={
-                  selectedPatientId && patientsList[selectedPatientId].services
-                } */
+              options={servicesList}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              closeMenuOnSelect={false}
+              hideSelectedOptions={true}
+              onChange={handleServicesChange}
+              isDisabled={!idPatient}
+              value={idPatient && patients[idPatient].services}
             />
           </FormGroup>
         </Col>
