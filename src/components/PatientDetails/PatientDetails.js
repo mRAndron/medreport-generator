@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
+import T from 'prop-types'
 import {
   Button,
   Form,
@@ -9,542 +10,427 @@ import {
   Row,
   CustomInput,
 } from 'reactstrap'
-import { NotificationContainer, NotificationManager } from 'react-notifications'
+import Select from 'react-select'
+
 import {
-  INITIAL_STATE_PATIENT,
   GENDER_LIST,
   USA_STATES,
-  DATE_FORMAT,
-  ERROR_LABEL,
-  ERROR_MESSAGE,
-  TIMEOUT_MESSAGE,
-  SUCCES_MESSAGE,
-  SUCCES_LABEL,
   RELATIONSHIP_LIST,
   INSURANCE_LIST,
-} from '../../constants/mainForm'
-import moment from 'moment'
-import Select from 'react-select'
+  REPEAT_TEXT_INPUTS,
+} from '@/constants/mainForm'
+
 import './PatientDetails.scss'
-import PropTypes from 'prop-types'
-import 'react-notifications/lib/notifications.css'
 
-class PatientDetails extends Component {
-  static propTypes = {
-    addPatien: PropTypes.func.isRequired,
-  }
+const PatientDetails = props => {
+  const [textInputs, setTextInputs] = useState({
+    patientName: '',
+    ssn: '',
+    patientAddress: '',
+    patientCity: 'Jacksonville',
+    patientZip: '',
+    patientPhone: '',
+    dobPatient: null,
+    accidentDate: null,
+    stateAccident: 'FL',
+    holderName: '',
+    policyNumber: '',
+    holderAddress: '',
+    holderCity: 'Jacksonville',
+    holderZip: '',
+    holderPhone: '',
+  })
+  const [patientState, setPatientState] = useState('FL')
+  const [holderState, setHolderState] = useState('FL')
+  const [insuranceName, setInsuranceName] = useState('')
+  const [gender, setGender] = useState('')
+  const [relastionship, setRelastionship] = useState('')
+  const [isSameHolder, setSameHolder] = useState(true)
+  const [isEmployment, setEmployment] = useState(false)
+  const [isAutoAccident, setAutoAccident] = useState(true)
+  const [isOtherAccident, setOtherAccident] = useState(false)
 
-  constructor(props) {
-    super(props)
-    this.state = INITIAL_STATE_PATIENT
-    this.onSSNChange = this.onSSNChange.bind(this)
-    this.onPatientNameChange = this.onPatientNameChange.bind(this)
-    this.onInsuranceHolderChange = this.onInsuranceHolderChange.bind(this)
-    this.onPolicyNumberChange = this.onPolicyNumberChange.bind(this)
-    this.onDobChange = this.onDobChange.bind(this)
-    this.onSameHolderChange = this.onSameHolderChange.bind(this)
-    this.onAddressPatientChange = this.onAddressPatientChange.bind(this)
-    this.onAddressHolderChange = this.onAddressHolderChange.bind(this)
-    this.onStateChange = this.onStateChange.bind(this)
-    this.onStateHolderChange = this.onStateHolderChange.bind(this)
-    this.onGenderChange = this.onGenderChange.bind(this)
-    this.onZipChange = this.onZipChange.bind(this)
-    this.onZipHolderChange = this.onZipHolderChange.bind(this)
-    this.onCityChange = this.onCityChange.bind(this)
-    this.onCityHolderChange = this.onCityHolderChange.bind(this)
-    this.onPhoneNumberChange = this.onPhoneNumberChange.bind(this)
-    this.onPhoneNumberHolderChange = this.onPhoneNumberHolderChange.bind(this)
-    this.checkValidForm = this.checkValidForm.bind(this)
-    this.onEmploymentChange = this.onEmploymentChange.bind(this)
-    this.onAutoAccidentChange = this.onAutoAccidentChange.bind(this)
-    this.onOtherAccidentChange = this.onOtherAccidentChange.bind(this)
-    this.onStateAccidentChange = this.onStateAccidentChange.bind(this)
-    this.onRelastionshipChange = this.onRelastionshipChange.bind(this)
-    this.onAccidentDateChange = this.onAccidentDateChange.bind(this)
-    this.onInsuranceChange = this.onInsuranceChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-  }
+  const { addPatient, showMesseageSuccess, showMesseageFill } = props
 
-  onSSNChange(event) {
-    this.setState({ ssn: event.target.value })
-  }
+  const handleTextInputChange = event => {
+    event.persist()
+    setTextInputs(textInputs => ({
+      ...textInputs,
+      [event.target.name]: event.target.value,
+    }))
 
-  onRelastionshipChange(event) {
-    this.setState({ relastionship: event.value })
-  }
+    if (isSameHolder && REPEAT_TEXT_INPUTS.includes(event.target.name)) {
+      switch (event.target.name) {
+        case 'patientName':
+          setTextInputs(textInputs => ({
+            ...textInputs,
+            holderName: event.target.value,
+          }))
+          break
 
-  onEmploymentChange(event) {
-    const { isEmployment } = this.state
-    this.setState({ isEmployment: !isEmployment })
-  }
+        case 'patientAddress':
+          setTextInputs(textInputs => ({
+            ...textInputs,
+            holderAddress: event.target.value,
+          }))
+          break
 
-  onAutoAccidentChange(event) {
-    const { isAutoAccident } = this.state
-    this.setState({ isAutoAccident: !isAutoAccident })
-  }
+        case 'patientCity':
+          setTextInputs(textInputs => ({
+            ...textInputs,
+            holderCity: event.target.value,
+          }))
+          break
 
-  onOtherAccidentChange(event) {
-    const { isOtherAccident } = this.state
-    this.setState({ isOtherAccident: !isOtherAccident })
-  }
+        case 'patientZip':
+          setTextInputs(textInputs => ({
+            ...textInputs,
+            holderZip: event.target.value,
+          }))
+          break
 
-  onStateAccidentChange(event) {
-    this.setState({ stateAccident: event.target.value })
-  }
+        case 'patientPhone':
+          setTextInputs(textInputs => ({
+            ...textInputs,
+            holderPhone: event.target.value,
+          }))
+          break
 
-  onPatientNameChange(event) {
-    this.setState({
-      patientName: event.target.value,
-    })
-    if (this.state.isSameHolder) {
-      this.setState({
-        insuranceHolder: event.target.value,
-      })
+        default:
+          break
+      }
     }
   }
 
-  onInsuranceHolderChange(event) {
-    this.setState({ insuranceHolder: event.target.value })
-  }
-
-  onPolicyNumberChange(event) {
-    this.setState({ policyNumber: event.target.value })
-  }
-
-  onAddressPatientChange(event) {
-    this.setState({ addressPatient: event.target.value })
-    if (this.state.isSameHolder) {
-      this.setState({
-        addressHolder: event.target.value,
-      })
-    }
-  }
-
-  onAddressHolderChange(event) {
-    this.setState({ addressHolder: event.target.value })
-  }
-
-  onDobChange(event) {
-    this.setState({
-      dob: moment(event.target.value).format(DATE_FORMAT),
-    })
-  }
-
-  onAccidentDateChange(event) {
-    this.setState({
-      accidentDate: moment(event.target.value).format(DATE_FORMAT),
-    })
-  }
-
-  onCityChange(event) {
-    this.setState({ city: event.target.value })
-    if (this.state.isSameHolder) {
-      this.setState({
-        cityHolder: event.target.value,
-      })
-    }
-  }
-
-  onCityHolderChange(event) {
-    this.setState({ cityHolder: event.target.value })
-  }
-
-  onStateChange(event) {
-    this.setState({ state: event.label })
-    if (this.state.isSameHolder) {
-      this.setState({
-        stateHolder: event.label,
-      })
-    }
-  }
-
-  onStateHolderChange(event) {
-    this.setState({ stateHolder: event.label })
-  }
-
-  onPhoneNumberChange(event) {
-    this.setState({ phoneNumber: event.target.value })
-    if (this.state.isSameHolder) {
-      this.setState({
-        phoneNumberHolder: event.target.value,
-      })
-    }
-  }
-
-  onPhoneNumberHolderChange(event) {
-    this.setState({ phoneNumberHolder: event.target.value })
-  }
-
-  onGenderChange(event) {
-    this.setState({ gender: event.value })
-  }
-
-  onInsuranceChange(event) {
-    this.setState({ insurance: event.value })
-  }
-
-  onOfficeAddressChange(event) {
-    this.setState({ officeAddress: event.value })
-  }
-
-  onZipChange(event) {
-    this.setState({ zip: event.target.value })
-    if (this.state.isSameHolder) {
-      this.setState({
-        zipHolder: event.target.value,
-      })
-    }
-  }
-
-  onZipHolderChange(event) {
-    this.setState({ zipHolder: event.target.value })
-  }
-
-  onSameHolderChange() {
-    const {
-      isSameHolder,
-      patientName,
-      phoneNumber,
-      zip,
-      city,
-      state,
-      addressPatient,
-    } = this.state
-    !isSameHolder
-      ? this.setState({
-          insuranceHolder: patientName,
-          phoneNumberHolder: phoneNumber,
-          zipHolder: zip,
-          cityHolder: city,
-          stateHolder: state,
-          addressHolder: addressPatient,
-        })
-      : this.setState({
-          insuranceHolder: '',
-          phoneNumberHolder: '',
-          zipHolder: '',
-          cityHolder: '',
-          stateHolder: '',
-          addressHolder: '',
-        })
-    this.setState({
-      isSameHolder: !isSameHolder,
-    })
-  }
-
-  checkValidForm() {
+  const checkValid = () => {
     return (
-      this.state.gender &&
-      this.state.state &&
-      this.state.insurance &&
-      this.state.relastionship &&
-      this.state.stateHolder
+      patientState && holderState && insuranceName && gender && relastionship
     )
   }
 
-  onSubmit(event) {
+  const onSubmitForm = event => {
     event.preventDefault()
-    if (this.checkValidForm()) {
-      const patient = this.state
-      delete patient.isSameHolder
-      this.props.addPatien(patient)
-      NotificationManager.success(SUCCES_MESSAGE, SUCCES_LABEL, TIMEOUT_MESSAGE)
+    if (checkValid()) {
+      const newPatient = {
+        ...textInputs,
+        patientState: patientState,
+        holderState: holderState,
+        insuranceName: insuranceName,
+        gender: gender,
+        relastionship: relastionship,
+        isSameHolder: isSameHolder,
+        isEmployment: isEmployment,
+        isAutoAccident: isAutoAccident,
+        isOtherAccident: isOtherAccident,
+      }
+      addPatient(newPatient)
+      showMesseageSuccess()
     } else {
-      NotificationManager.error(ERROR_LABEL, ERROR_MESSAGE, TIMEOUT_MESSAGE)
+      showMesseageFill()
     }
   }
 
-  render() {
-    const {
-      isEmployment,
-      isAutoAccident,
-      isSameHolder,
-      isOtherAccident,
-      stateAccident,
-    } = this.state
-    return (
-      <Form onSubmit={this.onSubmit}>
-        <Row className="input-label" form>
-          <Col md={6}>
-            <FormGroup>
-              <Label>Full name patient:</Label>
+  return (
+    <Form onSubmit={onSubmitForm}>
+      <Row className="input-label" form>
+        <Col md={6}>
+          <FormGroup>
+            <Label>Full name patient:</Label>
+            <Input
+              name="patientName"
+              placeholder="full name patient..."
+              onChange={handleTextInputChange}
+              required
+            />
+          </FormGroup>
+        </Col>
+        <Col md={4}>
+          <FormGroup>
+            <Label>Social Security Number (SSN):</Label>
+            <Input
+              name="ssn"
+              placeholder="ssn..."
+              onChange={handleTextInputChange}
+              required
+            />
+          </FormGroup>
+        </Col>
+        <Col md={2}>
+          <FormGroup>
+            <Label>Insurance name:</Label>
+            <Select
+              name="insuranceName"
+              placeholder="..."
+              options={INSURANCE_LIST}
+              onChange={e => setInsuranceName(e.value)}
+            />
+          </FormGroup>
+        </Col>
+      </Row>
+      <FormGroup>
+        <Label>Address patient:</Label>
+        <Input
+          name="patientAddress"
+          placeholder="address patient..."
+          onChange={handleTextInputChange}
+          required
+        />
+      </FormGroup>
+      <Row form>
+        <Col md={6}>
+          <FormGroup>
+            <Label>City:</Label>
+            <Input
+              name="patientCity"
+              placeholder="city patient..."
+              onChange={handleTextInputChange}
+              defaultValue="Jacksonville"
+              required
+            />
+          </FormGroup>
+        </Col>
+        <Col md={4}>
+          <FormGroup>
+            <Label>State:</Label>
+            <Select
+              placeholder="state patient..."
+              options={USA_STATES}
+              onChange={e => setPatientState(e.label)}
+              defaultValue={{
+                value: 'Florida',
+                label: 'FL',
+              }}
+            />
+          </FormGroup>
+        </Col>
+        <Col md={2}>
+          <FormGroup>
+            <Label>Zip:</Label>
+            <Input
+              name="patientZip"
+              placeholder="zip patient..."
+              onChange={handleTextInputChange}
+              required
+            />
+          </FormGroup>
+        </Col>
+      </Row>
+      <Row form>
+        <Col md={6}>
+          <FormGroup>
+            <Label>Phone number:</Label>
+            <Input
+              name="patientPhone"
+              placeholder="phone number..."
+              onChange={handleTextInputChange}
+              required
+            />
+          </FormGroup>
+        </Col>
+        <Col md={4}>
+          <FormGroup>
+            <Label>Date of Birth:</Label>
+            <Input
+              name="dobPatient"
+              type="date"
+              placeholder="date of birth..."
+              onChange={handleTextInputChange}
+              required
+            />
+          </FormGroup>
+        </Col>
+        <Col md={2}>
+          <FormGroup>
+            <Label>Gender:</Label>
+            <Select
+              placeholder="gender..."
+              options={GENDER_LIST}
+              onChange={e => setGender(e.label)}
+            />
+          </FormGroup>
+        </Col>
+      </Row>
+      <Row className="line" form>
+        <Col md={6}>
+          <FormGroup>
+            <Label>Full name insurance holder:</Label>
+            <Input
+              name="holderName"
+              placeholder="full name insurance holder..."
+              value={textInputs.holderName}
+              disabled={isSameHolder}
+              onChange={handleTextInputChange}
+              required
+            />
+            <Label check className="check-box">
               <Input
-                placeholder="full name patient..."
-                onChange={this.onPatientNameChange}
-                required
+                type="checkbox"
+                checked={isSameHolder}
+                onChange={() => setSameHolder(!isSameHolder)}
+              />{' '}
+              the name of the insurer matches the name of the patient
+            </Label>
+          </FormGroup>
+        </Col>
+        <Col md={6}>
+          <FormGroup>
+            <Label>Palicy Number:</Label>
+            <Input
+              name="policyNumber"
+              placeholder="palicy number..."
+              onChange={handleTextInputChange}
+            />
+          </FormGroup>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={6}>
+          <FormGroup>
+            <Label>Address:</Label>
+            <Input
+              name="holderAddress"
+              placeholder="address holder..."
+              value={textInputs.holderAddress}
+              disabled={isSameHolder}
+              onChange={handleTextInputChange}
+              required
+            />
+          </FormGroup>
+        </Col>
+        <Col md={6}>
+          <FormGroup>
+            <Label>Phone number:</Label>
+            <Input
+              name="holderPhone"
+              placeholder="phone number..."
+              value={textInputs.holderPhone}
+              disabled={isSameHolder}
+              onChange={handleTextInputChange}
+              required
+            />
+          </FormGroup>
+        </Col>
+      </Row>
+      <Row form>
+        <Col md={6}>
+          <FormGroup>
+            <Label>City:</Label>
+            <Input
+              name="holderCity"
+              placeholder="city holder..."
+              value={textInputs.holderCity}
+              disabled={isSameHolder}
+              onChange={handleTextInputChange}
+              required
+            />
+          </FormGroup>
+        </Col>
+        <Col md={4}>
+          <FormGroup>
+            <Label>State:</Label>
+            <Select
+              placeholder="state holder..."
+              options={USA_STATES}
+              onChange={e => setHolderState(e.label)}
+              isDisabled={isSameHolder}
+              defaultValue={{
+                value: 'Florida',
+                label: 'FL',
+              }}
+            />
+          </FormGroup>
+        </Col>
+        <Col md={2}>
+          <FormGroup>
+            <Label>Zip:</Label>
+            <Input
+              name="holderZip"
+              placeholder="zip holder..."
+              value={textInputs.holderZip}
+              disabled={isSameHolder}
+              onChange={handleTextInputChange}
+              required
+            />
+          </FormGroup>
+        </Col>
+      </Row>
+      <Row className="line" form>
+        <Col md={6}>
+          <FormGroup>
+            <Label>Patient to relationship to insured:</Label>
+            <Select
+              placeholder="..."
+              options={RELATIONSHIP_LIST}
+              onChange={e => setRelastionship(e.value)}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label>Accident date:</Label>
+            <Input
+              name="accidentDate"
+              type="date"
+              placeholder="accident date..."
+              onChange={handleTextInputChange}
+              required
+            />
+          </FormGroup>
+        </Col>
+        <Col md={6}>
+          <FormGroup>
+            <Label for="exampleCheckbox">
+              Is patients condition related to:
+            </Label>
+            <div>
+              <CustomInput
+                type="switch"
+                id="employment"
+                label="EMPLOYMENT? (Courrent or Previous)"
+                onChange={() => setEmployment(!isEmployment)}
+                checked={isEmployment}
               />
-            </FormGroup>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Label>Social Security Number (SSN):</Label>
-              <Input
-                placeholder="ssn..."
-                onChange={this.onSSNChange}
-                required
+              <Row>
+                <Col md={3}>
+                  <CustomInput
+                    type="switch"
+                    id="auto"
+                    label="AUTO ACCIDENT?"
+                    onChange={() => setAutoAccident(!isAutoAccident)}
+                    checked={isAutoAccident}
+                  />
+                </Col>
+                <Col className="inputState" md={2}>
+                  State:
+                  <Input
+                    name="stateAccident"
+                    bsSize="sm"
+                    defaultValue="FL"
+                    required
+                    onChange={handleTextInputChange}
+                  />
+                </Col>
+              </Row>
+              <CustomInput
+                type="switch"
+                id="other"
+                label="OTHER ACCIDENT?"
+                checked={isOtherAccident}
+                onChange={() => setOtherAccident(!isOtherAccident)}
               />
-            </FormGroup>
-          </Col>
-          <Col md={2}>
-            <FormGroup>
-              <Label>Insurance name:</Label>
-              <Select
-                placeholder="..."
-                options={INSURANCE_LIST}
-                onChange={this.onInsuranceChange}
-              />
-            </FormGroup>
-          </Col>
-        </Row>
-        <FormGroup>
-          <Label>Address patient:</Label>
-          <Input
-            placeholder="address patient..."
-            onChange={this.onAddressPatientChange}
-            required
-          />
-        </FormGroup>
-        <Row form>
-          <Col md={6}>
-            <FormGroup>
-              <Label>City:</Label>
-              <Input
-                placeholder="city patient..."
-                onChange={this.onCityChange}
-                required
-                defaultValue="Jacksonville"
-              />
-            </FormGroup>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Label>State:</Label>
-              <Select
-                placeholder="state patient..."
-                options={USA_STATES}
-                onChange={this.onStateChange}
-                defaultValue={{
-                  value: 'Florida',
-                  label: 'FL',
-                }}
-              />
-            </FormGroup>
-          </Col>
-          <Col md={2}>
-            <FormGroup>
-              <Label>Zip:</Label>
-              <Input
-                placeholder="zip patient..."
-                onChange={this.onZipChange}
-                required
-              />
-            </FormGroup>
-          </Col>
-        </Row>
-        <Row form>
-          <Col md={6}>
-            <FormGroup>
-              <Label>Phone number:</Label>
-              <Input
-                placeholder="phone number..."
-                onChange={this.onPhoneNumberChange}
-                required
-              />
-            </FormGroup>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Label>Date of Birth:</Label>
-              <Input
-                type="date"
-                placeholder="date of birth..."
-                onChange={this.onDobChange}
-                required
-              />
-            </FormGroup>
-          </Col>
-          <Col md={2}>
-            <FormGroup>
-              <Label>Gender:</Label>
-              <Select
-                placeholder="gender..."
-                options={GENDER_LIST}
-                onChange={this.onGenderChange}
-              />
-            </FormGroup>
-          </Col>
-        </Row>
-        <Row className="line" form>
-          <Col md={6}>
-            <FormGroup>
-              <Label>Full name insurance holder:</Label>
-              <Input
-                placeholder="full name insurance holder..."
-                value={this.state.insuranceHolder}
-                disabled={isSameHolder}
-                onChange={this.onInsuranceHolderChange}
-                required
-              />
-              <Label check className="check-box">
-                <Input
-                  type="checkbox"
-                  checked={isSameHolder}
-                  onChange={this.onSameHolderChange}
-                />{' '}
-                the name of the insurer matches the name of the patient
-              </Label>
-            </FormGroup>
-          </Col>
-          <Col md={6}>
-            <FormGroup>
-              <Label>Palicy Number:</Label>
-              <Input
-                placeholder="palicy number..."
-                onChange={this.onPolicyNumberChange}
-              />
-            </FormGroup>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6}>
-            <FormGroup>
-              <Label>Address:</Label>
-              <Input
-                placeholder="address holder..."
-                onChange={this.onAddressHolderChange}
-                value={this.state.addressHolder}
-                disabled={isSameHolder}
-                required
-              />
-            </FormGroup>
-          </Col>
-          <Col md={6}>
-            <FormGroup>
-              <Label>Phone number:</Label>
-              <Input
-                placeholder="phone number..."
-                onChange={this.onPhoneNumberHolderChange}
-                value={this.state.phoneNumberHolder}
-                disabled={isSameHolder}
-                required
-              />
-            </FormGroup>
-          </Col>
-        </Row>
-        <Row form>
-          <Col md={6}>
-            <FormGroup>
-              <Label>City:</Label>
-              <Input
-                placeholder="city holder..."
-                onChange={this.onCityHolderChange}
-                value={this.state.cityHolder}
-                disabled={isSameHolder}
-                defaultValue="Jacksonville"
-                required
-              />
-            </FormGroup>
-          </Col>
-          <Col md={4}>
-            <FormGroup>
-              <Label>State:</Label>
-              <Select
-                placeholder="state holder..."
-                options={USA_STATES}
-                onChange={this.onStateHolderChange}
-                isDisabled={isSameHolder}
-                defaultValue={{
-                  value: 'Florida',
-                  label: 'FL',
-                }}
-              />
-            </FormGroup>
-          </Col>
-          <Col md={2}>
-            <FormGroup>
-              <Label>Zip:</Label>
-              <Input
-                placeholder="zip holder..."
-                onChange={this.onZipHolderChange}
-                value={this.state.zipHolder}
-                disabled={isSameHolder}
-                required
-              />
-            </FormGroup>
-          </Col>
-        </Row>
-        <Row className="line" form>
-          <Col md={6}>
-            <FormGroup>
-              <Label>Patient to relationship to insured:</Label>
-              <Select
-                placeholder="..."
-                options={RELATIONSHIP_LIST}
-                onChange={this.onRelastionshipChange}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label>Accident date:</Label>
-              <Input
-                type="date"
-                placeholder="accident date..."
-                onChange={this.onAccidentDateChange}
-                required
-              />
-            </FormGroup>
-          </Col>
-          <Col md={6}>
-            <FormGroup>
-              <Label for="exampleCheckbox">
-                Is patients condition related to:
-              </Label>
-              <div>
-                <CustomInput
-                  type="switch"
-                  id="exampleCustomSwitch"
-                  name="customSwitch"
-                  label="EMPLOYMENT? (Courrent or Previous)"
-                  onChange={this.onEmploymentChange}
-                  checked={isEmployment}
-                />
-                <Row>
-                  <Col md={3}>
-                    <CustomInput
-                      type="switch"
-                      id="exampleCustomSwitch2"
-                      name="customSwitch"
-                      label="AUTO ACCIDENT?"
-                      onChange={this.onAutoAccidentChange}
-                      checked={isAutoAccident}
-                    />
-                  </Col>
-                  <Col className="inputState" md={2}>
-                    State:
-                    <Input
-                      bsSize="sm"
-                      value={stateAccident}
-                      onChange={this.onStateAccidentChange}
-                    />
-                  </Col>
-                </Row>
-                <CustomInput
-                  type="switch"
-                  id="exampleCustomSwitch3"
-                  label="OTHER ACCIDENT?"
-                  onChange={this.onOtherAccidentChange}
-                  checked={isOtherAccident}
-                />
-              </div>
-            </FormGroup>
-          </Col>
-        </Row>
-        <Button color="secondary" size="lg">
-          Add
-        </Button>
-        <NotificationContainer />
-      </Form>
-    )
-  }
+            </div>
+          </FormGroup>
+        </Col>
+      </Row>
+      <Button color="secondary" size="lg">
+        Add
+      </Button>
+    </Form>
+  )
 }
 
-export default PatientDetails
+T.PropTypes = {
+  addPatient: T.func.isRequired,
+  showMesseageSuccess: T.func.isRequired,
+  showMesseageFill: T.func.isRequired,
+}
+
+export { PatientDetails }

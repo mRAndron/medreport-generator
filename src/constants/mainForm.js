@@ -55,6 +55,14 @@ export const INITIAL_STATE_PATIENT = {
   stateAccident: 'FL',
 }
 
+export const REPEAT_TEXT_INPUTS = [
+  'patientName',
+  'patientAddress',
+  'patientCity',
+  'patientZip',
+  'patientPhone',
+]
+
 export const GENDER_LIST = [
   { value: 'Male', label: 'Male' },
   { value: 'Female', label: 'Female' },
