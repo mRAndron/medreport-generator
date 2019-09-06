@@ -19,6 +19,7 @@ import {
   INSURANCE_LIST,
   REPEAT_TEXT_INPUTS,
 } from '@/constants/mainForm'
+import { ERROR_FILL, SUCCES_ADD_PATIENT, ERROR_EXIST } from '@/constants/app'
 
 import './PatientDetails.scss'
 
@@ -50,7 +51,12 @@ const PatientDetails = props => {
   const [isAutoAccident, setAutoAccident] = useState(true)
   const [isOtherAccident, setOtherAccident] = useState(false)
 
-  const { addPatient, showMesseageSuccess, showMesseageFill } = props
+  const {
+    addPatient,
+    showMesseageSuccess,
+    showMesseageFill,
+    checkPatientName,
+  } = props
 
   const handleTextInputChange = event => {
     event.persist()
@@ -111,22 +117,26 @@ const PatientDetails = props => {
   const onSubmitForm = event => {
     event.preventDefault()
     if (checkValid()) {
-      const newPatient = {
-        ...textInputs,
-        patientState: patientState,
-        holderState: holderState,
-        insuranceName: insuranceName,
-        gender: gender,
-        relastionship: relastionship,
-        isSameHolder: isSameHolder,
-        isEmployment: isEmployment,
-        isAutoAccident: isAutoAccident,
-        isOtherAccident: isOtherAccident,
+      if (!checkPatientName(textInputs.patientName)) {
+        const newPatient = {
+          ...textInputs,
+          patientState: patientState,
+          holderState: holderState,
+          insuranceName: insuranceName,
+          gender: gender,
+          relastionship: relastionship,
+          isSameHolder: isSameHolder,
+          isEmployment: isEmployment,
+          isAutoAccident: isAutoAccident,
+          isOtherAccident: isOtherAccident,
+        }
+        addPatient(newPatient)
+        showMesseageSuccess(SUCCES_ADD_PATIENT)
+      } else {
+        showMesseageFill(ERROR_EXIST)
       }
-      addPatient(newPatient)
-      showMesseageSuccess()
     } else {
-      showMesseageFill()
+      showMesseageFill(ERROR_FILL)
     }
   }
 
@@ -431,6 +441,7 @@ T.PropTypes = {
   addPatient: T.func.isRequired,
   showMesseageSuccess: T.func.isRequired,
   showMesseageFill: T.func.isRequired,
+  checkPatientName: T.func.isRequired,
 }
 
 export { PatientDetails }

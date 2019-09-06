@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Form, FormGroup, Label, Input, Col, Row } from 'reactstrap'
-
-//import moment from 'moment'
+import T from 'prop-types'
 import Select from 'react-select'
 
 import {
@@ -13,6 +12,8 @@ import {
   SERVICES_FIELD,
   DIAGNOSES_FIELD,
 } from '@/constants/mainForm'
+import { SUCCES_GENERATION } from '@/constants/app'
+import { generateFile } from '@/api'
 
 import './DoctorsAppointment.scss'
 
@@ -29,7 +30,7 @@ const DoctorsAppointment = props => {
   const servicesList = window.servicesList
   const officeAddressList = window.officeAddressList
   const diagnosesList = window.diagnosesList
-  const { patients, updatePatient } = props
+  const { patients, updatePatient, showMesseageSuccess } = props
 
   const selectPatientList = getSelectedPatients(patients)
 
@@ -56,12 +57,15 @@ const DoctorsAppointment = props => {
       officeAddress: officeAddress,
       dateReceipt: dateReceipt,
     }
-    setPages(pages.concat(newPage))
 
+    pages.push(newPage)
     setCurrentDay(currentDay + 1)
+
     if (currentDay === maxDay) {
+      generateFile(pages, patients[idPatient])
       setCurrentDay(MIN_DAY)
-      console.log(pages)
+      setPages([])
+      showMesseageSuccess(SUCCES_GENERATION)
     }
   }
 
@@ -164,6 +168,12 @@ const DoctorsAppointment = props => {
       </Button>
     </Form>
   )
+}
+
+T.PropTypes = {
+  showMesseageSuccess: T.func.isRequired,
+  updatePatient: T.func.isRequired,
+  patients: T.Object,
 }
 
 export { DoctorsAppointment }

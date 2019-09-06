@@ -10,9 +10,7 @@ import {
   PATIENTS_TABLE,
   ERROR_LABEL,
   SUCCES_LABEL,
-  ERROR_MESSAGE,
   TIMEOUT_MESSAGE,
-  SUCCES_MESSAGE,
 } from '@/constants/app'
 import { SERVICES_FIELD } from '../../constants/mainForm'
 
@@ -45,12 +43,12 @@ class App extends Component {
     }))
   }
 
-  showMesseageSuccess = () => {
-    NotificationManager.success(SUCCES_MESSAGE, SUCCES_LABEL, TIMEOUT_MESSAGE)
+  showMesseageSuccess = message => {
+    NotificationManager.success(message, SUCCES_LABEL, TIMEOUT_MESSAGE)
   }
 
-  showMesseageFill = () => {
-    NotificationManager.error(ERROR_LABEL, ERROR_MESSAGE, TIMEOUT_MESSAGE)
+  showMesseageFill = message => {
+    NotificationManager.error(message, ERROR_LABEL, TIMEOUT_MESSAGE)
   }
 
   updatePatient = (id, data, field) => {
@@ -66,6 +64,11 @@ class App extends Component {
     this.setState({ patients: patientsList })
   }
 
+  checkPatientName = name => {
+    const list = Object.values(this.state.patients)
+    return list.find(patient => patient.patientName === name)
+  }
+
   render() {
     const { patients } = this.state
     return (
@@ -76,6 +79,7 @@ class App extends Component {
           showMesseageFill={this.showMesseageFill}
           patients={patients}
           updatePatient={this.updatePatient}
+          checkPatientName={this.checkPatientName}
         />
         <NotificationContainer />
       </Container>

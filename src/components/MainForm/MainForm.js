@@ -17,6 +17,7 @@ const MainForm = props => {
     addPatient,
     showMesseageSuccess,
     showMesseageFill,
+    checkPatientName,
     updatePatient,
     patients,
   } = props
@@ -32,6 +33,7 @@ const MainForm = props => {
               <DoctorsAppointment
                 patients={patients}
                 updatePatient={updatePatient}
+                showMesseageSuccess={showMesseageSuccess}
               />
             </Col>
           </Row>
@@ -43,6 +45,7 @@ const MainForm = props => {
                 addPatient={addPatient}
                 showMesseageSuccess={showMesseageSuccess}
                 showMesseageFill={showMesseageFill}
+                checkPatientName={checkPatientName}
               />
             </Col>
           </Row>
@@ -57,6 +60,7 @@ T.PropTypes = {
   showMesseageSuccess: T.func.isRequired,
   showMesseageFill: T.func.isRequired,
   updatePatient: T.func.isRequired,
+  checkPatientName: T.func.isRequired,
   patients: T.Object,
 }
 
