@@ -1,152 +1,90 @@
 import React, { Component } from 'react'
-import './App.scss'
 import { Container } from 'reactstrap'
-import { base } from '../../db/base'
-import MainForm from '../../components/MainForm/MainForm'
-import { SERVICES_FIELD, TABLE_NAME, MIN_DAY } from '../../constants/mainForm'
+import { NotificationContainer, NotificationManager } from 'react-notifications'
+
+import { MainForm } from '@/components/MainForm'
+
+import { base } from '@/db/base'
+import {
+  INITIAL_STATE,
+  PATIENTS_TABLE,
+  ERROR_LABEL,
+  SUCCES_LABEL,
+  TIMEOUT_MESSAGE,
+} from '@/constants/app'
+import { SERVICES_FIELD } from '../../constants/mainForm'
+
+import './App.scss'
+import 'react-notifications/lib/notifications.css'
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      patients: {},
-      selectedPatientId: '',
-      allServices: [],
-      allDiagnoses: [],
-      allDoctors: [],
-      allDates: [],
-      allOffices: [],
-      currentDay: MIN_DAY,
-      countDays: MIN_DAY,
+  state = INITIAL_STATE
+
+  componentDidMount() {
+    try {
+      this.patientsRef = base.syncState(PATIENTS_TABLE, {
+        context: this,
+        state: PATIENTS_TABLE,
+      })
+    } catch (error) {
+      throw error
     }
-    this.addPatient = this.addPatient.bind(this)
-    this.setSelectedPatientId = this.setSelectedPatientId.bind(this)
-    this.setPatientInfo = this.setPatientInfo.bind(this)
-    this.getPatientByName = this.getPatientByName.bind(this)
-    this.getPatientIdByValue = this.getPatientIdByValue.bind(this)
-    this.setAllData = this.setAllData.bind(this)
   }
 
-  setCountDays = days => {
-    this.setState({ countDays: days })
-  }
-
-  addPatient(data) {
-    const patientsList = { ...this.state.patients }
+  addPatient = patientData => {
     const id = Date.now()
-    patientsList[id] = {
-      ...data,
-      diagnoses: [],
-      services: [],
-    }
-    this.setState({ patients: patientsList })
+    this.setState(prevState => ({
+      patients: {
+        ...prevState.patients,
+        [id]: patientData,
+        diagnoses: [],
+        services: [],
+      },
+    }))
   }
 
-  setPatientInfo(data, field) {
-    const { patients, selectedPatientId } = this.state
+  showMesseageSuccess = message => {
+    NotificationManager.success(message, SUCCES_LABEL, TIMEOUT_MESSAGE)
+  }
+
+  showMesseageFill = message => {
+    NotificationManager.error(message, ERROR_LABEL, TIMEOUT_MESSAGE)
+  }
+
+  updatePatient = (id, data, field) => {
+    const { patients } = this.state
     const patientsList = { ...patients }
-    const selectedPatient = patientsList[selectedPatientId]
+    const selectedPatient = patientsList[id]
     if (field === SERVICES_FIELD) {
       selectedPatient.services = data
     } else {
       selectedPatient.diagnoses = data
     }
-    patientsList[selectedPatientId] = selectedPatient
+    patientsList[id] = selectedPatient
     this.setState({ patients: patientsList })
   }
 
-  setSelectedPatientId(id) {
-    this.setState({
-      selectedPatientId: id,
-    })
-  }
-
-  setAllData(data) {
-    const {
-      allServices,
-      allDates,
-      allDiagnoses,
-      allDoctors,
-      allOffices,
-      currentDay,
-      countDays,
-    } = this.state
-    this.setState({
-      allServices:
-        currentDay !== countDays ? [...allServices, data.services] : [],
-      allDates: currentDay !== countDays ? [...allDates, data.date] : [],
-      allDiagnoses:
-        currentDay !== countDays ? [...allDiagnoses, data.diagnoses] : [],
-      allDoctors: currentDay !== countDays ? [...allDoctors, data.doctor] : [],
-      allOffices: currentDay !== countDays ? [...allOffices, data.office] : [],
-      currentDay: currentDay !== countDays ? currentDay + MIN_DAY : MIN_DAY,
-    })
-  }
-
-  getPatientByName(name) {
-    const { patients } = this.state
-    return Object.values(patients).find(patient => {
-      return patient.patientName === name
-    })
-  }
-
-  getPatientIdByValue(value) {
-    const { patients } = this.state
-    for (let [key, val] of Object.entries(patients)) {
-      if (JSON.stringify(val) === JSON.stringify(value)) {
-        return key
-      }
-    }
-  }
-
-  componentWillMount() {
-    try {
-      this.patientsRef = base.syncState(TABLE_NAME, {
-        context: this,
-        state: TABLE_NAME,
-      })
-    } catch (error) {
-      console.log(error)
-      throw error
-    }
+  checkPatientName = name => {
+    const list = Object.values(this.state.patients)
+    return list.find(patient => patient.patientName === name)
   }
 
   render() {
-    const {
-      patients,
-      currentDay,
-      selectedPatientId,
-      allServices,
-      allDiagnoses,
-      allDoctors,
-      allDates,
-      allOffices,
-      countDays,
-    } = this.state
-
+    const { patients } = this.state
     return (
       <Container className="app">
         <MainForm
-          addPatien={this.addPatient}
-          getPatientByName={this.getPatientByName}
-          setSelectedPatientId={this.setSelectedPatientId}
-          getPatientIdByValue={this.getPatientIdByValue}
-          setPatientInfo={this.setPatientInfo}
+          addPatient={this.addPatient}
+          showMesseageSuccess={this.showMesseageSuccess}
+          showMesseageFill={this.showMesseageFill}
           patients={patients}
-          selectedPatientId={selectedPatientId}
-          setAllData={this.setAllData}
-          day={currentDay}
-          countDays={countDays}
-          allServices={allServices}
-          allDiagnoses={allDiagnoses}
-          allDoctors={allDoctors}
-          allDates={allDates}
-          allOffices={allOffices}
-          setCountDays={this.setCountDays}
+          updatePatient={this.updatePatient}
+          checkPatientName={this.checkPatientName}
         />
+        <NotificationContainer />
       </Container>
     )
   }
 }
 
-export default App
+export { App }

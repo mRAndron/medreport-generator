@@ -2,7 +2,7 @@
 export const DATE_FORMAT = 'MMDDYYYY'
 export const ERROR_LABEL = 'Error message'
 export const ERROR_MESSAGE = 'Please, fill in all fields!'
-export const SUCCES_MESSAGE = 'You add new patient'
+export const SUCCES_MESSAGE = 'Done'
 export const SUCCES_LABEL = 'Success'
 export const SUCCES_GENERATION = 'Generation'
 export const TIMEOUT_MESSAGE = 3000
@@ -23,6 +23,31 @@ export const INITIAL_STATE_DOCTORS_APPOINTMENT = {
   doctorValue: {},
   isPatientSelected: true,
   dateReceipt: null,
+}
+
+export const getPatientByName = (list, name) => {
+  return Object.values(list).find(patient => {
+    return patient.patientName === name
+  })
+}
+
+export const getPatientIdByValue = (list, value) => {
+  for (let [key, val] of Object.entries(list)) {
+    if (JSON.stringify(val) === JSON.stringify(value)) {
+      return key
+    }
+  }
+}
+
+export const getSelectedPatients = patientsList => {
+  const selectPatientList = []
+  Object.entries(patientsList).map(([key, val]) => {
+    return selectPatientList.push({
+      value: val.patientName,
+      label: val.patientName,
+    })
+  })
+  return selectPatientList
 }
 
 // PATIENT DETAILS
@@ -54,6 +79,14 @@ export const INITIAL_STATE_PATIENT = {
   insurance: '',
   stateAccident: 'FL',
 }
+
+export const REPEAT_TEXT_INPUTS = [
+  'patientName',
+  'patientAddress',
+  'patientCity',
+  'patientZip',
+  'patientPhone',
+]
 
 export const GENDER_LIST = [
   { value: 'Male', label: 'Male' },

@@ -71,113 +71,108 @@ const generateEmptyLine = countLines => {
 const calculateSum = services => {
   let sum = 0
   services.forEach(element => {
-    sum += parseInt(element.value)
+    sum += element.price
   })
   return sum
 }
 
-export const generateFile = (data, patient, countDays) => {
-  const propsData = data
+const getRemainDiagnoses = diagnoses => {
+  const remain = diagnoses.slice(12, diagnoses.length)
+  const result = []
+  remain.forEach(element => {
+    result.push(element.label)
+  })
+  return result.join()
+}
 
-  let diagnosesList = []
-  let diagnosesRemainList = []
-  let temporaryDate = null
-  let doctorsList = []
-  // TODO: FIX DATE FORMAT
-  patient.accidentDate = `${patient.accidentDate.substr(
-    0,
-    2
-  )} ${patient.accidentDate.substr(2, 2)} ${patient.accidentDate.substr(4, 4)}`
+const getDiagnosesList = diagnoses => {
+  const result = {}
+  diagnoses.slice(0, 12).forEach((element, indexElement) => {
+    result[`dai_${indexElement}`] = element.value
+  })
+  return result
+}
 
-  propsData.allDiagnoses.forEach((list, indexList) => {
-    temporaryDate = {}
-    list.slice(0, 11).forEach((element, indexElement) => {
-      temporaryDate[`dai_${indexElement}`] = element.value
-    })
-    diagnosesList.push(temporaryDate)
-    diagnosesRemainList.push(list.slice(11, list.length - 1).join())
+const getDoctorFormat = doctor => {
+  return {
+    [`dN_`]: doctor.name,
+    [`npi_`]: doctor.npi,
+    [`sig_`]: doctor.signature,
+  }
+}
+
+const getServicesTemplate = services => {
+  const result = [...services]
+  result.forEach((element, number) => {
+    if (
+      element.label === CODE_97110 &&
+      result.find(elem => elem.label === CODE_97530) !== undefined
+    ) {
+      element.pfx = '59'
+    } else if (
+      element.label === CODE_97140 &&
+      result.find(
+        elem =>
+          elem.label === CODE_98940 ||
+          elem.label === CODE_98941 ||
+          elem.label === CODE_98942
+      ) !== undefined
+    ) {
+      element.pfx = '59'
+    } else if (
+      (element.label === CODE_99202 ||
+        element.label === CODE_99203 ||
+        element.label === CODE_99212 ||
+        element.label === CODE_99213) &&
+      result.length > 1
+    ) {
+      element.pfx = '25'
+    }
   })
 
-  propsData.allDoctors.forEach((element, index) => {
-    doctorsList.push({
-      [`dN_`]: element.name,
-      [`npi_`]: element.npi,
-      [`sig_`]: element.signature,
-    })
-  })
+  return result
+}
 
-  propsData.allServices.forEach((list, index) => {
-    list.forEach((element, number) => {
-      element.value = element.value.replace(`${element.label}_`, '')
-      if (
-        element.label === CODE_97110 &&
-        list.find(elem => elem.label === CODE_97530) !== undefined
-      ) {
-        propsData.allServices[index][number]['pfx'] = ` 59`
-      } else if (
-        element.label === CODE_97140 &&
-        list.find(
-          elem =>
-            elem.label === CODE_98940 ||
-            elem.label === CODE_98941 ||
-            elem.label === CODE_98942
-        ) !== undefined
-      ) {
-        propsData.allServices[index][number]['pfx'] = ` 59`
-      } else if (
-        (element.label === CODE_99202 ||
-          element.label === CODE_99203 ||
-          element.label === CODE_99212 ||
-          element.label === CODE_99213) &&
-        propsData.allServices[index].length > 1
-      ) {
-        propsData.allServices[index][number]['pfx'] = ` 25`
-      } else {
-        propsData.allServices[index][number]['pfx'] = ''
-      }
-    })
-  })
+const getOfficeFormat = office => {
+  const indexSub = office.search(/JACKSONVILLE/i)
+  return {
+    of_1: office.substr(0, indexSub),
+    of_2: office.substr(indexSub + 1),
+  }
+}
 
-  const offices = []
-  let indexSub = null
-  data.allOffices.forEach((element, index) => {
-    indexSub = element.search(/JACKSONVILLE/i)
-    offices.push({
-      of_1: element.substr(0, indexSub),
-      of_2: element.substr(indexSub + 1),
-    })
-  })
+export const generateFile = (pages, patient) => {
+  const listPages = pages
+  const result = []
 
-  loadFile(`${process.env.REACT_APP_URL_DOCX}${1}.docx`, (error, content) => {
+  loadFile(process.env.REACT_APP_URL_DOCX, (error, content) => {
     if (error) {
       throw error
     }
 
-    let result = []
-
-    for (let i = 0; i < countDays; i++) {
-      let servicesMain = propsData.allServices[i].filter(
-        (element, index) => index <= 5
-      )
+    listPages.forEach(page => {
+      let servicesMain = page.services.filter((element, index) => index <= 5)
       let insertData = {
         ...patient,
-        services: servicesMain,
-        remain: diagnosesRemainList[i],
-        ...diagnosesList[i],
-        ...doctorsList[i],
+        dobPatient: moment(patient.dobPatient).format('MMDDYYYY'),
+        accidentDate: moment(patient.dateReceipt).format('MM DD YYYY'),
+        services: getServicesTemplate(servicesMain),
+        remain: getRemainDiagnoses(page.diagnoses),
+        ...getDiagnosesList(page.diagnoses),
+        ...getDoctorFormat(page.doctor),
         sum_: calculateSum(servicesMain),
-        dv: propsData.allDates[i],
-        ...offices[i],
+        dv: moment(page.dateReceipt).format('MMDDYYYY'),
+        ...getOfficeFormat(page.officeAddress),
       }
 
-      if (propsData.allServices[i].length <= 6) {
-        insertData['nl'] = generateEmptyLine(propsData.allServices[i].length)
+      if (page.services.length <= 6) {
+        insertData['nl'] = generateEmptyLine(page.services.length)
       }
 
       result.push(renderData(content, insertData))
 
-      if (propsData.allServices[i].length > 6) {
-        const servicesRemain = propsData.allServices[i].filter(
+      if (page.services.length > 6) {
+        const servicesRemain = page.services.filter(
           (element, index) => index > 5
         )
         insertData['nl'] = generateEmptyLine(servicesRemain.length)
@@ -185,7 +180,7 @@ export const generateFile = (data, patient, countDays) => {
         insertData['sum_'] = calculateSum(servicesRemain)
         result.push(renderData(content, insertData))
       }
-    }
+    })
 
     var docx = new DocxMerger({}, result)
     const dateTimeCreate = moment(Date.now()).format(DATE_FORMAT)
