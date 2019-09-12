@@ -2,7 +2,15 @@ import React, { useState } from 'react'
 import { Button, Form, FormGroup, Label, Input, Col, Row } from 'reactstrap'
 import T from 'prop-types'
 import Select from 'react-select'
-//import { MultiValueLabel } from '@/components/MultiValueLabel'
+import { MultiValueLabel } from '@/components/MultiValueLabel'
+
+/* const custom = props => {
+  return (
+    <Tooltip content={'Customise your multi-value label component!'}>
+      <components.MultiValueLabel {...props} />
+    </Tooltip>
+  );
+} */
 
 import {
   COUT_DAYS,
@@ -160,7 +168,18 @@ const DoctorsAppointment = props => {
               onChange={handleServicesChange}
               isDisabled={!idPatient}
               value={idPatient && patients[idPatient].services}
-              //components={{ MultiValueLabel }}
+              components={{
+                MultiValueLabel: props => (
+                  <MultiValueLabel
+                    updateCountServices={updatePatient}
+                    patientInfo={{
+                      idPatient: idPatient,
+                      patientServices: patients[idPatient].services,
+                    }}
+                    defaultProps={props}
+                  />
+                ),
+              }}
               backspaceRemovesValue={false}
             />
           </FormGroup>

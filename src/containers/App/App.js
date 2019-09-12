@@ -12,7 +12,7 @@ import {
   SUCCES_LABEL,
   TIMEOUT_MESSAGE,
 } from '@/constants/app'
-import { SERVICES_FIELD } from '../../constants/mainForm'
+import { SERVICES_FIELD } from '@/constants/mainForm'
 
 import './App.scss'
 import 'react-notifications/lib/notifications.css'

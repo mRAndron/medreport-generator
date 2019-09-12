@@ -69,11 +69,11 @@ const generateEmptyLine = countLines => {
 }
 
 const calculateSum = services => {
-  let sum = 0
+  let sum = 0.0
   services.forEach(element => {
-    sum += element.price
+    sum += parseFloat(element.quantity) * parseFloat(element.price)
   })
-  return sum
+  return sum.toFixed(2)
 }
 
 const getRemainDiagnoses = diagnoses => {
