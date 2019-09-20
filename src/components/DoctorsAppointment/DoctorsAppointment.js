@@ -1,16 +1,8 @@
 import React, { useState } from 'react'
 import { Button, Form, FormGroup, Label, Input, Col, Row } from 'reactstrap'
 import T from 'prop-types'
-import Select from 'react-select'
+import Select, { components } from 'react-select'
 import { MultiValueLabel } from '@/components/MultiValueLabel'
-
-/* const custom = props => {
-  return (
-    <Tooltip content={'Customise your multi-value label component!'}>
-      <components.MultiValueLabel {...props} />
-    </Tooltip>
-  );
-} */
 
 import {
   COUT_DAYS,
@@ -25,6 +17,19 @@ import { SUCCES_GENERATION } from '@/constants/app'
 import { generateFile } from '@/api'
 
 import './DoctorsAppointment.scss'
+
+const Menu = props => {
+  const optionSelectedLength = props.getValue().length || 0
+  return (
+    <components.Menu {...props}>
+      {optionSelectedLength <= 19 ? (
+        props.children
+      ) : (
+        <div style={{ margin: 15 }}>Max limit achieved</div>
+      )}
+    </components.Menu>
+  )
+}
 
 const DoctorsAppointment = props => {
   const [idPatient, setIdPatient] = useState('')
@@ -144,6 +149,7 @@ const DoctorsAppointment = props => {
             <Label>Diagnoses:</Label>
             <Select
               isMulti
+              components={{ Menu }}
               options={diagnosesList}
               className="basic-multi-select"
               classNamePrefix="select"
