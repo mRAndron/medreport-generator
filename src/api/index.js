@@ -102,7 +102,7 @@ const getDoctorFormat = doctor => {
 }
 
 const getServicesTemplate = services => {
-  const result = [].concat(services)
+  const result = [...services]
   result.forEach((element, number) => {
     if (
       element.label === CODE_97110 &&
