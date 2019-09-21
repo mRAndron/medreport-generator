@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { TabContent, TabPane, Row, Col } from 'reactstrap'
 import T from 'prop-types'
+
+import { TabContent, TabPane, Row, Col } from 'reactstrap'
 
 import { NavBar } from '../NavBar'
 import { PatientDetails } from '../PatientDetails'

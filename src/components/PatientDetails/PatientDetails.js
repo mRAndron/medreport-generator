@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import T from 'prop-types'
+
+import Select from 'react-select'
+
 import {
   Button,
   Form,
@@ -10,7 +13,6 @@ import {
   Row,
   CustomInput,
 } from 'reactstrap'
-import Select from 'react-select'
 
 import {
   GENDER_LIST,
