@@ -1,16 +1,11 @@
 import React, { useState } from 'react'
-import { Button, Form, FormGroup, Label, Input, Col, Row } from 'reactstrap'
 import T from 'prop-types'
-import Select from 'react-select'
-import { MultiValueLabel } from '@/components/MultiValueLabel'
 
-/* const custom = props => {
-  return (
-    <Tooltip content={'Customise your multi-value label component!'}>
-      <components.MultiValueLabel {...props} />
-    </Tooltip>
-  );
-} */
+import Select from 'react-select'
+import { Button, Form, FormGroup, Label, Input, Col, Row } from 'reactstrap'
+
+import { SelectServices } from '@/components/SelectServices'
+import { SelectDiagnoses } from '@/components/SelectDiagnoses'
 
 import {
   COUT_DAYS,
@@ -22,6 +17,7 @@ import {
   DIAGNOSES_FIELD,
 } from '@/constants/mainForm'
 import { SUCCES_GENERATION } from '@/constants/app'
+
 import { generateFile } from '@/api'
 
 import './DoctorsAppointment.scss'
@@ -36,9 +32,7 @@ const DoctorsAppointment = props => {
   const [dateReceipt, setDateReceipt] = useState(null)
 
   const doctorList = window.doctorList
-  const servicesList = window.servicesList
   const officeAddressList = window.officeAddressList
-  const diagnosesList = window.diagnosesList
   const { patients, updatePatient, showMesseageSuccess } = props
 
   const selectPatientList = getSelectedPatients(patients)
@@ -141,46 +135,28 @@ const DoctorsAppointment = props => {
       <Row form>
         <Col md={6}>
           <FormGroup>
-            <Label>Diagnoses:</Label>
-            <Select
-              isMulti
-              options={diagnosesList}
-              className="basic-multi-select"
-              classNamePrefix="select"
-              closeMenuOnSelect={false}
-              hideSelectedOptions={true}
-              onChange={handleDiagnosesChange}
-              isDisabled={!idPatient}
-              value={idPatient && patients[idPatient].diagnoses}
+            <SelectDiagnoses
+              changeDiagnoses={handleDiagnosesChange}
+              patient={
+                idPatient && {
+                  id: idPatient,
+                  services: patients[idPatient].services,
+                }
+              }
             />
           </FormGroup>
         </Col>
         <Col md={6}>
           <FormGroup>
-            <Label>Selection of services rendered:</Label>
-            <Select
-              isMulti
-              options={servicesList}
-              className="basic-multi-select"
-              classNamePrefix="select"
-              closeMenuOnSelect={false}
-              hideSelectedOptions={true}
+            <SelectServices
+              updateServices={updatePatient}
               onChange={handleServicesChange}
-              isDisabled={!idPatient}
-              value={idPatient && patients[idPatient].services}
-              components={{
-                MultiValueLabel: props => (
-                  <MultiValueLabel
-                    updateCountServices={updatePatient}
-                    patientInfo={{
-                      idPatient: idPatient,
-                      patientServices: patients[idPatient].services,
-                    }}
-                    defaultProps={props}
-                  />
-                ),
-              }}
-              backspaceRemovesValue={false}
+              patient={
+                idPatient && {
+                  id: idPatient,
+                  services: patients[idPatient].services,
+                }
+              }
             />
           </FormGroup>
         </Col>

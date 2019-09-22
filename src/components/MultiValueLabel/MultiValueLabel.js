@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import T from 'prop-types'
+
 import { Tooltip, Label } from 'reactstrap'
-//import T from 'prop-types'
 import { components } from 'react-select'
+
 import { SERVICES_FIELD } from '@/constants/mainForm'
 
 const MultiValueLabel = props => {
@@ -21,10 +23,10 @@ const MultiValueLabel = props => {
   const checkVaild = value => value === '0.5' || value === '1' || value === '2'
 
   const handleInput = ({ target: { value } }) => {
-    const { idPatient, patientServices } = patientInfo
+    const { id, services } = patientInfo
 
     if (checkVaild(value)) {
-      const changedServices = patientServices.map(service => {
+      const changedServices = services.map(service => {
         if (service._id === data._id) {
           return { ...service, quantity: value }
         } else {
@@ -32,7 +34,7 @@ const MultiValueLabel = props => {
         }
       })
       setQuantity(value)
-      updateCountServices(idPatient, changedServices, SERVICES_FIELD)
+      updateCountServices(id, changedServices, SERVICES_FIELD)
     } else {
       setQuantity(value)
     }
@@ -53,6 +55,18 @@ const MultiValueLabel = props => {
       </Tooltip>
     </div>
   )
+}
+
+T.defaultProps = {
+  patient: {
+    id: '',
+    services: [],
+  },
+}
+
+T.PropTypes = {
+  updateCountServices: T.func.isRequired,
+  patientInfo: T.Object,
 }
 
 export { MultiValueLabel }

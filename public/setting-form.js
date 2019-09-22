@@ -281,7 +281,8 @@ window.servicesList = [
   {
     label: '97014',
     value: '97014_50',
-    price: 50,
+    price: 50.0,
+    priceView: 50.0,
     pfx: '',
     _id: 'k0',
     quantity: 1,
@@ -289,7 +290,8 @@ window.servicesList = [
   {
     label: '97010',
     value: '97010_50',
-    price: 50,
+    price: 50.0,
+    priceView: 50.0,
     pfx: '',
     _id: 'k1',
     quantity: 1,
@@ -297,7 +299,8 @@ window.servicesList = [
   {
     label: '97039',
     value: '97039_60',
-    price: 60,
+    price: 60.0,
+    priceView: 60.0,
     pfx: '',
     _id: 'k2',
     quantity: 1,
@@ -305,7 +308,8 @@ window.servicesList = [
   {
     label: '97012',
     value: '97012_75',
-    price: 75,
+    price: 75.0,
+    priceView: 75.0,
     pfx: '',
     _id: 'k3',
     quantity: 1,
@@ -313,7 +317,8 @@ window.servicesList = [
   {
     label: '97035',
     value: '97035_35',
-    price: 35,
+    price: 35.0,
+    priceView: 35.0,
     pfx: '',
     _id: 'k4',
     quantity: 1,
@@ -321,7 +326,8 @@ window.servicesList = [
   {
     label: '97110',
     value: '97110_70',
-    price: 70,
+    price: 70.0,
+    priceView: 70.0,
     pfx: '',
     _id: 'k5',
     quantity: 1,
@@ -329,7 +335,8 @@ window.servicesList = [
   {
     label: '97140',
     value: '97140_60',
-    price: 60,
+    price: 60.0,
+    priceView: 60.0,
     pfx: '',
     _id: 'k6',
     quantity: 1,
@@ -337,7 +344,8 @@ window.servicesList = [
   {
     label: '97530',
     value: '97530_70',
-    price: 70,
+    price: 70.0,
+    priceView: 70.0,
     pfx: '',
     _id: 'k7',
     quantity: 1,
@@ -345,7 +353,8 @@ window.servicesList = [
   {
     label: '76140',
     value: '76140_85',
-    price: 85,
+    price: 85.0,
+    priceView: 85.0,
     pfx: '',
     _id: 'k8',
     quantity: 1,
@@ -353,7 +362,8 @@ window.servicesList = [
   {
     label: '98940',
     value: '98940_80',
-    price: 80,
+    price: 80.0,
+    priceView: 80.0,
     pfx: '',
     _id: 'k9',
     quantity: 1,
@@ -361,7 +371,8 @@ window.servicesList = [
   {
     label: '98941',
     value: '98941_100',
-    price: 100,
+    price: 100.0,
+    priceView: 100.0,
     pfx: '',
     _id: 'k10',
     quantity: 1,
@@ -369,7 +380,8 @@ window.servicesList = [
   {
     label: '98942',
     value: '98942_120',
-    price: 120,
+    price: 120.0,
+    priceView: 120.0,
     pfx: '',
     _id: 'k11',
     quantity: 1,
@@ -377,7 +389,8 @@ window.servicesList = [
   {
     label: '98943',
     value: '98943_80',
-    price: 80,
+    price: 80.0,
+    priceView: 80.0,
     pfx: '',
     _id: 'k12',
     quantity: 1,
@@ -385,7 +398,8 @@ window.servicesList = [
   {
     label: '99202',
     value: '99202_250',
-    price: 250,
+    price: 250.0,
+    priceView: 250.0,
     pfx: '',
     _id: 'k13',
     quantity: 1,
@@ -393,7 +407,8 @@ window.servicesList = [
   {
     label: '99203',
     value: '99203_350',
-    price: 350,
+    price: 350.0,
+    priceView: 350.0,
     pfx: '',
     _id: 'k14',
     quantity: 1,
@@ -401,7 +416,8 @@ window.servicesList = [
   {
     label: '99212',
     value: '99212_150',
-    price: 150,
+    price: 150.0,
+    priceView: 150.0,
     pfx: '',
     _id: 'k15',
     quantity: 1,
@@ -409,7 +425,8 @@ window.servicesList = [
   {
     label: '99213',
     value: '99213_200',
-    price: 200,
+    price: 200.0,
+    priceView: 200.0,
     pfx: '',
     _id: 'k16',
     quantity: 1,
@@ -417,7 +434,8 @@ window.servicesList = [
   {
     label: '99348',
     value: '99348_350',
-    price: 350,
+    price: 350.0,
+    priceView: 350.0,
     pfx: '',
     _id: 'k17',
     quantity: 1,
@@ -425,7 +443,8 @@ window.servicesList = [
   {
     label: '99343',
     value: '99343_450',
-    price: 450,
+    price: 450.0,
+    priceView: 450.0,
     pfx: '',
     _id: 'k18',
     quantity: 1,
@@ -433,7 +452,8 @@ window.servicesList = [
   {
     label: '99082',
     value: '99082_20',
-    price: 20,
+    price: 20.0,
+    priceView: 20.0,
     pfx: '',
     _id: 'k19',
     quantity: 1,

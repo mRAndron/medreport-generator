@@ -75,7 +75,8 @@
     "postinstall": "npm i --save-dev --ignore-scripts pizzip",
     "predeploy": "env-cmd -f ./.env.production.local npm run build",
     "deploy": "gh-pages -d build",
-    "eslint": "node_modules/.bin/eslint src/"
+    "eslint": "node_modules/.bin/eslint src/",
+    "precommit": "lint-staged"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -173,6 +174,12 @@
   "babel": {
     "presets": [
       "react-app"
+    ]
+  },
+  "lint-staged": {
+    "*.{js, jsx}": [
+        "prettier --write",
+        "git add"
     ]
   }
 }

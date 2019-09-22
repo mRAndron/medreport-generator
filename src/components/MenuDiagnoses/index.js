@@ -1,0 +1,1 @@
+export { MenuDiagnoses } from './MenuDiagnoses'

@@ -71,7 +71,7 @@ const generateEmptyLine = countLines => {
 const calculateSum = services => {
   let sum = 0.0
   services.forEach(element => {
-    sum += parseFloat(element.quantity) * parseFloat(element.price)
+    sum += parseFloat(element.priceView)
   })
   return sum.toFixed(2)
 }
@@ -128,6 +128,9 @@ const getServicesTemplate = services => {
     ) {
       element.pfx = '25'
     }
+    element.priceView = (
+      parseFloat(element.quantity) * parseFloat(element.price)
+    ).toFixed(2)
   })
 
   return result
@@ -142,7 +145,7 @@ const getOfficeFormat = office => {
 }
 
 export const generateFile = (pages, patient) => {
-  const listPages = pages
+  const listPages = [].concat(pages)
   const result = []
 
   loadFile(process.env.REACT_APP_URL_DOCX, (error, content) => {
@@ -176,7 +179,7 @@ export const generateFile = (pages, patient) => {
           (element, index) => index > 5
         )
         insertData['nl'] = generateEmptyLine(servicesRemain.length)
-        insertData['services'] = servicesRemain
+        insertData['services'] = getServicesTemplate(servicesRemain)
         insertData['sum_'] = calculateSum(servicesRemain)
         result.push(renderData(content, insertData))
       }
