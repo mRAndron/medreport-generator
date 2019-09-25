@@ -86,11 +86,12 @@ export const REPEAT_TEXT_INPUTS = [
   'patientCity',
   'patientZip',
   'patientPhone',
+  'dobPatient',
 ]
 
 export const GENDER_LIST = [
-  { value: 'Male', label: 'Male' },
-  { value: 'Female', label: 'Female' },
+  { value: 'M', label: 'Male' },
+  { value: 'F', label: 'Female' },
 ]
 
 export const INSURANCE_LIST = [

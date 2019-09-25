@@ -20,7 +20,8 @@ const MultiValueLabel = props => {
     setToggle(!isOpen)
   }
 
-  const checkVaild = value => value === '0.5' || value === '1' || value === '2'
+  const checkVaild = value =>
+    value === '1/2' || value === '0.5' || value === '1' || value === '2'
 
   const handleInput = ({ target: { value } }) => {
     const { id, services } = patientInfo
