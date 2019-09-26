@@ -34,6 +34,7 @@ const PatientDetails = props => {
     patientZip: '',
     patientPhone: '',
     dobPatient: null,
+    dobHolder: '',
     accidentDate: null,
     stateAccident: 'FL',
     holderName: '',
@@ -101,6 +102,13 @@ const PatientDetails = props => {
           setTextInputs(textInputs => ({
             ...textInputs,
             holderPhone: event.target.value,
+          }))
+          break
+
+        case 'dobPatient':
+          setTextInputs(textInputs => ({
+            ...textInputs,
+            dobHolder: event.target.value,
           }))
           break
 
@@ -257,7 +265,7 @@ const PatientDetails = props => {
             <Select
               placeholder="gender..."
               options={GENDER_LIST}
-              onChange={e => setGender(e.label)}
+              onChange={e => setGender(e.value)}
             />
           </FormGroup>
         </Col>
@@ -309,7 +317,20 @@ const PatientDetails = props => {
             />
           </FormGroup>
         </Col>
-        <Col md={6}>
+        <Col md={3}>
+          <FormGroup>
+            <Label>Date of Birth:</Label>
+            <Input
+              type="date"
+              value={textInputs.dobHolder}
+              disabled={isSameHolder}
+              placeholder="date of birth..."
+              onChange={handleTextInputChange}
+              required
+            />
+          </FormGroup>
+        </Col>
+        <Col md={3}>
           <FormGroup>
             <Label>Phone number:</Label>
             <Input

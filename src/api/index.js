@@ -1,9 +1,11 @@
 import docxtemplater from 'docxtemplater'
-import JSZipUtils from 'jszip-utils'
-import { saveAs } from 'file-saver'
-import JSZip from 'jszip'
 import DocxMerger from 'docx-merger'
+import JSZipUtils from 'jszip-utils'
+import JSZip from 'jszip'
 import moment from 'moment'
+
+import { saveAs } from 'file-saver'
+
 import {
   DATE_FORMAT,
   CODE_97110,
@@ -27,6 +29,60 @@ const newLineMapping = {
   5: 10,
 }
 
+export const generateFile = (pages, patient) => {
+  const listPages = [...pages]
+  const result = []
+
+  loadFile(process.env.REACT_APP_URL_DOCX, (error, content) => {
+    if (error) {
+      throw error
+    }
+
+    listPages.forEach(page => {
+      let servicesMain = page.services.filter((element, index) => index <= 5)
+      let insertData = {
+        ...patient,
+        dobPatient: moment(patient.dobPatient).format('MMDDYYYY'),
+        dobHolder: moment(patient.dobHolder).format('MMDDYYYY'),
+        accidentDate: moment(patient.accidentDate).format('MM DD YYYY'),
+        policyNumber: patient.policyNumber
+          ? patient.policyNumber
+          : 'POLICY NUMBER',
+        services: getServicesTemplate(servicesMain),
+        remain: getRemainDiagnoses(page.diagnoses),
+        ...getDiagnosesList(page.diagnoses),
+        ...getDoctorFormat(page.doctor),
+        sum_: calculateSum(servicesMain),
+        dv: moment(page.dateReceipt).format('MMDDYYYY'),
+        ...getOfficeFormat(page.officeAddress),
+      }
+
+      if (page.services.length <= 6) {
+        insertData['nl'] = generateEmptyLine(page.services.length)
+      }
+
+      result.push(renderData(content, insertData))
+
+      if (page.services.length > 6) {
+        const servicesRemain = page.services.filter(
+          (element, index) => index > 5
+        )
+        insertData['nl'] = generateEmptyLine(servicesRemain.length)
+        insertData['services'] = getServicesTemplate(servicesRemain)
+        insertData['sum_'] = calculateSum(servicesRemain)
+        result.push(renderData(content, insertData))
+      }
+    })
+
+    var docx = new DocxMerger({}, result)
+    const dateTimeCreate = moment(Date.now()).format(DATE_FORMAT)
+    const outputName = `report_${dateTimeCreate}.docx`
+    docx.save('blob', function(data) {
+      saveAs(data, outputName)
+    })
+  })
+}
+
 const loadFile = (url, callback) => {
   JSZipUtils.getBinaryContent(url, callback)
 }
@@ -46,13 +102,6 @@ const renderData = (content, data) => {
   try {
     doc.render()
   } catch (error) {
-    const e = {
-      message: error.message,
-      name: error.name,
-      stack: error.stack,
-      properties: error.properties,
-    }
-    console.log(JSON.stringify({ error: e })) // TODO: DELETE
     throw error
   }
 
@@ -142,54 +191,4 @@ const getOfficeFormat = office => {
     of_1: office.substr(0, indexSub),
     of_2: office.substr(indexSub + 1),
   }
-}
-
-export const generateFile = (pages, patient) => {
-  const listPages = [].concat(pages)
-  const result = []
-
-  loadFile(process.env.REACT_APP_URL_DOCX, (error, content) => {
-    if (error) {
-      throw error
-    }
-
-    listPages.forEach(page => {
-      let servicesMain = page.services.filter((element, index) => index <= 5)
-      let insertData = {
-        ...patient,
-        dobPatient: moment(patient.dobPatient).format('MMDDYYYY'),
-        accidentDate: moment(patient.dateReceipt).format('MM DD YYYY'),
-        services: getServicesTemplate(servicesMain),
-        remain: getRemainDiagnoses(page.diagnoses),
-        ...getDiagnosesList(page.diagnoses),
-        ...getDoctorFormat(page.doctor),
-        sum_: calculateSum(servicesMain),
-        dv: moment(page.dateReceipt).format('MMDDYYYY'),
-        ...getOfficeFormat(page.officeAddress),
-      }
-
-      if (page.services.length <= 6) {
-        insertData['nl'] = generateEmptyLine(page.services.length)
-      }
-
-      result.push(renderData(content, insertData))
-
-      if (page.services.length > 6) {
-        const servicesRemain = page.services.filter(
-          (element, index) => index > 5
-        )
-        insertData['nl'] = generateEmptyLine(servicesRemain.length)
-        insertData['services'] = getServicesTemplate(servicesRemain)
-        insertData['sum_'] = calculateSum(servicesRemain)
-        result.push(renderData(content, insertData))
-      }
-    })
-
-    var docx = new DocxMerger({}, result)
-    const dateTimeCreate = moment(Date.now()).format(DATE_FORMAT)
-    const outputName = `report_${dateTimeCreate}.docx`
-    docx.save('blob', function(data) {
-      saveAs(data, outputName)
-    })
-  })
 }

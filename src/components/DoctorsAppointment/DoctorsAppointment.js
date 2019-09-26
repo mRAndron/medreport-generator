@@ -140,7 +140,7 @@ const DoctorsAppointment = props => {
               patient={
                 idPatient && {
                   id: idPatient,
-                  services: patients[idPatient].services,
+                  diagnoses: patients[idPatient].diagnoses,
                 }
               }
             />
