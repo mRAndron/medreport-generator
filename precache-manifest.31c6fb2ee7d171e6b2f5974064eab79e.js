@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "afee904d3822e99e90566f9e14b44d3f",
+    "revision": "68a0ffbe5516d8fd0817f0bfc94231d5",
     "url": "/medreport-generator/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/medreport-generator/static/css/2.d7aff942.chunk.css"
   },
   {
-    "revision": "45aca05112419d752fcf",
+    "revision": "99a2ad90ed62ea96ce3a",
     "url": "/medreport-generator/static/css/main.5417884f.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/medreport-generator/static/js/2.b84a0885.chunk.js"
   },
   {
-    "revision": "45aca05112419d752fcf",
-    "url": "/medreport-generator/static/js/main.86145146.chunk.js"
+    "revision": "99a2ad90ed62ea96ce3a",
+    "url": "/medreport-generator/static/js/main.7f1b45e9.chunk.js"
   },
   {
     "revision": "562bfe434ddbe25cc64a",
