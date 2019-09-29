@@ -17,8 +17,6 @@ import {
 import {
   GENDER_LIST,
   USA_STATES,
-  RELATIONSHIP_LIST,
-  INSURANCE_LIST,
   REPEAT_TEXT_INPUTS,
 } from '@/constants/mainForm'
 import { ERROR_FILL, SUCCES_ADD_PATIENT, ERROR_EXIST } from '@/constants/app'
@@ -181,7 +179,7 @@ const PatientDetails = props => {
             <Select
               name="insuranceName"
               placeholder="..."
-              options={INSURANCE_LIST}
+              options={window.insuranceList}
               onChange={e => setInsuranceName(e.value)}
             />
           </FormGroup>
@@ -265,7 +263,7 @@ const PatientDetails = props => {
             <Select
               placeholder="gender..."
               options={GENDER_LIST}
-              onChange={e => setGender(e.value)}
+              onChange={e => setGender(e.label)}
             />
           </FormGroup>
         </Col>
@@ -393,7 +391,7 @@ const PatientDetails = props => {
             <Label>Patient to relationship to insured:</Label>
             <Select
               placeholder="..."
-              options={RELATIONSHIP_LIST}
+              options={window.relationshipList}
               onChange={e => setRelastionship(e.value)}
             />
           </FormGroup>

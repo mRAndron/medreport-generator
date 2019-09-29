@@ -9,7 +9,7 @@ const MenuDiagnoses = ({ defaultProps }) => {
   const optionSelectedLength = defaultProps.getValue().length || 0
   return (
     <components.Menu {...defaultProps}>
-      {optionSelectedLength <= MAX_COUNT ? (
+      {optionSelectedLength < MAX_COUNT ? (
         defaultProps.children
       ) : (
         <div style={{ margin: 15 }}>Max limit achieved</div>

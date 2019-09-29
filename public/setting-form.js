@@ -1,4 +1,15 @@
-window.insuranceList = [{ value: 'STATEFARM', label: 'STATEFARM' }]
+window.insuranceList = [
+  { value: 'STATEFARM', label: 'STATEFARM' },
+  { value: 'GEICO', label: 'GEICO' },
+  { value: 'LIBERTY MUTUAL', label: 'LIBERTY MUTUAL' },
+]
+
+window.relationshipList = [
+  { value: 'Selа', label: 'Selа' },
+  { value: 'Spouse', label: 'Spouse' },
+  { value: 'Child', label: 'Child' },
+  { value: 'Other', label: 'Other' },
+]
 
 window.doctorList = [
   {
