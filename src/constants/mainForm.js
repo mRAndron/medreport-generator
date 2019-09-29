@@ -90,20 +90,8 @@ export const REPEAT_TEXT_INPUTS = [
 ]
 
 export const GENDER_LIST = [
-  { value: 'M', label: 'Male' },
-  { value: 'F', label: 'Female' },
-]
-
-export const INSURANCE_LIST = [
-  { value: 'STATEFARM', label: 'STATEFARM' },
-  { value: 'GEICO', label: 'GEICO' },
-]
-
-export const RELATIONSHIP_LIST = [
-  { value: 'Selа', label: 'Selа' },
-  { value: 'Spouse', label: 'Spouse' },
-  { value: 'Child', label: 'Child' },
-  { value: 'Other', label: 'Other' },
+  { value: 'm', label: 'male' },
+  { value: 'f', label: 'female' },
 ]
 
 export const COUT_DAYS = [

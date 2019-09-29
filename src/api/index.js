@@ -42,12 +42,12 @@ export const generateFile = (pages, patient) => {
       let servicesMain = page.services.filter((element, index) => index <= 5)
       let insertData = {
         ...patient,
+        hasGen: checkLine(patient.gender),
+        hasRe: checkLine(patient.relastionship),
         dobPatient: moment(patient.dobPatient).format('MMDDYYYY'),
         dobHolder: moment(patient.dobHolder).format('MMDDYYYY'),
         accidentDate: moment(patient.accidentDate).format('MM DD YYYY'),
-        policyNumber: patient.policyNumber
-          ? patient.policyNumber
-          : 'POLICY NUMBER',
+        policyNumber: patient.policyNumber,
         services: getServicesTemplate(servicesMain),
         remain: getRemainDiagnoses(page.diagnoses),
         ...getDiagnosesList(page.diagnoses),
@@ -177,9 +177,8 @@ const getServicesTemplate = services => {
     ) {
       element.pfx = '25'
     }
-    element.priceView = (
-      parseFloat(element.quantity) * parseFloat(element.price)
-    ).toFixed(2)
+    let quantity = element.quantity === '1/2' ? 0.5 : element.quantity
+    element.priceView = (parseFloat(element.price) * quantity).toFixed(2)
   })
 
   return result
@@ -192,3 +191,5 @@ const getOfficeFormat = office => {
     of_2: office.substr(indexSub + 1),
   }
 }
+
+const checkLine = line => line.length < 6
