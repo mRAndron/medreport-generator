@@ -42,8 +42,8 @@ export const generateFile = (pages, patient) => {
       let servicesMain = page.services.filter((element, index) => index <= 5)
       let insertData = {
         ...patient,
-        hasGen: checkLine(patient.gender),
-        hasRe: checkLine(patient.relastionship),
+        hasGen: patient.gender === 'female',
+        hasG: patient.gender !== 'female',
         dobPatient: moment(patient.dobPatient).format('MMDDYYYY'),
         dobHolder: moment(patient.dobHolder).format('MMDDYYYY'),
         accidentDate: moment(patient.accidentDate).format('MM DD YYYY'),
@@ -191,5 +191,3 @@ const getOfficeFormat = office => {
     of_2: office.substr(indexSub + 1),
   }
 }
-
-const checkLine = line => line.length < 6
