@@ -40,6 +40,7 @@ export const generateFile = (pages, patient) => {
 
     listPages.forEach(page => {
       let servicesMain = page.services.filter((element, index) => index <= 5)
+      console.log(patient.relastionship)
       let insertData = {
         ...patient,
         hasGen: patient.gender === 'female',
@@ -54,6 +55,10 @@ export const generateFile = (pages, patient) => {
         ...getDoctorFormat(page.doctor),
         sum_: calculateSum(servicesMain),
         dv: moment(page.dateReceipt).format('MMDDYYYY'),
+        hasSela: patient.relastionship === 'Selа',
+        hasSpouse: patient.relastionship === 'Spouse',
+        hasChild: patient.relastionship === 'Child',
+        hasOther: patient.relastionship === 'Other',
         ...getOfficeFormat(page.officeAddress),
       }
 
