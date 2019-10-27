@@ -320,6 +320,7 @@ const PatientDetails = props => {
             <Label>Date of Birth:</Label>
             <Input
               type="date"
+              name="dobHolder"
               value={textInputs.dobHolder}
               disabled={isSameHolder}
               placeholder="date of birth..."
