@@ -417,7 +417,11 @@ const PatientDetails = props => {
                 type="switch"
                 id="employment"
                 label="EMPLOYMENT? (Courrent or Previous)"
-                onChange={() => setEmployment(!isEmployment)}
+                onChange={() => {
+                  setEmployment(!isEmployment)
+                  setAutoAccident(false)
+                  setOtherAccident(false)
+                }}
                 checked={isEmployment}
               />
               <Row>
@@ -426,7 +430,11 @@ const PatientDetails = props => {
                     type="switch"
                     id="auto"
                     label="AUTO ACCIDENT?"
-                    onChange={() => setAutoAccident(!isAutoAccident)}
+                    onChange={() => {
+                      setAutoAccident(!isAutoAccident)
+                      setEmployment(false)
+                      setOtherAccident(false)
+                    }}
                     checked={isAutoAccident}
                   />
                 </Col>
@@ -446,7 +454,11 @@ const PatientDetails = props => {
                 id="other"
                 label="OTHER ACCIDENT?"
                 checked={isOtherAccident}
-                onChange={() => setOtherAccident(!isOtherAccident)}
+                onChange={() => {
+                  setOtherAccident(!isOtherAccident)
+                  setEmployment(false)
+                  setAutoAccident(false)
+                }}
               />
             </div>
           </FormGroup>
