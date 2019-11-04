@@ -193,6 +193,6 @@ const getOfficeFormat = office => {
   const indexSub = office.search(/JACKSONVILLE/i)
   return {
     of_1: office.substr(0, indexSub),
-    of_2: office.substr(indexSub + 1),
+    of_2: office.substr(indexSub),
   }
 }
