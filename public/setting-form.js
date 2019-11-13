@@ -36,6 +36,14 @@ window.doctorList = [
     },
     label: 'T. GENTRY',
   },
+  {
+    value: {
+      name: 'DR.CHRISTOPHER POLK',
+      npi: '1255851002',
+      signature: 'CH12226',
+    },
+    label: 'DR.CHRISTOPHER POLK',
+  },
 ]
 
 window.officeAddressList = [

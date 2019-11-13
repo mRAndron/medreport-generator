@@ -46,6 +46,7 @@ const PatientDetails = props => {
   const [holderState, setHolderState] = useState('FL')
   const [insuranceName, setInsuranceName] = useState('')
   const [gender, setGender] = useState('')
+  const [genderHolder, setGenderHolder] = useState('')
   const [relastionship, setRelastionship] = useState('')
   const [isSameHolder, setSameHolder] = useState(true)
   const [isEmployment, setEmployment] = useState(false)
@@ -118,7 +119,12 @@ const PatientDetails = props => {
 
   const checkValid = () => {
     return (
-      patientState && holderState && insuranceName && gender && relastionship
+      patientState &&
+      holderState &&
+      insuranceName &&
+      gender &&
+      genderHolder &&
+      relastionship
     )
   }
 
@@ -132,6 +138,7 @@ const PatientDetails = props => {
           holderState: holderState,
           insuranceName: insuranceName,
           gender: gender,
+          genderHolder: genderHolder,
           relastionship: relastionship,
           isSameHolder: isSameHolder,
           isEmployment: isEmployment,
@@ -290,7 +297,17 @@ const PatientDetails = props => {
             </Label>
           </FormGroup>
         </Col>
-        <Col md={6}>
+        <Col md={3}>
+          <FormGroup>
+            <Label>Gender:</Label>
+            <Select
+              placeholder="gender..."
+              options={GENDER_LIST}
+              onChange={e => setGenderHolder(e.label)}
+            />
+          </FormGroup>
+        </Col>
+        <Col md={3}>
           <FormGroup>
             <Label>Palicy Number:</Label>
             <Input
@@ -419,8 +436,6 @@ const PatientDetails = props => {
                 label="EMPLOYMENT? (Courrent or Previous)"
                 onChange={() => {
                   setEmployment(!isEmployment)
-                  setAutoAccident(false)
-                  setOtherAccident(false)
                 }}
                 checked={isEmployment}
               />
@@ -432,8 +447,6 @@ const PatientDetails = props => {
                     label="AUTO ACCIDENT?"
                     onChange={() => {
                       setAutoAccident(!isAutoAccident)
-                      setEmployment(false)
-                      setOtherAccident(false)
                     }}
                     checked={isAutoAccident}
                   />
@@ -456,8 +469,6 @@ const PatientDetails = props => {
                 checked={isOtherAccident}
                 onChange={() => {
                   setOtherAccident(!isOtherAccident)
-                  setEmployment(false)
-                  setAutoAccident(false)
                 }}
               />
             </div>

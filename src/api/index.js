@@ -40,11 +40,15 @@ export const generateFile = (pages, patient) => {
 
     listPages.forEach(page => {
       let servicesMain = page.services.filter((element, index) => index <= 5)
-      console.log(patient.relastionship)
+      console.log(patient)
       let insertData = {
         ...patient,
         hasGen: patient.gender === 'female',
         hasG: patient.gender !== 'female',
+        hasH: patient.genderHolder === 'female',
+        hasEmp: !patient.isEmployment,
+        hasEmpp: patient.isEmployment,
+        hasOth: !patient.isOtherAccident,
         dobPatient: moment(patient.dobPatient).format('MMDDYYYY'),
         dobHolder: moment(patient.dobHolder).format('MMDDYYYY'),
         accidentDate: moment(patient.accidentDate).format('MM DD YYYY'),
