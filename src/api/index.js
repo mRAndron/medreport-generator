@@ -49,6 +49,8 @@ export const generateFile = (pages, patient) => {
         hasEmp: !patient.isEmployment,
         hasEmpp: patient.isEmployment,
         hasOth: !patient.isOtherAccident,
+        hasAu: patient.isAutoAccident,
+        hasA: !patient.isAutoAccident,
         dobPatient: moment(patient.dobPatient).format('MMDDYYYY'),
         dobHolder: moment(patient.dobHolder).format('MMDDYYYY'),
         accidentDate: moment(patient.accidentDate).format('MM DD YYYY'),
