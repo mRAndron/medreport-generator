@@ -1,1 +1,0 @@
-export { MainForm } from './MainForm'

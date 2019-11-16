@@ -1,1 +1,0 @@
-export { SelectDiagnoses } from './SelectDiagnoses'

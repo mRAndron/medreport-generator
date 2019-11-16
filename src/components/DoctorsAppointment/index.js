@@ -1,1 +1,0 @@
-export { DoctorsAppointment } from './DoctorsAppointment'

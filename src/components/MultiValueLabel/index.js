@@ -1,1 +1,0 @@
-export { MultiValueLabel } from './MultiValueLabel'
