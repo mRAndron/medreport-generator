@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Container } from 'reactstrap';
+import { Container } from 'semantic-ui-react';
 
 import './styles.scss';
 
@@ -9,12 +9,8 @@ interface IProps {
   className?: string;
 }
 
-const Page: React.FC<IProps> = ({children}) => {
-  return (
-    <Container className='page'>
-      {children}
-    </Container>
-  );
+const Page: React.FC<IProps> = ({ children }) => {
+  return <Container className="page">{children}</Container>;
 };
 
 export { Page };
