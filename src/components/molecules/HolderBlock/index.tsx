@@ -29,7 +29,6 @@ const HolderBlock: React.FC<IProps> = (props) => {
           fluid
           label="Palicy Number:"
           placeholder="palicy number"
-          required
         />
       </Form.Group>
       <Form.Group>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Tab } from 'semantic-ui-react';
-import { PatientDetails } from '../../organisms/PatientDetails';
+import PatientDetails from '../../organisms/PatientDetails/container';
 
 const panes = [
   {
