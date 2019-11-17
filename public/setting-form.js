@@ -296,6 +296,11 @@ window.diagnosesList = [
   },
 ];
 
+window.genderList = [
+  { value: 'Male', text: 'Male' },
+  { value: 'Female', text: 'Female' },
+];
+
 window.servicesList = [
   {
     text: '97014',
