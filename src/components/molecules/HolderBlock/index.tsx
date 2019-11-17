@@ -33,7 +33,9 @@ const HolderBlock: React.FC<IProps> = (props) => {
         />
       </Form.Group>
       <Form.Group>
-        <Form.Checkbox label='the name of the insurer matches the name of the patient'></Form.Checkbox>
+        <Form.Checkbox
+          label='the name of the insurer matches the name of the patient'
+        />
       </Form.Group>
       <Form.Group>
         <Form.Input
@@ -51,7 +53,7 @@ const HolderBlock: React.FC<IProps> = (props) => {
           required
         />
         <Form.Field>
-          <DatePicker />
+          <DatePicker label='Date of Birth:' />
         </Form.Field>
       </Form.Group>
       <Form.Group widths="equal">

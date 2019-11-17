@@ -5,14 +5,15 @@ import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 
 interface IProps {
   className?: string;
+  label?: string;
   callback?: () => void;
 }
 
-const DatePicker: React.FC<IProps> = ({callback}) => {
+const DatePicker: React.FC<IProps> = ({label, callback}) => {
   return (
     <SemanticDatepicker
       type="basic"
-      label="Date of Birth:"
+      label={label}
       locale="en-US"
       onChange={callback}
       required

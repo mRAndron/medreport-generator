@@ -7,6 +7,7 @@ declare global {
     insuranceList: any;
     states: any;
     genderList: any;
+    relationshipList: any;
   }
 }
 
@@ -66,7 +67,7 @@ const PatientBlock: React.FC<IProps> = (props) => {
           required
         />
         <Form.Field>
-          <DatePicker />
+          <DatePicker label='Date of Birth:' />
         </Form.Field>
         <Form.Select
           width={6}
