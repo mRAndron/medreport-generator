@@ -21,7 +21,8 @@
     "deploy": "gh-pages -d build",
     "eject": "react-scripts eject",
     "eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx src",
-    "eslint:dump": "eslint --print-config ./.eslintrc.json"
+    "eslint:dump": "eslint --print-config ./.eslintrc.json",
+    "precommit": "lint-staged"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.148",
+    "@types/reactstrap": "^8.0.6",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
     "@typescript-eslint/parser": "^2.7.0",
     "bootstrap": "^4.3.1",
@@ -62,8 +64,7 @@
     "moment": "^2.24.0",
     "node-sass": "^4.13.0",
     "prettier": "^1.19.1",
-    "react-select": "^3.0.8",
-    "reactstrap": "^8.1.1"
+    "react-select": "^3.0.8"
   },
   "lint-staged": {
     "*.{ts, tsx}": [
