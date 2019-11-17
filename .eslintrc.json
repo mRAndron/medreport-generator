@@ -19,8 +19,7 @@
   },
   "plugins": [
     "@typescript-eslint",
-    "prettier",
-    "babel"
+    "prettier"
   ],
   "rules": {
     "no-console": "error",
