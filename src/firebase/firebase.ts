@@ -2,6 +2,7 @@ import app from 'firebase/app';
 import 'firebase/database';
 
 import { config } from './config';
+import {Patient} from '../components/organisms/PatientDetails/types'
 
 class Firebase {
   private static instance: Firebase;
@@ -18,6 +19,10 @@ class Firebase {
       Firebase.instance = new Firebase();
     }
     return Firebase.instance;
+  }
+
+  public createPatient = (patient: Patient): void => {
+    this.db.ref('patients').push(patient);
   }
 }
 

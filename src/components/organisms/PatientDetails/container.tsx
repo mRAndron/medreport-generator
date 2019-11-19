@@ -6,17 +6,7 @@ import { setField } from './actions';
 import { PatientDetails } from './index';
 
 const mapStateToProps = (state: AppState) => ({
-  holderInfo: {
-    holderName: state.patientDetails.holderName,
-    holderAddress: state.patientDetails.holderAddress,
-    holderCity: state.patientDetails.holderCity,
-    holderZip: state.patientDetails.holderZip,
-    holderPhone: state.patientDetails.holderPhone,
-    holderState: state.patientDetails.holderState,
-    holderGender: state.patientDetails.holderGender,
-    holderDob: state.patientDetails.holderDob,
-  },
-  isSameHolder: state.patientDetails.isSameHolder,
+  patient: state.patientDetails,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
