@@ -22,7 +22,7 @@ export interface Patient {
   isAutoAccident: boolean;
   isOtherAccident: boolean;
   stateAccident: string;
-  relastionship: SelectFild;
+  relationship: SelectFild;
   accidentDate: null | Date;
 }
 

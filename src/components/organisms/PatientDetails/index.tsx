@@ -25,7 +25,7 @@ const PatientDetails: React.FC<IProps> = ({
         holderInfo={holderInfo}
         setField={setField}
       />
-      <AccidentBlock />
+      <AccidentBlock setField={setField} />
     </Form>
   );
 };

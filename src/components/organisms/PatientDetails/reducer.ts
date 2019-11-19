@@ -22,7 +22,7 @@ const initialState: Patient = {
   holderDob: null,
   accidentDate: null,
   stateAccident: 'FL',
-  relastionship: { text: '', value: '' },
+  relationship: { text: '', value: '' },
   isEmployment: false,
   isAutoAccident: true,
   isOtherAccident: false,
