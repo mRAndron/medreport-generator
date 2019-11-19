@@ -76,6 +76,7 @@ const PatientBlock: React.FC<IProps> = ({ isSameHolder, setField }) => {
           options={window.insuranceList}
           placeholder="insurance name"
           onChange={handleSelectChange}
+          defaultValue='STATEFARM'
           required
         />
       </Form.Group>
@@ -96,6 +97,7 @@ const PatientBlock: React.FC<IProps> = ({ isSameHolder, setField }) => {
           label="City:"
           placeholder="city"
           onChange={handleTextChange}
+          defaultValue='Jacksonville'
           required
         />
         <Form.Select
@@ -105,6 +107,7 @@ const PatientBlock: React.FC<IProps> = ({ isSameHolder, setField }) => {
           options={window.states}
           placeholder="state"
           onChange={handleSelectChange}
+          defaultValue="FL"
           required
         />
         <Form.Input
@@ -141,6 +144,7 @@ const PatientBlock: React.FC<IProps> = ({ isSameHolder, setField }) => {
           options={window.genderList}
           placeholder="gender"
           onChange={handleSelectChange}
+          defaultValue='Male'
           required
         />
       </Form.Group>

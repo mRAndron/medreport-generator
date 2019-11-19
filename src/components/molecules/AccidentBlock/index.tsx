@@ -47,6 +47,7 @@ const AccidentBlock: React.FC<IProps> = ({ setField }) => {
           options={window.relationshipList}
           placeholder="relationship"
           onChange={handleSelectChange}
+          defaultValue="Selа"
           required
         />
         <DatePicker

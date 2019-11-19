@@ -135,7 +135,7 @@ const HolderBlock: React.FC<IProps> = ({
           label="State:"
           options={window.states}
           placeholder="state"
-          value={holderInfo.holderState.text}
+          value={holderInfo.holderState.value}
           onChange={handleSelectChange}
           disabled={isSameHolder}
           required

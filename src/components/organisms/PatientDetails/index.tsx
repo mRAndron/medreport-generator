@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Form } from 'semantic-ui-react';
+import { Button, Form, FormProps } from 'semantic-ui-react';
 import { PatientBlock } from '../../molecules/PatientBlock';
 import { HolderBlock } from '../../molecules/HolderBlock';
 import { AccidentBlock } from '../../molecules/AccidentBlock';
@@ -17,8 +17,16 @@ const PatientDetails: React.FC<IProps> = ({
   holderInfo,
   setField,
 }) => {
+  const onSubmit = (
+    event: React.FormEvent<HTMLFormElement>,
+    data: FormProps
+  ): void => {
+    event.preventDefault();
+    console.log('ee');
+  };
+
   return (
-    <Form>
+    <Form onSubmit={onSubmit}>
       <PatientBlock isSameHolder={isSameHolder} setField={setField} />
       <HolderBlock
         isSameHolder={isSameHolder}
@@ -26,6 +34,7 @@ const PatientDetails: React.FC<IProps> = ({
         setField={setField}
       />
       <AccidentBlock setField={setField} />
+      <Button>Submit</Button>
     </Form>
   );
 };
