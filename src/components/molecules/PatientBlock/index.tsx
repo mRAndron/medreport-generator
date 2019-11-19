@@ -3,12 +3,14 @@ import { Form, DropdownProps } from 'semantic-ui-react';
 import { DatePicker } from '../../atoms/DatePicker';
 import { HOLDER_FIELDS } from '../../organisms/PatientDetails/constants'
 
-declare global {
+declare global { //TODO: DELETE
   interface Window {
     insuranceList: any;
     states: any;
     genderList: any;
     relationshipList: any;
+    diagnosesList: any;
+    servicesList: any;
   }
 }
 

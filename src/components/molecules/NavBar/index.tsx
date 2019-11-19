@@ -1,11 +1,16 @@
 import * as React from 'react';
 import { Tab } from 'semantic-ui-react';
 import PatientDetails from '../../organisms/PatientDetails/container';
+import DoctorsAppointment from '../../organisms/DoctorsAppointment/container';
 
 const panes = [
   {
     menuItem: "Doctor's Appointment",
-    render: () => <Tab.Pane>Doctor's Appointment</Tab.Pane>,
+    render: () => (
+      <Tab.Pane>
+        <DoctorsAppointment />
+      </Tab.Pane>
+    ),
   },
   {
     menuItem: 'Patient Details',
