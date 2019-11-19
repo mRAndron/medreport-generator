@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Form } from 'semantic-ui-react';
-import { DatePicker } from '../../atoms/DatePicker'
+import { DatePicker } from '../../atoms/DatePicker';
 
 interface IProps {
   className?: string;
 }
 
-const AccidentBlock: React.FC<IProps> = (props) => {
+const AccidentBlock: React.FC<IProps> = props => {
   return (
     <React.Fragment>
       <Form.Group>
@@ -18,27 +18,17 @@ const AccidentBlock: React.FC<IProps> = (props) => {
           placeholder="relationship"
           required
         />
-        <DatePicker label='Accident date:' />
+        <DatePicker label="Accident date:" />
       </Form.Group>
       <Form.Group>
-        <Form.Checkbox
-          label='Employment? (Courrent or Previous)'
-        />
+        <Form.Checkbox label="Employment? (Courrent or Previous)" />
       </Form.Group>
       <Form.Group>
-        <Form.Checkbox
-          label='Auto accident?'
-        />
-        <Form.Input
-          fluid
-          size='mini'
-          label="State:"
-        />
+        <Form.Checkbox label="Auto accident?" />
+        <Form.Input fluid size="mini" label="State:" />
       </Form.Group>
       <Form.Group>
-        <Form.Checkbox
-          label='Other accident?'
-        />
+        <Form.Checkbox label="Other accident?" />
       </Form.Group>
     </React.Fragment>
   );

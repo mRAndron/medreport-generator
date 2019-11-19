@@ -1,11 +1,11 @@
 //import { SelectFild } from './types';
 //import _ from 'lodash';
 
-export const SET_PATIENT_FIELD: string = 'SET_PATIENT_FIELD';
+export const SET_FIELD: string = 'SET_FIELD';
 
-export const setPatientField = (field: any) => {
+export const setField = (field: any) => {
   return {
-    type: SET_PATIENT_FIELD,
+    type: SET_FIELD,
     field,
   };
 };

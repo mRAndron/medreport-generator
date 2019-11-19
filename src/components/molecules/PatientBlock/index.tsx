@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Form, DropdownProps } from 'semantic-ui-react';
 import { DatePicker } from '../../atoms/DatePicker';
-import { PatientInfo } from '../../organisms/PatientDetails/types';
+import { HOLDER_FIELDS } from '../../organisms/PatientDetails/constants'
 
 declare global {
   interface Window {
@@ -14,21 +14,41 @@ declare global {
 
 interface IProps {
   className?: string;
-  patient: PatientInfo;
-  setPatientField: (field: any) => any;
+  isSameHolder: boolean;
+  setField: (field: any) => any;
 }
 
-const PatientBlock: React.FC<IProps> = ({ patient, setPatientField }) => {
+const PatientBlock: React.FC<IProps> = ({ isSameHolder, setField }) => {
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
-    setPatientField({[name]: value });
+    setField({ [name]: value });
+    if (isSameHolder && checkSameHolderFields(name)) {
+      const fieldName = `holder${capitalizeFirstLetter(name)}`;
+      setField({ [fieldName]: value });
+    }
   }
 
-  const handleSelectChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
+  const handleSelectChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps): void => {
     const { name, value } = data
-    setPatientField({[name]: {text: value, value: value} });
+    setField({ [name]: { text: value, value: value } });
+    if (isSameHolder && checkSameHolderFields(name)) {
+      const fieldName = `holder${capitalizeFirstLetter(name)}`;
+      setField({ [fieldName]: { text: value, value: value } });
+    }
   }
 
+  const handleDateChange = (event: any, data: any): void => {
+    const { name, value } = data
+    setField({ [name]: value });
+    if (isSameHolder && checkSameHolderFields(name)) {
+      const fieldName = `holder${capitalizeFirstLetter(name)}`;
+      setField({ [fieldName]: value });
+    }
+  }
+
+  const checkSameHolderFields = (field: string): boolean => HOLDER_FIELDS.includes(field);
+
+  const capitalizeFirstLetter = (field: string): string => field.charAt(0).toUpperCase() + field.slice(1);
 
   return (
     <React.Fragment>
@@ -38,7 +58,6 @@ const PatientBlock: React.FC<IProps> = ({ patient, setPatientField }) => {
           fluid
           label="Patient name:"
           placeholder="patient name"
-          value={patient.name}
           onChange={handleTextChange}
           required
         />
@@ -47,7 +66,6 @@ const PatientBlock: React.FC<IProps> = ({ patient, setPatientField }) => {
           fluid
           label="Social Security Number (SSN):"
           placeholder="ssn"
-          value={patient.ssn}
           onChange={handleTextChange}
           required
         />
@@ -67,7 +85,6 @@ const PatientBlock: React.FC<IProps> = ({ patient, setPatientField }) => {
           fluid
           label="Address patient:"
           placeholder="address patient"
-          value={patient.address}
           onChange={handleTextChange}
           required
         />
@@ -78,7 +95,6 @@ const PatientBlock: React.FC<IProps> = ({ patient, setPatientField }) => {
           fluid
           label="City:"
           placeholder="city"
-          value={patient.city}
           onChange={handleTextChange}
           required
         />
@@ -96,7 +112,6 @@ const PatientBlock: React.FC<IProps> = ({ patient, setPatientField }) => {
           fluid
           label="Zip:"
           placeholder="zip"
-          value={patient.zip}
           onChange={handleTextChange}
           required
         />
@@ -108,12 +123,15 @@ const PatientBlock: React.FC<IProps> = ({ patient, setPatientField }) => {
           fluid
           label="Phone number:"
           placeholder="phone number"
-          value={patient.phone}
           onChange={handleTextChange}
           required
         />
         <Form.Field>
-          <DatePicker label='Date of Birth:' value={patient.dob} />
+          <DatePicker
+            name="dob"
+            label='Date of Birth:'
+            onChange={handleDateChange}
+          />
         </Form.Field>
         <Form.Select
           name="gender"

@@ -3,19 +3,28 @@ import { Form } from 'semantic-ui-react';
 import { PatientBlock } from '../../molecules/PatientBlock';
 import { HolderBlock } from '../../molecules/HolderBlock';
 import { AccidentBlock } from '../../molecules/AccidentBlock';
-import { PatientInfo } from './types';
+import { HolderInfo } from './types';
 
 interface IProps {
   className?: string;
-  patient: PatientInfo;
-  setPatientField: (field: any) => void;
+  isSameHolder: boolean;
+  holderInfo: HolderInfo;
+  setField: (field: any) => any;
 }
 
-const PatientDetails: React.FC<IProps> = ({ patient, setPatientField }) => {
+const PatientDetails: React.FC<IProps> = ({
+  isSameHolder,
+  holderInfo,
+  setField,
+}) => {
   return (
     <Form>
-      <PatientBlock patient={patient} setPatientField={setPatientField} />
-      <HolderBlock />
+      <PatientBlock isSameHolder={isSameHolder} setField={setField} />
+      <HolderBlock
+        isSameHolder={isSameHolder}
+        holderInfo={holderInfo}
+        setField={setField}
+      />
       <AccidentBlock />
     </Form>
   );
