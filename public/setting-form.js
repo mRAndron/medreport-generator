@@ -38,11 +38,11 @@ window.doctorList = [
   },
   {
     value: {
-      name: 'DR.CHRISTOPHER POLK',
+      name: 'C. POLK',
       npi: '1255851002',
       signature: 'CH12226',
     },
-    label: 'DR.CHRISTOPHER POLK',
+    label: 'C. POLK',
   },
 ]
 
