@@ -1,31 +1,11 @@
 window.insuranceList = [
-  { value: 'ALLSTATE', label: 'ALLSTATE' },
-  { value: 'AMICA', label: 'AMICA' },
-  { value: 'ASSURANCE AMERICA', label: 'ASSURANCE AMERICA' },
-  { value: 'BCBS', label: 'BCBS' },
-  { value: 'CENTURY NATIONAL', label: 'CENTURY NATIONAL' },
-  { value: 'DIRECT AUTO', label: 'DIRECT AUTO' },
-  { value: 'EQUITY INS.', label: 'EQUITY INS.' },
-  { value: 'GAINSCO', label: 'GAINSCO' },
-  { value: 'GEICO', label: 'GEICO' },
-  { value: 'GREENWICH INS. CO', label: 'GREENWICH INS. CO' },
-  { value: 'HORACE MANN INS.', label: 'HORACE MANN INS.' },
-  { value: 'HORACE MANN PROP CAS. INS CO.', label: 'HORACE MANN PROP CAS. INS CO.' },
-  { value: 'INFINITY', label: 'INFINITY' },
-  { value: 'LIBERTY MUTUAL', label: 'LIBERTY MUTUAL' }, 
-  { value: 'MERCURY', label: 'MERCURY' },
-  { value: 'OCEAN HARBOR', label: 'OCEAN HARBOR' },
-  { value: 'ONE CALL PHYSICAL THERAPY', label: 'ONE CALL PHYSICAL THERAPY' },
-  { value: 'PEARL HOLDING', label: 'PEARL HOLDING' },
-  { value: 'PROGRESSIVE', label: 'PROGRESSIVE' },
   { value: 'STATEFARM', label: 'STATEFARM' },
-  { value: 'UNITED HEALTH CARE', label: 'UNITED HEALTH CARE' },
-  { value: 'USAA', label: 'USAA' },
-  
+  { value: 'GEICO', label: 'GEICO' },
+  { value: 'LIBERTY MUTUAL', label: 'LIBERTY MUTUAL' },
 ]
 
 window.relationshipList = [
-  { value: 'Selа', label: 'Self' },
+  { value: 'Selа', label: 'Selа' },
   { value: 'Spouse', label: 'Spouse' },
   { value: 'Child', label: 'Child' },
   { value: 'Other', label: 'Other' },
@@ -64,44 +44,20 @@ window.doctorList = [
     },
     label: 'C. POLK',
   },
-  {
-    value: {
-      name: 'C. ASSI',
-      npi: '1447724273',
-      signature: 'CH12563',
-    },
-    label: 'C. ASSI',
-  },
-  {
-    value: {
-      name: 'YALE GORDON',
-      npi: '1801425913',
-      signature: 'CH13083',
-    },
-    label: 'YALE GORDON',
-  },
 ]
 
 window.officeAddressList = [
   {
-    value: '6320 ST. AUGUSTINE RD. #1, JACKSONVILLE, FL 32217',
-    label: '6320 ST. AUGUSTINE RD. #1, JACKSONVILLE, FL 32217',
+    value: '6320 ST. AUGUSTINE RD. #10, JACKSONVILLE, FL 32217',
+    label: '6320 ST. AUGUSTINE RD. #10, JACKSONVILLE, FL 32217',
   },
   {
-    value: '5233 RICKER RD., #102, JACKSONVILLE, FL 32210',
-    label: '5233 RICKER RD., #102, JACKSONVILLE, FL 32210',
+    value: '5233 RICKER RD., STE.102, JACKSONVILLE, FL 32210',
+    label: '5233 RICKER RD., STE.102, JACKSONVILLE, FL 32210',
   },
   {
     value: '2907 SPRING GLEN RD, JACKSONVILLE, FL 32207',
     label: '2907 SPRING GLEN RD, JACKSONVILLE, FL 32207',
-  },
-  {
-    value: '3000 DUNN AVE #13, JACKSONVILLE, FL 32218',
-    label: '3000 DUNN AVE #13, JACKSONVILLE, FL 32218',
-  },
-  {
-    value: '1543 KINGSLEY AVE, #9, ORANGE PARK, FL 32073',
-    label: '1543 KINGSLEY AVE, #9, ORANGE PARK, FL 32073',
   },
 ]
 
@@ -119,16 +75,16 @@ window.diagnosesList = [
     label: 'S13.100A',
   },
   {
-    value: 'S13.4XXA',
-    label: 'S13.4XXA',
+    value: 'S13.4xxA',
+    label: 'S13.4xxA',
   },
   {
     value: 'M47.22',
     label: 'M47.22',
   },
   {
-    value: 'M48.03',
-    label: 'M48.03',
+    value: 'M48.12',
+    label: 'M48.12',
   },
   {
     value: 'M54.12',
@@ -147,12 +103,12 @@ window.diagnosesList = [
     label: 'M99.02',
   },
   {
-    value: 'S23.100A',
-    label: 'S23.100A',
+    value: 'S23.100',
+    label: 'S23.100',
   },
   {
-    value: 'S23.3XXA',
-    label: 'S23.3XXA',
+    value: 'S23.3xxA',
+    label: 'S23.3xxA',
   },
   {
     value: 'M54.14',
@@ -163,16 +119,16 @@ window.diagnosesList = [
     label: 'M54.5',
   },
   {
-    value: 'M99.03',
-    label: 'M99.03',
+    value: 'M99.3',
+    label: 'M99.3',
   },
   {
-    value: 'S33.100A',
-    label: 'S33.100A',
+    value: 'S33.100',
+    label: 'S33.100',
   },
   {
-    value: 'S33.5XXA',
-    label: 'S33.5XXA',
+    value: 'S33.5xxA',
+    label: 'S33.5xxA',
   },
   {
     value: 'M54.41',
@@ -203,8 +159,8 @@ window.diagnosesList = [
     label: 'M99.04',
   },
   {
-    value: 'S33.6XXA',
-    label: 'S33.6XXA',
+    value: 'S33.6xxA',
+    label: 'S33.6xxA',
   },
   {
     value: 'M99.05',
@@ -215,12 +171,12 @@ window.diagnosesList = [
     label: 'M99.07',
   },
   {
-    value: 'S43.401A',
-    label: 'S43.401A',
+    value: 'S43.401',
+    label: 'S43.401',
   },
   {
-    value: 'S43.402A',
-    label: 'S43.402A',
+    value: 'S43.402',
+    label: 'S43.402',
   },
   {
     value: 'M25.511',
@@ -243,12 +199,12 @@ window.diagnosesList = [
     label: 'M99.06',
   },
   {
-    value: 'S73.101A',
-    label: 'S73.101A',
+    value: 'S73.101',
+    label: 'S73.101',
   },
   {
-    value: 'S73.102A',
-    label: 'S73.102A',
+    value: 'S73.102',
+    label: 'S73.102',
   },
   {
     value: 'M25.551',
@@ -263,8 +219,8 @@ window.diagnosesList = [
     label: 'G44.209',
   },
   {
-    value: 'S83.401A',
-    label: 'S83.401A',
+    value: 'S83.401',
+    label: 'S83.401',
   },
   {
     value: 'M25.561',
@@ -275,12 +231,12 @@ window.diagnosesList = [
     label: 'M25.562',
   },
   {
-    value: 'S93.401A',
-    label: 'S93.401A',
+    value: 'S93.401',
+    label: 'S93.401',
   },
   {
-    value: 'S93.402A',
-    label: 'S93.402A',
+    value: 'S93.402',
+    label: 'S93.402',
   },
   {
     value: 'M25.571',
@@ -299,20 +255,20 @@ window.diagnosesList = [
     label: 'M99.08',
   },
   {
-    value: 'S23.41XA',
-    label: 'S23.41XA',
+    value: 'S23.41x',
+    label: 'S23.41x',
   },
   {
-    value: 'S03.4XXA',
-    label: 'S03.4XXA',
+    value: 'S03.4xx',
+    label: 'S03.4xx',
   },
   {
     value: 'M26.629',
     label: 'M26.629',
   },
   {
-    value: 'M79.10',
-    label: 'M79.10',
+    value: 'M79.1',
+    label: 'M79.1',
   },
   {
     value: 'M24.2',
@@ -323,95 +279,21 @@ window.diagnosesList = [
     label: 'M48.30',
   },
   {
-    value: 'S06.0X0A',
-    label: 'S06.0X0A',
+    value: 'S06.0x0',
+    label: 'S06.0x0',
   },
   {
     value: 'R51',
     label: 'R51',
   },
   {
-    value: 'G44.209',
-    label: 'G44.209',
+    value: 'G44.009',
+    label: 'G44.009',
   },
   {
-    value: 'S83.401A',
-    label: 'S83.401A',
+    value: 'S83.401',
+    label: 'S83.401',
   },
-  {
-    value: 'S13.100D',
-    label: 'S13.100D',
-  },
-  {
-    value: 'S13.4XXD',
-    label: 'S13.4XXD',
-  },
-  {
-    value: 'S23.100D',
-    label: 'S23.100D',
-  },
-  {
-    value: 'S23.3XXD',
-    label: 'S23.3XXD',
-  },
-  {
-    value: 'S33.100D',
-    label: 'S33.100D',
-  },
-  {
-    value: 'S33.5XXD',
-    label: 'S33.5XXD',
-  },
-  {
-    value: 'S33.6XXD',
-    label: 'S33.6XXD',
-  },
-  {
-    value: 'S43.401D',
-    label: 'S43.401D',
-  },
-  {
-    value: 'S43.402D',
-    label: 'S43.402D',
-  },
-  {
-    value: 'S73.101D',
-    label: 'S73.101D',
-  },
-  {
-    value: 'S73.102D',
-    label: 'S73.102D',
-  },
-  {
-    value: 'S83.401D',
-    label: 'S83.401D',
-  },
-  {
-    value: 'S93.401D',
-    label: 'S93.401D',
-  },
-  {
-    value: 'S93.402D',
-    label: 'S93.402D',
-  },
-  {
-    value: 'S23.41XD',
-    label: 'S23.41XD',
-  },
-  {
-    value: 'S03.4XXD',
-    label: 'S03.4XXD',
-  },
-  {
-    value: 'S06.0X0D',
-    label: 'S06.0X0D',
-  },
-  {
-    value: 'S83.401D',
-    label: 'S83.401D',
-  },
-  
-  
 ]
 
 window.servicesList = [
@@ -593,24 +475,6 @@ window.servicesList = [
     priceView: 20.0,
     pfx: '',
     _id: 'k19',
-    quantity: 1,
-  },
-    {
-    label: 'A0100',
-    value: 'A0100_20',
-    price: 20.0,
-    priceView: 20.0,
-    pfx: '',
-    _id: 'k20',
-    quantity: 1,
-  },
-  {
-    label: '97022',
-    value: '97022_60',
-    price: 60.0,
-    priceView: 60.0,
-    pfx: '',
-    _id: 'k21',
     quantity: 1,
   },
 ]
