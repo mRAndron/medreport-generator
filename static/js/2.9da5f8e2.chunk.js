@@ -32978,7 +32978,15 @@
 									},
 									a = Object({
 										NODE_ENV: "production",
-										PUBLIC_URL: "/medreport-generator"
+										PUBLIC_URL: "/medreport-generator",
+										REACT_APP_FIREBASE_APP_ID: "1:971351385810:web:91740bf0323dde5e",
+										REACT_APP_FIREBASE_DATABASE: "https://medreport-gen.firebaseio.com",
+										REACT_APP_URL_DOCX: "/medreport-generator/tag-example.docx",
+										REACT_APP_FIREBASE_SENDER_ID: "971351385810",
+										REACT_APP_FIREBASE_DOMAIN: "medreport-gen.firebaseapp.com",
+										REACT_APP_FIREBASE_STORAGE_BUCKET: "",
+										REACT_APP_FIREBASE_KEY: "AIzaSyAiC4RtmDL172Pb0qv6kzRFB233d6w1A3I",
+										REACT_APP_FIREBASE_PROJECT_ID: "medreport-gen"
 									}),
 									u = 0 == this.connURL.indexOf("wss://") ? a.HTTPS_PROXY || a.https_proxy : a.HTTP_PROXY || a.http_proxy;
 								u && (o.proxy = {
@@ -34381,7 +34389,15 @@
 							a = void 0;
 						return "undefined" !== typeof r && (a = Object({
 							NODE_ENV: "production",
-							PUBLIC_URL: "/medreport-generator"
+										PUBLIC_URL: "/medreport-generator",
+										REACT_APP_FIREBASE_APP_ID: "1:971351385810:web:91740bf0323dde5e",
+										REACT_APP_FIREBASE_DATABASE: "https://medreport-gen.firebaseio.com",
+										REACT_APP_URL_DOCX: "/medreport-generator/tag-example.docx",
+										REACT_APP_FIREBASE_SENDER_ID: "971351385810",
+										REACT_APP_FIREBASE_DOMAIN: "medreport-gen.firebaseapp.com",
+										REACT_APP_FIREBASE_STORAGE_BUCKET: "",
+										REACT_APP_FIREBASE_KEY: "AIzaSyAiC4RtmDL172Pb0qv6kzRFB233d6w1A3I",
+										REACT_APP_FIREBASE_PROJECT_ID: "medreport-gen"
 						}).FIREBASE_DATABASE_EMULATOR_HOST), a && (n = "http://" + a + "?ns=" + o.namespace), ue("Invalid Firebase Database URL", 1, i), i.path.isEmpty() || S("Database URL must point to the root of a Firebase Database (not including a child path)."), this.createRepo(o, e).database
 					}, e.prototype.deleteRepo = function(e) {
 						var t = s.safeGet(this.repos_, e.app.name);
@@ -35883,7 +35899,15 @@
 		function Qe(e) {
 			return e instanceof Uint8Array ? (v("YES" === Object({
 				NODE_ENV: "production",
-				PUBLIC_URL: "/medreport-generator"
+										PUBLIC_URL: "/medreport-generator",
+										REACT_APP_FIREBASE_APP_ID: "1:971351385810:web:91740bf0323dde5e",
+										REACT_APP_FIREBASE_DATABASE: "https://medreport-gen.firebaseio.com",
+										REACT_APP_URL_DOCX: "/medreport-generator/tag-example.docx",
+										REACT_APP_FIREBASE_SENDER_ID: "971351385810",
+										REACT_APP_FIREBASE_DOMAIN: "medreport-gen.firebaseapp.com",
+										REACT_APP_FIREBASE_STORAGE_BUCKET: "",
+										REACT_APP_FIREBASE_KEY: "AIzaSyAiC4RtmDL172Pb0qv6kzRFB233d6w1A3I",
+										REACT_APP_FIREBASE_PROJECT_ID: "medreport-gen"
 			}).USE_MOCK_PERSISTENCE, "Persisting non-string stream tokens is only supported with mock persistence."), e.toString()) : e
 		}
 
@@ -35950,7 +35974,15 @@
 					if ("undefined" === typeof window || null == window.indexedDB) return !1;
 					if (void 0 === window.navigator) return "YES" === Object({
 						NODE_ENV: "production",
-						PUBLIC_URL: "/medreport-generator"
+										PUBLIC_URL: "/medreport-generator",
+										REACT_APP_FIREBASE_APP_ID: "1:971351385810:web:91740bf0323dde5e",
+										REACT_APP_FIREBASE_DATABASE: "https://medreport-gen.firebaseio.com",
+										REACT_APP_URL_DOCX: "/medreport-generator/tag-example.docx",
+										REACT_APP_FIREBASE_SENDER_ID: "971351385810",
+										REACT_APP_FIREBASE_DOMAIN: "medreport-gen.firebaseapp.com",
+										REACT_APP_FIREBASE_STORAGE_BUCKET: "",
+										REACT_APP_FIREBASE_KEY: "AIzaSyAiC4RtmDL172Pb0qv6kzRFB233d6w1A3I",
+										REACT_APP_FIREBASE_PROJECT_ID: "medreport-gen"
 					}).USE_MOCK_PERSISTENCE;
 					var t = u.getUA(),
 						n = e.getIOSVersion(t),
@@ -37070,7 +37102,15 @@
 					var t, n, r = this.toDbTimestamp(e.snapshotVersion);
 					return t = e.query.isDocumentQuery() ? this.remoteSerializer.toDocumentsTarget(e.query) : this.remoteSerializer.toQueryTarget(e.query), e.resumeToken instanceof Uint8Array ? (v("YES" === Object({
 						NODE_ENV: "production",
-						PUBLIC_URL: "/medreport-generator"
+										PUBLIC_URL: "/medreport-generator",
+										REACT_APP_FIREBASE_APP_ID: "1:971351385810:web:91740bf0323dde5e",
+										REACT_APP_FIREBASE_DATABASE: "https://medreport-gen.firebaseio.com",
+										REACT_APP_URL_DOCX: "/medreport-generator/tag-example.docx",
+										REACT_APP_FIREBASE_SENDER_ID: "971351385810",
+										REACT_APP_FIREBASE_DOMAIN: "medreport-gen.firebaseapp.com",
+										REACT_APP_FIREBASE_STORAGE_BUCKET: "",
+										REACT_APP_FIREBASE_KEY: "AIzaSyAiC4RtmDL172Pb0qv6kzRFB233d6w1A3I",
+										REACT_APP_FIREBASE_PROJECT_ID: "medreport-gen"
 					}).USE_MOCK_PERSISTENCE, "Persisting non-string stream tokens is only supported with mock persistence ."), n = e.resumeToken.toString()) : n = e.resumeToken, new Bt(e.targetId, e.query.canonicalId(), r, n, e.sequenceNumber, t)
 				}, e
 			}();
