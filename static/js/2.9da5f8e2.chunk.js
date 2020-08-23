@@ -34389,15 +34389,15 @@
 							a = void 0;
 						return "undefined" !== typeof r && (a = Object({
 							NODE_ENV: "production",
-										PUBLIC_URL: "/medreport-generator",
-										REACT_APP_FIREBASE_APP_ID: "1:971351385810:web:91740bf0323dde5e",
-										REACT_APP_FIREBASE_DATABASE: "https://medreport-gen.firebaseio.com",
-										REACT_APP_URL_DOCX: "/medreport-generator/tag-example.docx",
-										REACT_APP_FIREBASE_SENDER_ID: "971351385810",
-										REACT_APP_FIREBASE_DOMAIN: "medreport-gen.firebaseapp.com",
-										REACT_APP_FIREBASE_STORAGE_BUCKET: "",
-										REACT_APP_FIREBASE_KEY: "AIzaSyAiC4RtmDL172Pb0qv6kzRFB233d6w1A3I",
-										REACT_APP_FIREBASE_PROJECT_ID: "medreport-gen"
+							PUBLIC_URL: "/medreport-generator",
+							REACT_APP_FIREBASE_APP_ID: "1:971351385810:web:91740bf0323dde5e",
+							REACT_APP_FIREBASE_DATABASE: "https://medreport-gen.firebaseio.com",
+							REACT_APP_URL_DOCX: "/medreport-generator/tag-example.docx",
+							REACT_APP_FIREBASE_SENDER_ID: "971351385810",
+							REACT_APP_FIREBASE_DOMAIN: "medreport-gen.firebaseapp.com",
+							REACT_APP_FIREBASE_STORAGE_BUCKET: "",
+							REACT_APP_FIREBASE_KEY: "AIzaSyAiC4RtmDL172Pb0qv6kzRFB233d6w1A3I",
+							REACT_APP_FIREBASE_PROJECT_ID: "medreport-gen"
 						}).FIREBASE_DATABASE_EMULATOR_HOST), a && (n = "http://" + a + "?ns=" + o.namespace), ue("Invalid Firebase Database URL", 1, i), i.path.isEmpty() || S("Database URL must point to the root of a Firebase Database (not including a child path)."), this.createRepo(o, e).database
 					}, e.prototype.deleteRepo = function(e) {
 						var t = s.safeGet(this.repos_, e.app.name);
